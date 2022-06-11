@@ -58,7 +58,7 @@ export default function Maintenance() {
           </div>
         </div>
 
-        <h1 className="ml-4 mb-4 text-red-200">Mean while visit us on,</h1>
+        <h1 className="ml-4 mb-4 text-rose-400">Mean while visit us on,</h1>
         <article className="flex flex-row gap-2 ml-4 mb-4">
           <a href="https://wa.link/bakesbyish" target="blank">
 						<Image
