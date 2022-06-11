@@ -7,7 +7,7 @@ export async function middleware (req: NextRequest) {
 	const isInMaintenanceMode = process.env.NODE_ENV === 'production';
 
 	if (isInMaintenanceMode) {
-		if (!url.pathname.startsWith("/api")) {
+		if (!url.pathname.startsWith("/api") && !url.pathname.startsWith("/favicon")) {
 			console.log(url.pathname)
 			url.pathname = '/maintenance'
 		}
