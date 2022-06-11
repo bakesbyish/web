@@ -19,5 +19,7 @@ declare namespace NodeJS {
     ROUTE_USERNAME: string;
     ROUTE_PASSWORD: string;
 		SEND_GRID_API: string;
+		SMTP_USER: string;
+		SMTP_PASSWORD: string;
   }
 }

@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import nodemailer, { Transporter } from 'nodemailer';
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,9 +36,35 @@ export default async function handler(
       }
     );
 
-    return res.status(response.status).send({
-      succsess: response.status >= 200 && response.status < 300 ? true : false,
-    });
+    if (Number(response.status) >= 200 && Number(response.status < 300)) {
+      const transporter: Transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+
+      try {
+        await transporter.sendMail({
+          from: process.env.SMTP_USER,
+          to: 'vinuka.airbus@gmail.com',
+          subject: 'New user signed up for the newsletter',
+          html: `
+						<h1>${email} just signed up for the newsletter</h1>
+					`,
+        });
+
+        return res.status(response.status).send({ succsess: true });
+      } catch (error) {
+        console.error(error);
+        return res.status(200).send({ succsess: true });
+      }
+    } else {
+      return res.status(response.status).send({ succsess: false });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).send('Internal server error');
