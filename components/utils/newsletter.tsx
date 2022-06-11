@@ -1,3 +1,5 @@
+import { AddEmail } from "@components/mail/add-email";
+
 export const Newsletter = () => {
   return (
     <>
@@ -18,16 +20,7 @@ export const Newsletter = () => {
             Whether article spirits new her covered hastily sitting her. Money
             witty books nor son add.
           </p>
-          <form className="flex items-stretch mt-12">
-            <input
-              className="bg-gray-100 rounded-lg rounded-r-none text-base leading-none text-gray-800 p-5 w-4/5 border border-transparent focus:outline-none focus:border-gray-500"
-              type="email"
-              placeholder="Your Email"
-            />
-            <button className="w-32 rounded-l-none hover:bg-rose-400 bg-rose-300 rounded text-base font-medium leading-none text-slate-400 p-5 uppercase focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">
-              subscribe
-            </button>
-          </form>
+					<AddEmail />
         </div>
       </div>
     </>

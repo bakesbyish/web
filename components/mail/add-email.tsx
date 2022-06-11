@@ -71,7 +71,7 @@ export const AddEmail = () => {
       onSubmit={subscribe}
       className="flex flex-col mt-8 space-y-3 lg:space-y-0 lg:gap-2"
     >
-      <div className="flex flex-row max-w-xs gap-2 lg:gap-0">
+      <div className="flex flex-row max-w-xs gap-2 lg:gap-0 mx-auto">
         <input
           id="email"
           type="text"
@@ -93,9 +93,9 @@ export const AddEmail = () => {
         </button>
       </div>
 
-      {state === 'error' && <p className="text-red-600">{error}</p>}
+      {state === 'error' && <p className="text-red-600 mx-auto">{error}</p>}
       {state === 'succsess' && (
-        <p className="text-green-200">Subscribed successfully</p>
+        <p className="text-green-200 mx-auto">Subscribed successfully</p>
       )}
     </form>
   );

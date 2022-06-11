@@ -27,7 +27,7 @@ export default function Maintenance() {
           <div className="items-center lg:flex">
             <div className="w-full lg:w-1/2">
               <div className="lg:max-w-lg">
-                <h1 className="text-2xl font-semibold text-gray-800 dark:text-white lg:text-3xl">
+                <h1 className="text-2xl font-semibold text-gray-800 dark:text-white lg:text-3xl mx-auto">
                   Subscribe To The{' '}
                   <span className="text-rose-300">Newsletter</span>
                 </h1>
