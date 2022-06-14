@@ -13,24 +13,14 @@ export const Footer = () => {
             Bakes By Ish
           </span>
         </a>
-        <ul className="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
+        <ul className="flex sm:flex-wrap sm:items-center justify-between mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
           <li>
             <a href="#" className="mr-4 hover:underline md:mr-6 ">
               About
             </a>
           </li>
           <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6">
-              Privacy Policy
-            </a>
-          </li>
-          <li>
-            <a href="#" className="mr-4 hover:underline md:mr-6 ">
-              Licensing
-            </a>
-          </li>
-          <li>
-						<div className="ml-10 hover:underline md:mr-6">
+						<div className="">
 							<Theme />
 						</div>
           </li>

@@ -36,6 +36,6 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
 	console.log(cursors)
 
-	return res.status(200).send("ok")
+	return res.status(200).json({ cursors })
 
 }

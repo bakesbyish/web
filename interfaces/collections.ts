@@ -1,4 +1,4 @@
-export interface ICatergory {
+export interface ICollection {
 	catergory :string
 	catergorySlug: string
 	catergoryDescription?: string

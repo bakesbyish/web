@@ -1,8 +1,8 @@
-import { ITrendingProducts } from '@interfaces/products';
+import { IProduct } from '@interfaces/products';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export const Trending = (props: { trendingProducts: ITrendingProducts[] }) => {
+export const Trending = (props: { trendingProducts: IProduct[] }) => {
   const { trendingProducts } = props;
 
   return (
