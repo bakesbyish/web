@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 
 export const Hero = () => {
   return (
@@ -6,11 +8,12 @@ export const Hero = () => {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-              Summer styles are finally here
+              BAKES BY ISH
             </h1>
             <p className="mt-4 text-xl text-gray-500 dark:text-white/80">
-              This year, our new summer collection will shelter you from the harsh elements of a world that doesn&apost care
-              if you live or die.
+              The one stop for all your baking needs, At BAKES BY ISH we are
+              commited to provide you with higest quality products at the most
+              affordable prices
             </p>
           </div>
           <div>
@@ -24,55 +27,69 @@ export const Hero = () => {
                   <div className="flex items-center space-x-6 lg:space-x-8">
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
-                          alt=""
+                        <Image
+                          src="/hero/1.jpg"
+                          alt="Bakes By Ish Image 1"
+                          height={1400}
+                          width={1000}
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
-                          className="w-full h-full object-center object-cover"
-                        />
-                      </div>
-                      <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                          alt=""
+                        <Image
+                          src="/hero/2.jpg"
+                          alt="Bakes By Ish Image 2"
+                          height={1400}
+                          width={1000}
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
                     </div>
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
-                          alt=""
+                        <Image
+                          src="/hero/3.jpg"
+                          alt="Bakes By Ish Image 3"
+                          height={1400}
+                          width={1000}
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
-                          alt=""
+                        <Image
+                          src="/hero/4.jpg"
+                          alt="Bakes By Ish Image 4"
+                          height={1400}
+                          width={1000}
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <Image
+                          src="/hero/5.jpg"
+                          alt="Bakes By Ish Image 5"
+                          height={1400}
+                          width={1000}
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <Image
+                          src="/hero/6.jpg"
+                          alt="Bakes By Ish Image 6"
+                          height={1400}
+                          width={1000}
+                          className="w-full h-full object-center object-cover"
+                        />
+                      </div>
+                      <div className="w-44 h-64 rounded-lg overflow-hidden">
+                        <Image
+                          src="/hero/7.jpg"
+                          alt="Bakes By Ish Image 7"
+                          height={1400}
+                          width={1000}
                           className="w-full h-full object-center object-cover"
                         />
                       </div>
@@ -81,16 +98,15 @@ export const Hero = () => {
                 </div>
               </div>
 
-              <a
-                href="#"
-                className="inline-block text-center bg-rose-300 border border-transparent rounded-md py-3 px-8 font-medium text-slate-500 hover:bg-rose-400"
-              >
-                Shop Collection
-              </a>
+              <Link href="/shop">
+                <a className="inline-block text-center bg-rose-300 border border-transparent rounded-md py-3 px-8 font-medium text-slate-500 hover:bg-rose-400">
+                  Shop
+                </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
