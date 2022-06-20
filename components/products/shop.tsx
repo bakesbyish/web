@@ -1,4 +1,4 @@
-import { ShoppingCartIcon } from '@heroicons/react/outline';
+import { CogIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { IShopProducts } from '@interfaces/products';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -17,15 +17,15 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
 
   // Define the key function to paginate the data fetched
   const getKey = (pageIndex: number, previousPageData: any) => {
-    if (previousPageData && !previousPageData.data) {
+    if (previousPageData && !previousPageData.hasNextPage) {
       return null;
     }
 
     if (pageIndex === 0) {
-      return '/api/hello?count=10&start=0';
+      return '/api/shop/get-products';
     }
 
-    return `/api/hello?count=10&start=${pageIndex}`;
+    return `/api/shop/get-products?cursor=${previousPageData.cursor}`;
   };
 
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
@@ -36,7 +36,7 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
   const fetchMoreProducts = () => {
     setSize(size + 1);
     if (data) {
-      data[0] && setProducts(products.concat(data[0]));
+      data[size - 1] && setProducts(products.concat(data[size - 1].products));
     }
   };
 
@@ -54,31 +54,36 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
     <>
       {products?.map((product, index: number) => (
         <article
+          id={encodeURI(product.title)}
           key={index}
           ref={products.length - 1 ? observe : null}
           className="group"
         >
           <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
             <Image
-              src={product?.imageSrc}
-              alt={product?.imageAlt}
+              src={product.url}
+              alt={product.title}
               width={300}
               height={300}
               className="w-full h-full object-center object-cover group-hover:opacity-75"
             />
           </div>
-					<div className="flex flex-row justify-between">
-						<div className="flex flex-col">
-							<h3 className="mt-4 text-sm text-gray-700 dark:text-white">
-								{product?.name}
-							</h3>
-							<p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-								{product?.price}
-							</p>
-						</div>
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-col">
+              <h3 className="mt-4 text-sm text-gray-700 dark:text-white">
+                {product.title}
+              </h3>
+              <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+                {product.price}
+              </p>
+            </div>
 
-						<ShoppingCartIcon className="w-6 h-6 mt-5" />
-					</div>
+            {product.hasVariants ? (
+              <CogIcon className="w-6 h-6 mt-5" />
+            ) : (
+              <ShoppingCartIcon className="w-6 h-6 mt-5" />
+            )}
+          </div>
         </article>
       ))}
 

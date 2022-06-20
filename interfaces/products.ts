@@ -28,10 +28,35 @@ export interface ICollectionCard {
 }
 
 export interface IShopProducts {
-  id: string;
-  name: string;
-  href: string;
-  price: string;
-  imageSrc: string;
-  imageAlt: string;
+  sku: number;
+  title: string;
+  slug: string;
+  price: number;
+  url: string;
+  hasVariants: boolean;
+}
+
+export interface IShopDataStream {
+  data: {
+    productsConnection: {
+      pageInfo: {
+        endCursor: string;
+        hasNextPage: boolean;
+      };
+      edges: {
+        node: {
+          sku: number;
+          title: string;
+          slug: string;
+          price: number;
+          image: {
+            url: string;
+          };
+          productVariants: {
+            id?: string;
+          }[];
+        };
+      }[];
+    };
+  };
 }
