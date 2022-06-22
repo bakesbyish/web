@@ -60,3 +60,31 @@ export interface IShopDataStream {
     };
   };
 }
+
+export interface ISlugProduct {
+  sku: string;
+  title: string;
+  price: number;
+  url: string;
+  description: string;
+  unit: null | string;
+  discountedFrom: number | null;
+  discountedPrice: number | null;
+  productVariants: {
+    name: string;
+    price: number;
+    url: string | null;
+    discountedFrom: number | null;
+    discountedPrice: number | null;
+    variantColors:
+      | {
+          color: string;
+        }[]
+      | [];
+  }[];
+  productColors: {
+    color: string;
+  }[];
+  hasVariants: boolean;
+  hasColors: boolean;
+}
