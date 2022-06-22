@@ -1,6 +1,7 @@
 import { CogIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import { IShopProducts } from '@interfaces/products';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
 import useSWRInfinite from 'swr/infinite';
@@ -60,13 +61,17 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
           className="group"
         >
           <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-            <Image
-              src={product.url}
-              alt={product.title}
-              width={300}
-              height={300}
-              className="w-full h-full object-center object-cover group-hover:opacity-75"
-            />
+            <Link href={`/shop/${product.slug}`} passHref>
+              <a>
+                <Image
+                  src={product.url}
+                  alt={product.title}
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-center object-cover group-hover:opacity-75"
+                />
+              </a>
+            </Link>
           </div>
           <div className="flex flex-row justify-between">
             <div className="flex flex-col">
