@@ -35,7 +35,3 @@ export const collections = [
 export const callsToAction = [
   { name: 'Browse all Collections', href: '#', icon: CollectionIcon },
 ];
-
-export function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
-}
