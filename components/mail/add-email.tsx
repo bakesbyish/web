@@ -87,6 +87,7 @@ export const AddEmail = () => {
         <button
           disabled={state === 'loading'}
           type="submit"
+          aria-label="Subscribe to BAKESBYISH mailing list"
           className="max-w-xs px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-rose-300 rounded-lg lg:w-auto lg:mx-4 hover:bg-rose-400 focus:outline-none focus:bg-blue-400"
         >
           <StatusIcon state={state} />

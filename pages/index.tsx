@@ -5,7 +5,7 @@ import { Collections } from '@components/utils/collections-card';
 import { Hero } from '@components/utils/hero';
 import { Loader } from '@components/utils/loader';
 import { Trending } from '@components/utils/trending';
-import { ICollectionCard, IProduct } from '@interfaces/products';
+import { ICollectionCard, ICollectionProduct } from '@interfaces/products';
 import { client } from 'config/apollo';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
@@ -23,7 +23,7 @@ const GeoLocation = dynamic<any>(() => import('@components/utils/map'), {
 });
 
 export default function Home(props: {
-  trendingProducts: IProduct[];
+  trendingProducts: ICollectionProduct[];
   collections: ICollectionCard[];
 }) {
   const { trendingProducts, collections } = props;
