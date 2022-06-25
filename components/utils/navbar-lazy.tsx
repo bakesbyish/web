@@ -14,7 +14,7 @@ export const CollectionsMenu = () => {
               open
                 ? 'text-gray-900 dark:text-white'
                 : 'text-gray-500 dark:text-white/80',
-              'group bg-white dark:bg-gray-700 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+              'group bg-white dark:bg-gray-700 rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 dark:hover:text-white focus:outline-none'
             )}
           >
             <span>Collections</span>
