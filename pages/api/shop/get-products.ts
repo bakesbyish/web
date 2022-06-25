@@ -16,7 +16,7 @@ export default async function handler(
   const { data } = (await client.query({
     query: gql`
       query ($cursor: String) {
-        productsConnection(orderBy: createdAt_DESC, after: $cursor, first: 2) {
+        productsConnection(orderBy: createdAt_DESC, after: $cursor, first: 10) {
           pageInfo {
             endCursor
             hasNextPage
