@@ -14,29 +14,28 @@ export default function Shop(props: {
   const { fallback } = props;
 
   return (
-		<div className="flex flex-col items-center min-h-screen">
-			<Meta
-				title={'Shop'}
-				description={
-        'Island wide delivery, for the finest and higest quality cake tools for the lowest possible price'
-				}
-			/>
+    <div className="flex flex-col items-center min-h-screen">
+      <Meta
+        title={'Shop'}
+        description={
+          'Island wide delivery, for the finest and higest quality cake tools for the lowest possible price'
+        }
+      />
 
-			<main className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 py-10">
-				<SWRConfig value={{ fallback }}>
-					<ShopProducts products={fallback.products} />
-				</SWRConfig>
-			</main>
-		</div>
-	);
-
+      <main className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 py-10">
+        <SWRConfig value={{ fallback }}>
+          <ShopProducts products={fallback.products} />
+        </SWRConfig>
+      </main>
+    </div>
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = (await client.query({
     query: gql`
       query {
-        productsConnection(orderBy: createdAt_DESC, after: null, first: 2) {
+        productsConnection(orderBy: createdAt_DESC, after: null, first: 20) {
           pageInfo {
             endCursor
             hasNextPage
