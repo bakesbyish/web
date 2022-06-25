@@ -1,4 +1,4 @@
-export interface IProduct {
+export interface ICollectionProduct {
   title: string;
   slug: string;
   sku: number;
@@ -61,19 +61,22 @@ export interface IShopDataStream {
   };
 }
 
-export interface ISlugProduct {
+export interface IProduct {
   sku: string;
+	slug: string;
   title: string;
   price: number;
   url: string;
   description: string;
   unit: null | string;
+  hasDiscounts: boolean;
   discountedFrom: number | null;
   discountedPrice: number | null;
   productVariants: {
     name: string;
     price: number;
     url: string | null;
+    hasDiscounts: boolean;
     discountedFrom: number | null;
     discountedPrice: number | null;
     variantColors:
@@ -87,4 +90,14 @@ export interface ISlugProduct {
   }[];
   hasVariants: boolean;
   hasColors: boolean;
+}
+
+export interface ICart {
+  id: string;
+  url: string;
+	slug: string;
+  name: string;
+  color: string | null;
+  size: string | null;
+  price: number;
 }
