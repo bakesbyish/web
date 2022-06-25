@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { Meta } from '@components/seo/metatags';
 import { Loader } from '@components/utils/loader';
-import { IProduct } from '@interfaces/products';
+import { ICollectionProduct } from '@interfaces/products';
 import { ICollection } from '@interfaces/collections';
 import { client } from 'config/apollo';
 import { db } from 'config/firebase';
@@ -19,7 +19,7 @@ import { CollectionPagination } from '@components/pagination/collections';
 export default function Page(props: {
   page: string;
   totalPages: string;
-  products: IProduct[];
+  products: ICollectionProduct[];
   collections: ICollection;
 }) {
   const { page, totalPages, products, collections } = props;
@@ -243,8 +243,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const products: IProduct[] = [];
-  productsData.map((product: { node: IProduct }) => {
+  const products: ICollectionProduct[] = [];
+  productsData.map((product: { node: ICollectionProduct }) => {
     products.push({
       title: product.node.title,
       slug: product.node.slug,
