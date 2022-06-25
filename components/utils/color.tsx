@@ -11,7 +11,9 @@ export const Color = (props: {
 
   return colors ? (
     <div>
-      <h3 className="text-sm text-gray-900 dark:text-white font-medium">Color</h3>
+      <h3 className="text-sm text-gray-900 dark:text-white font-medium">
+        Color
+      </h3>
 
       <RadioGroup value={value} onChange={setValue} className="mt-4">
         <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
