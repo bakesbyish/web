@@ -1,26 +1,38 @@
-import type { AppProps } from 'next/app'
-import { NextPage } from 'next'
-import { ReactElement, ReactNode } from 'react'
-import '../styles/globals.css'
-import { ThemeProvider } from 'next-themes'
+import type { AppProps } from 'next/app';
+import { NextPage } from 'next';
+import { ReactElement, ReactNode, useState } from 'react';
+import { ThemeProvider } from 'next-themes';
+import { CartProvider } from 'react-use-cart';
+import { BakesbyIshContext } from '@context/context';
+import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
-	getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-	Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-	const getLayout = Component.getLayout ?? ((page) => page)
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
 
-	return (
-		<ThemeProvider enableSystem={true} attribute={"class"}>
-			{getLayout(<Component {...pageProps} />)}
-		</ThemeProvider>
-	)
+  const getLayout = Component.getLayout ?? ((page) => page);
 
+  return (
+    <BakesbyIshContext.Provider
+      value={{
+        cartOpen,
+        setCartOpen,
+      }}
+    >
+      <CartProvider>
+        <ThemeProvider enableSystem={true} attribute={'class'}>
+          {getLayout(<Component {...pageProps} />)}
+        </ThemeProvider>
+      </CartProvider>
+    </BakesbyIshContext.Provider>
+  );
 }
 
-export default MyApp
+export default MyApp;
