@@ -1,12 +1,17 @@
 import { CogIcon, ShoppingCartIcon } from '@heroicons/react/outline';
-import { IShopProducts } from '@interfaces/products';
+import { ICart, IShopProducts } from '@interfaces/products';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
+import { useCart } from 'react-use-cart';
 import useSWRInfinite from 'swr/infinite';
 
 export const ShopProducts = (props: { products: IShopProducts[] }) => {
+  const { addItem } = useCart();
+
+  const [end, setEnd] = useState<boolean>(false);
+
   // Define the fetcher function to fetch data
   const fetcher = async (url: string) => {
     const response = await fetch(url, {
@@ -19,6 +24,7 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
   // Define the key function to paginate the data fetched
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.hasNextPage) {
+      setEnd(true);
       return null;
     }
 
@@ -86,13 +92,29 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
             {product.hasVariants ? (
               <CogIcon className="w-6 h-6 mt-5" />
             ) : (
-              <ShoppingCartIcon className="w-6 h-6 mt-5" />
+              <ShoppingCartIcon
+                type="button"
+                onClick={() => {
+                  const selectedProduct = {
+                    id: product.sku.toString(),
+										slug: product.slug,
+                    name: product.title,
+                    url: product.url,
+                    color: null,
+                    size: null,
+                    price: product.price,
+                  } as ICart;
+
+                  addItem(selectedProduct, 1);
+                }}
+                className="w-6 h-6 mt-5 cursor-pointer"
+              />
             )}
           </div>
         </article>
       ))}
 
-      <button onClick={fetchMoreProducts}>Load More</button>
+      {!end && <button onClick={fetchMoreProducts}>Load More</button>}
     </>
   );
 };
