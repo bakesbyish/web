@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { collections, pages } from '@lib/navbar-data';
 import dynamic from 'next/dynamic';
 import { classNames } from '@lib/utils';
-import { Loader } from '@components/utils/loader';
 
 const CollectionsMenu = dynamic<any>(() =>
   import('@components/utils/navbar-lazy').then((mod) => mod.CollectionsMenu)
@@ -33,7 +32,7 @@ export const Navbar = () => {
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <span className="sr-only">Bakes By Ish</span>
               <Link href="/" passHref>
-                <>
+                <a>
                   <Image
                     className="h-8 w-auto sm:h-10"
                     src="/bakesbyish.svg"
@@ -41,7 +40,7 @@ export const Navbar = () => {
                     width={40}
                     height={40}
                   />
-                </>
+                </a>
               </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -107,7 +106,7 @@ export const Navbar = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <Link href="/" passHref>
-                      <>
+                      <a>
                         <Image
                           className="h-8 w-auto"
                           src="/bakesbyish.svg"
@@ -115,7 +114,7 @@ export const Navbar = () => {
                           width={40}
                           height={40}
                         />
-                      </>
+                      </a>
                     </Link>
                   </div>
                   <div className="-mr-2">

@@ -2,6 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { callsToAction, collections } from '@lib/navbar-data';
 import { classNames } from '@lib/utils';
+import Link from 'next/link';
 import { Fragment } from 'react';
 
 export const CollectionsMenu = () => {
@@ -61,16 +62,15 @@ export const CollectionsMenu = () => {
                 <div className="px-5 py-5 bg-gray-50 dark:bg-gray-600 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
                   {callsToAction.map((item) => (
                     <div key={item.name} className="flow-root">
-                      <a
-                        href={item.href}
-                        className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
-                      >
-                        <item.icon
-                          className="flex-shrink-0 h-6 w-6 text-gray-400 dar:text-white/80"
-                          aria-hidden="true"
-                        />
-                        <span className="ml-3">{item.name}</span>
-                      </a>
+                      <Link href={item.href}>
+                        <a className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900">
+                          <item.icon
+                            className="flex-shrink-0 h-6 w-6 text-gray-400 dar:text-white/80"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3">{item.name}</span>
+                        </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
