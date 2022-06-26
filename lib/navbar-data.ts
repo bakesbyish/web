@@ -16,18 +16,18 @@ export const pages = [
 export const collections = [
   {
     name: 'Cake boards',
-    href: '#',
+    href: '/collections/cake-boards',
     description:
       'The best cake boards you can buy, handmade with high-quality materials',
   },
   {
     name: 'Cake boxses',
-    href: '#',
+    href: '/collections/cake-boxses',
     description: 'The best cake boxses that you can find in the market',
   },
   {
     name: 'Toppers',
-    href: '#',
+    href: '/collections/cake-toppers',
     description: 'Cake toppers for decorating all your cakes',
   },
 ];
