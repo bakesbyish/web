@@ -68,13 +68,20 @@ export const Cart = () => {
                                 {items.map((item) => (
                                   <li key={item.id} className="flex py-6">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                      <Image
-                                        src={item.url}
-                                        alt={item.name}
-                                        width={200}
-                                        height={200}
-                                        className="h-full w-full object-cover object-center"
-                                      />
+                                      <Link
+                                        href={`/shop/${item.slug}`}
+                                        passHref
+                                      >
+                                        <a onClick={() => setCartOpen(false)}>
+                                          <Image
+                                            src={item.url}
+                                            alt={item.name}
+                                            width={200}
+                                            height={200}
+                                            className="h-full w-full object-cover object-center"
+                                          />
+                                        </a>
+                                      </Link>
                                     </div>
 
                                     <div className="ml-4 flex flex-1 flex-col">
@@ -87,7 +94,10 @@ export const Cart = () => {
                                           </h3>
                                           <p className="ml-4">{item.price}</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500 dark:text-white">
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-white/80">
+                                          {item.size ? item.size : null}
+                                        </p>
+                                        <p className="mt-1 text-sm text-gray-500 dark:text-white/80">
                                           {item.color ? item.color : null}
                                         </p>
                                       </div>
@@ -141,12 +151,15 @@ export const Cart = () => {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <a
-                          href="#"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-rose-300 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-rose-400"
-                        >
-                          Checkout
-                        </a>
+                        <Link href="/checkout">
+                          <a
+                            onClick={() => setCartOpen(false)}
+                            href="#"
+                            className="flex items-center justify-center rounded-md border border-transparent bg-rose-300 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-rose-400"
+                          >
+                            Checkout
+                          </a>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
