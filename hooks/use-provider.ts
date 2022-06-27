@@ -7,7 +7,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
  * @description - Get the result from the redirect and sign in the user
  * @returns - loading - Returns the state of the user creation
  **/
-export const useProvider = (): [loading: boolean, setLoading: Dispatch<SetStateAction<boolean>>] => {
+export const useProvider = (): [
+  loading: boolean,
+  setLoading: Dispatch<SetStateAction<boolean>>
+] => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ export const useProvider = (): [loading: boolean, setLoading: Dispatch<SetStateA
           // Generate a username for the user
           const username =
             displayName?.replace(' ', '-').toLocaleLowerCase() +
-            new Date().getMilliseconds().toString();
+            Date.now().toString();
           // Create an Image of the photoURL is null
           const photoURL =
             result.user.photoURL ||
@@ -43,7 +46,6 @@ export const useProvider = (): [loading: boolean, setLoading: Dispatch<SetStateA
 
         // Get the user id Token
         const idToken = await result.user.getIdToken();
-        console.log(idToken);
 
         // Create a session for the user
         try {
