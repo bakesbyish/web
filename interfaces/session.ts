@@ -1,4 +1,5 @@
 import { IronSession } from "iron-session";
+import { IUser } from "./firestore";
 
 export interface ISessionOptions {
   cookieName: string;
@@ -8,10 +9,4 @@ export interface ISessionOptions {
   };
 }
 
-export type ISession = IronSession & {
-  uid: string;
-  username: string;
-	email: string;
-	displayName: string;
-	photoURL: string;
-};
+export type ISession = IronSession & IUser;

@@ -1,3 +1,11 @@
+export interface IUser {
+	uid: string;
+	username: string;
+	email: string;
+	displayName: string;
+	photoURL: string;
+}
+
 export interface IUserDocument {
   uid: string;
   username: string;
