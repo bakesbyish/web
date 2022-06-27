@@ -15,11 +15,19 @@ import { useInView } from 'react-cool-inview';
 // Lazy loaded components
 const Newsletter = dynamic<any>(
   () => import('@components/utils/newsletter').then((mod) => mod.Newsletter),
-  { loading: () => <Loader /> }
+  { loading: () => (
+		<section className="mb-4 mt-4">
+			<Loader />
+		</section>
+	)}
 );
 
 const GeoLocation = dynamic<any>(() => import('@components/utils/map'), {
-  loading: () => <Loader />,
+  loading: () => (
+		<section className="mb-4 mt-4">
+			<Loader />
+		</section>
+	),
 });
 
 export default function Home(props: {
