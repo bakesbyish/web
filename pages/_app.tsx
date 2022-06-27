@@ -4,6 +4,7 @@ import { ReactElement, ReactNode, useState } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { CartProvider } from 'react-use-cart';
 import { BakesbyIshContext } from '@context/context';
+import { useUserData } from '@hooks/use-user-data';
 import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
@@ -16,14 +17,20 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const { user, validating, mutate } = useUserData();
+
+  console.log(user);
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <BakesbyIshContext.Provider
       value={{
+        user,
+        validating,
         cartOpen,
         setCartOpen,
+        mutate,
       }}
     >
       <CartProvider>
