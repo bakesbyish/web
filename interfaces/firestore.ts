@@ -1,4 +1,4 @@
-interface IUserDocument {
+export interface IUserDocument {
   uid: string;
   username: string;
   displayName: string;

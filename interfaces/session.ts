@@ -11,4 +11,7 @@ export interface ISessionOptions {
 export type ISession = IronSession & {
   uid: string;
   username: string;
+	email: string;
+	displayName: string;
+	photoURL: string;
 };
