@@ -21,12 +21,18 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { commitUserData, createSession } from '@lib/auth';
+import { useBakesbyIshcontext } from '@context/context';
+import { useRouter } from 'next/router';
 
 export default function Register() {
+  const { mutate } = useBakesbyIshcontext();
+
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
 
   const [loading] = useProvider();
+
+  const router = useRouter();
 
   const formSchema = yup.object().shape({
     email: yup
@@ -86,8 +92,10 @@ export default function Register() {
         try {
           await commitUserData(uid, username, email, displayName, photoURL);
           const idToken = await user.getIdToken();
+
           await createSession(idToken);
-          setCreatingAccount(false);
+          mutate();
+          router.push('/');
         } catch (error) {
           setCreatingAccount(false);
           console.log(error);

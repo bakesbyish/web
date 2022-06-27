@@ -21,13 +21,20 @@ import { useForm } from 'react-hook-form';
 import { createSession } from '@lib/auth';
 import { ResetPassword } from '@components/auth/reset-password';
 import Link from 'next/link';
+import { useBakesbyIshcontext } from '@context/context';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+
+	const { mutate } = useBakesbyIshcontext();
+
   const [passwordVisible, setPasswordVisble] = useState<boolean>(false);
   const [resetPassword, setResetPassword] = useState<boolean>(false);
   const [logginIn, setLogginIn] = useState<boolean>(false);
 
   const [loading] = useProvider();
+
+	const router = useRouter();
 
   const formSchema = yup.object().shape({
     email: yup
@@ -58,7 +65,8 @@ export default function Login() {
 
         try {
           await createSession(idToken);
-          setLogginIn(false);
+					mutate();
+					router.push("/")
         } catch (error) {
           setLogginIn(false);
           console.error(error);

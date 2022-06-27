@@ -1,6 +1,8 @@
+import { useBakesbyIshcontext } from '@context/context';
 import { commitUserData, createSession } from '@lib/auth';
 import { auth } from 'config/firebase';
 import { getAdditionalUserInfo, getRedirectResult } from 'firebase/auth';
+import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 /**
@@ -11,7 +13,9 @@ export const useProvider = (): [
   loading: boolean,
   setLoading: Dispatch<SetStateAction<boolean>>
 ] => {
+  const { mutate } = useBakesbyIshcontext();
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     getRedirectResult(auth).then(async (result) => {
@@ -50,7 +54,8 @@ export const useProvider = (): [
         // Create a session for the user
         try {
           await createSession(idToken);
-          setLoading(false);
+          mutate();
+          router.push('/');
         } catch (error) {
           setLoading(false);
           console.log(error);
