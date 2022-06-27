@@ -1,9 +1,12 @@
-export const Loader = () => {
+export const Loader = (props: { width?: number; height?: number }) => {
+  const width = props.width ? props.width.toString() : '8';
+  const height = props.height ? props.height.toString() : '8';
+
   return (
     <div className="text-center">
       <svg
         role="status"
-        className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-rose-400"
+        className={`inline w-${width} h-${height} mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-rose-400`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
