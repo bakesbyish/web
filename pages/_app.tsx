@@ -19,8 +19,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const { user, validating, mutate } = useUserData();
 
-  console.log(user);
-
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
