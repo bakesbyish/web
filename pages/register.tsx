@@ -9,8 +9,10 @@ import Link from 'next/link';
 import { useProvider } from '@hooks/use-provider';
 import { Loader } from '@components/utils/loader';
 import {
+  createUserWithEmailAndPassword,
   FacebookAuthProvider,
   GoogleAuthProvider,
+  sendEmailVerification,
   signInWithRedirect,
   TwitterAuthProvider,
 } from 'firebase/auth';
@@ -18,6 +20,7 @@ import { auth } from 'config/firebase';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { commitUserData, createSession } from '@lib/auth';
 
 export default function Register() {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -58,7 +61,34 @@ export default function Register() {
   const onFormSubmit = (data: IFormInputs) => {
     const { email, password } = data;
 
-    console.log(email, password);
+    createUserWithEmailAndPassword(auth, email, password).then(
+      async (result) => {
+        const { user } = result;
+
+        // Send email verification
+        sendEmailVerification(user);
+
+        const { uid } = user;
+        const name = email.match(/^.+(?=@)/)![0];
+
+        const displayName = name
+          .replaceAll('.', ' ')
+          .replaceAll('-', ' ')
+          .replaceAll('_', ' ');
+        const username =
+          name.toLowerCase().replaceAll('.', '-').replaceAll('_', '-') +
+          Date.now().toString();
+        const photoURL = `https://avatars.dicebear.com/api/adventurer/${uid}.svg`;
+
+        try {
+          await commitUserData(uid, username, email, displayName, photoURL);
+          const idToken = await user.getIdToken();
+          await createSession(idToken);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
   };
 
   return !loading ? (
