@@ -24,7 +24,9 @@ import { commitUserData, createSession } from '@lib/auth';
 
 export default function Register() {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
-  const [loading, setLoading] = useProvider();
+  const [creatingAccount, setCreatingAccount] = useState<boolean>(false);
+
+  const [loading] = useProvider();
 
   const formSchema = yup.object().shape({
     email: yup
@@ -60,6 +62,7 @@ export default function Register() {
 
   const onFormSubmit = (data: IFormInputs) => {
     const { email, password } = data;
+    setCreatingAccount(true);
 
     createUserWithEmailAndPassword(auth, email, password).then(
       async (result) => {
@@ -84,7 +87,9 @@ export default function Register() {
           await commitUserData(uid, username, email, displayName, photoURL);
           const idToken = await user.getIdToken();
           await createSession(idToken);
+          setCreatingAccount(false);
         } catch (error) {
+          setCreatingAccount(false);
           console.log(error);
         }
       }
@@ -242,7 +247,11 @@ export default function Register() {
                     aria-label="create my account"
                     className="focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full"
                   >
-                    Create an Account
+                    {creatingAccount ? (
+                      <Loader width={4} height={4} />
+                    ) : (
+                      'Create an Account'
+                    )}
                   </button>
                 </div>
               </form>

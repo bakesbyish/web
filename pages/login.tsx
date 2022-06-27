@@ -25,6 +25,7 @@ import Link from 'next/link';
 export default function Login() {
   const [passwordVisible, setPasswordVisble] = useState<boolean>(false);
   const [resetPassword, setResetPassword] = useState<boolean>(false);
+  const [logginIn, setLogginIn] = useState<boolean>(false);
 
   const [loading] = useProvider();
 
@@ -49,18 +50,22 @@ export default function Login() {
 
   const onFormSubmit = (data: IFormInputs) => {
     const { email, password } = data;
+    setLogginIn(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then(async (result) => {
         const idToken = await result.user.getIdToken();
 
         try {
-          createSession(idToken);
+          await createSession(idToken);
+          setLogginIn(false);
         } catch (error) {
+          setLogginIn(false);
           console.error(error);
         }
       })
       .catch((error) => {
+        setLogginIn(false);
         console.error(error);
       });
   };
@@ -188,10 +193,11 @@ export default function Login() {
                   <div className="mt-8">
                     <button
                       role="button"
-                      aria-label="create my account"
+                      aria-label="Login"
+                      disabled={logginIn}
                       className="focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full"
                     >
-                      Login
+                      {logginIn ? <Loader width={4} height={4} /> : 'Login'}
                     </button>
                   </div>
                 </form>
