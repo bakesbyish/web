@@ -1,5 +1,6 @@
 import { database } from '@interfaces/firestore';
-import { db } from 'config/firebase';
+import { auth, db } from 'config/firebase';
+import { signOut } from 'firebase/auth';
 import { doc, writeBatch } from 'firebase/firestore';
 
 /**
@@ -8,6 +9,9 @@ import { doc, writeBatch } from 'firebase/firestore';
 export const createSession = async (idToken: string) => {
   const response = await fetch('/api/auth/login', {
     method: 'POST',
+		headers: {
+			"Content-Type": "application/json"
+		},
     body: JSON.stringify({
       idToken,
     }),
@@ -44,4 +48,17 @@ export const commitUserData = async (
   });
 
   await batch.commit();
+};
+
+/**
+ * @description - Logout the user from firebase and destroy the user session
+ * */
+export const logout = async () => {
+  const response = await fetch('/api/auth/logout', {
+    method: 'DELETE',
+  });
+
+  if (Number(response.status) === 200) {
+    await signOut(auth);
+  }
 };
