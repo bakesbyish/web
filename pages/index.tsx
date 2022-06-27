@@ -16,7 +16,7 @@ import { useInView } from 'react-cool-inview';
 const Newsletter = dynamic<any>(
   () => import('@components/utils/newsletter').then((mod) => mod.Newsletter),
   { loading: () => (
-		<section className="mb-4 mt-4">
+		<section className="mb-5 mt-5">
 			<Loader />
 		</section>
 	)}
@@ -24,7 +24,7 @@ const Newsletter = dynamic<any>(
 
 const GeoLocation = dynamic<any>(() => import('@components/utils/map'), {
   loading: () => (
-		<section className="mb-4 mt-4">
+		<section className="mb-5 mt-5">
 			<Loader />
 		</section>
 	),
