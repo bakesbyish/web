@@ -3,9 +3,11 @@ import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import Image from 'next/image';
 import Link from 'next/link';
-import { collections, pages } from '@lib/navbar-data';
+import { collections, mobilePages, pages } from '@lib/navbar-data';
 import dynamic from 'next/dynamic';
 import { classNames } from '@lib/utils';
+import { useBakesbyIshcontext } from '@context/context';
+import { UserProfile } from '@components/utils/navbar-lazy';
 
 const CollectionsMenu = dynamic<any>(() =>
   import('@components/utils/navbar-lazy').then((mod) => mod.CollectionsMenu)
@@ -21,7 +23,13 @@ const Cart = dynamic<any>(
   { ssr: false }
 );
 
+const MobileMenu = dynamic<any>(() =>
+  import('@components/utils/navbar-lazy').then((mod) => mod.MobileMenu)
+);
+
 export const Navbar = () => {
+  const { user, validating, mutate } = useBakesbyIshcontext();
+
   return (
     <>
       <Cart />
@@ -69,21 +77,29 @@ export const Navbar = () => {
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
               <CartIcon />
 
-              <Link href="/login">
-                <a className="whitespace-nowrap text-base font-medium text-gray-500 dark:text-white/80 hover:text-gray-900 dark:hover:text-white">
-                  Sign in
-                </a>
-              </Link>
-              <Link href="/register">
-                <a
-                  className={classNames(
-                    'ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent',
-                    'rounded-md shadow-sm text-base font-medium text-slate-500 bg-rose-200 hover:bg-rose-400'
-                  )}
-                >
-                  Sign up
-                </a>
-              </Link>
+              {!validating ? (
+                user ? (
+                  <UserProfile user={user} mutate={mutate} />
+                ) : (
+                  <>
+                    <Link href="/login">
+                      <a className="whitespace-nowrap text-base font-medium text-gray-500 dark:text-white/80 hover:text-gray-900 dark:hover:text-white">
+                        Sign in
+                      </a>
+                    </Link>
+                    <Link href="/register">
+                      <a
+                        className={classNames(
+                          'ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent',
+                          'rounded-md shadow-sm text-base font-medium text-slate-500 bg-rose-200 hover:bg-rose-400'
+                        )}
+                      >
+                        Sign up
+                      </a>
+                    </Link>
+                  </>
+                )
+              ) : null}
             </div>
           </div>
         </div>
@@ -132,7 +148,7 @@ export const Navbar = () => {
                 </div>
                 <div className="mt-6">
                   <nav className="grid gap-y-8">
-                    {pages.map((item, index: number) => (
+                    {mobilePages.map((item, index: number) => (
                       <a
                         key={index}
                         href={item.href}
@@ -150,39 +166,7 @@ export const Navbar = () => {
                   </nav>
                 </div>
               </div>
-              <div className="py-6 px-5 space-y-6">
-                <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                  {collections.map((item, index: number) => (
-                    <a
-                      key={index}
-                      href={item.href}
-                      className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-white/80"
-                    >
-                      {item.name}
-                    </a>
-                  ))}{' '}
-                </div>
-                <div>
-                  <Link href="/register">
-                    <a
-                      className={classNames(
-                        'w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md',
-                        'shadow-sm text-base font-medium text-slate-500 bg-rose-200 hover:bg-rose-400'
-                      )}
-                    >
-                      Sign up
-                    </a>
-                  </Link>
-                  <p className="mt-6 text-center text-base font-medium text-gray-500 dark:text-white/80">
-                    Existing customer?{' '}
-                    <Link href="/login">
-                      <a className="text-rose-400 hover:text-rose-400">
-                        Sign in
-                      </a>
-                    </Link>
-                  </p>
-                </div>
-              </div>
+              <MobileMenu user={user} validating={validating} mutate={mutate} />
             </div>
           </Popover.Panel>
         </Transition>

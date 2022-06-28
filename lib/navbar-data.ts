@@ -1,4 +1,4 @@
-import { ShoppingBagIcon, CollectionIcon } from '@heroicons/react/outline';
+import { ShoppingBagIcon, CollectionIcon, UserIcon } from '@heroicons/react/outline';
 
 export const pages = [
   {
@@ -10,6 +10,24 @@ export const pages = [
     name: 'Collections',
     href: '/collections',
     icon: CollectionIcon,
+  },
+];
+
+export const mobilePages = [
+  {
+    name: 'Shop',
+    href: '/shop',
+    icon: ShoppingBagIcon,
+  },
+  {
+    name: 'Collections',
+    href: '/collections',
+    icon: CollectionIcon,
+  },
+  {
+    name: 'Profile',
+    href: '/profile',
+    icon: UserIcon,
   },
 ];
 
