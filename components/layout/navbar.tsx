@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { SearchIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import Link from 'next/link';
-import { collections, mobilePages, pages } from '@lib/navbar-data';
+import { mobilePages } from '@lib/navbar-data';
 import dynamic from 'next/dynamic';
 import { classNames } from '@lib/utils';
 import { useBakesbyIshcontext } from '@context/context';
@@ -51,7 +52,11 @@ export const Navbar = () => {
                 </a>
               </Link>
             </div>
-            <div className="-mr-2 -my-2 md:hidden">
+            <div className="-mr-2 -my-2 md:hidden flex items-center justfiy-center">
+              <Link href="/search">
+                <SearchIcon className="w-7 h-7 mr-1 text-pink-600 z-auto" />
+              </Link>
+
               <CartIcon />
 
               <Popover.Button

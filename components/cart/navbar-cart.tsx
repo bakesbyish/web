@@ -5,13 +5,13 @@ import { useCart } from 'react-use-cart';
 
 export const Cart = () => {
   const { items } = useCart();
-  const { setCartOpen } = useBakesbyIshcontext();
+	const { setCartOpen } = useBakesbyIshcontext();
 
   return (
     <button
-      onClick={() => {
-        setCartOpen(true);
-      }}
+			onClick={() => {
+				setCartOpen(true)
+			}}
       className={classNames(
         'py-4 px-1 mr-0 sm:mr-2 relative border-2 border-transparent text-pink-400 rounded-full hover:text-rose-400',
         'transition duration-150 ease-in-out'
@@ -28,7 +28,7 @@ export const Cart = () => {
               'inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-rose-300 text-black'
             )}
           >
-            {items.length}
+						{items.length}
           </div>
         </span>
       ) : null}
