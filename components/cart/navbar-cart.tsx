@@ -13,7 +13,7 @@ export const Cart = () => {
 				setCartOpen(true)
 			}}
       className={classNames(
-        'py-4 px-1 mr-0 sm:mr-2 relative border-2 border-transparent text-pink-400 rounded-full hover:text-rose-400',
+        'py-4 px-1 mr-0 sm:mr-2 relative border-2 border-transparent text-pink-500 rounded-full hover:text-rose-400',
         'transition duration-150 ease-in-out'
       )}
       aria-label="Cart"
