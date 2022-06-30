@@ -80,6 +80,11 @@ export const Navbar = () => {
               <CollectionsMenu />
             </Popover.Group>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+
+							<Link href="/search" >
+								<SearchIcon className="w-7 h-7 mr-2 text-pink-600 z-auto cursor-pointer"/>
+							</Link>
+
               <CartIcon />
 
               {!validating ? (
