@@ -70,9 +70,11 @@ export const Checkout = () => {
                   >
                     {items.map((item) => (
                       <li key={item.id} className="flex py-6 space-x-6">
-                        <img
+                        <Image
                           src={item.url}
                           alt={item.name}
+                          width={200}
+                          height={200}
                           className="flex-none w-40 h-40 object-center object-cover bg-gray-200 rounded-md"
                         />
                         <div className="flex flex-col justify-between space-y-4">
