@@ -74,7 +74,13 @@ export default function SearchPage(props: {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { resolvedUrl } = context;
+  const { resolvedUrl, res } = context;
+
+  // Cache the result
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  );
 
   const searchState = pathToSearchState(resolvedUrl);
   const resultState = await findResultsState(Search, {

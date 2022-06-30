@@ -1,5 +1,7 @@
 import { Loader } from '@components/utils/loader';
+import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { connectStateResults } from 'react-instantsearch-dom';
 
 interface ISearchResults {
@@ -21,8 +23,10 @@ const Hits = (props: { searchState: any; searchResults: any }) => {
     <div className="bg-white dark:bg-gray-800">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-					Search results for{' '}
-					<span className="text-rose-400 underline">{props.searchState.query}</span>
+          Search results for{' '}
+          <span className="text-rose-400 underline">
+            {props.searchState.query}
+          </span>
         </h2>
 
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -32,28 +36,31 @@ const Hits = (props: { searchState: any; searchResults: any }) => {
               href={`/shop/${product.slug}`}
               passHref
             >
-              <div className="group relative">
-                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-                  />
+              <article id={product.slug} className="group">
+                <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+                  <Link href={`/shop/${product.slug}`} passHref>
+                    <a>
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-center object-cover group-hover:opacity-75"
+                      />
+                    </a>
+                  </Link>
                 </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700 dark:text-white">
-                      <a href={product.slug}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.title}
-                      </a>
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-col">
+                    <h3 className="mt-4 text-sm text-gray-700 dark:text-white">
+                      {product.title}
                     </h3>
+                    <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+                      {product.price}
+                    </p>
                   </div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {product.price}
-                  </p>
                 </div>
-              </div>
+              </article>
             </Link>
           ))}
         </div>
@@ -63,13 +70,9 @@ const Hits = (props: { searchState: any; searchResults: any }) => {
     <>
       {validQuery ? (
         <div className="flex flex-col items-center justfiy-center mt-10">
-          <Loader />
+          No results found
         </div>
-      ) : (
-        <div className="flex flex-col items-center justify-center mt-10">
-          <p>No results found</p>
-        </div>
-      )}
+      ) : null}
     </>
   );
 };
