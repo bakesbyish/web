@@ -9,8 +9,10 @@ declare namespace NodeJS {
     NEXT_PUBLIC_MEASUREMENT_ID: string;
     NEXT_PUBLIC_ROUTE_USERNAME: string;
     NEXT_PUBLIC_ROUTE_PASSOWORD: string;
-		NEXT_PUBLIC_GRAPHCMS_CONTENT_API: string;
-		NEXT_PUBLIC_GOOGLE_MAPS_API: string;
+    NEXT_PUBLIC_GRAPHCMS_CONTENT_API: string;
+    NEXT_PUBLIC_GOOGLE_MAPS_API: string;
+    NEXT_PUBLIC_ALGOLIA_APP_ID: string;
+    NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY: string;
     FIREBASE_ADMIN_PROJECT_ID: string;
     FIREBASE_ADMIN_CLIENT_EMAIL: string;
     FIREBASE_ADMIN_PRIVATE_KEY: string;
@@ -18,8 +20,10 @@ declare namespace NodeJS {
     SESSION_PASSWORD: string;
     ROUTE_USERNAME: string;
     ROUTE_PASSWORD: string;
-		SEND_GRID_API: string;
-		SMTP_USER: string;
-		SMTP_PASSWORD: string;
+    SEND_GRID_API: string;
+    SMTP_USER: string;
+    SMTP_PASSWORD: string;
+    ALGOLIA_APPLICATION_ID: string;
+    ALGOLIA_ADMIN_API_KEY: string;
   }
 }
