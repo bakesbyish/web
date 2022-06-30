@@ -34,11 +34,17 @@ enum Usernames {
   uid = 'uid',
 }
 
+enum Products {
+	hearts = 'hearts'
+}
+
 export const database = {
   users: 'users',
   usernames: 'usernames',
+	products: 'products',
   collections: {
     users: Users,
     usernames: Usernames,
+		products: Products
   },
 };

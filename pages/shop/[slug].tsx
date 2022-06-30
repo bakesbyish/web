@@ -7,9 +7,12 @@ import { ReactElement } from 'react';
 import { IProduct } from '@interfaces/products';
 import { Meta } from '@components/seo/metatags';
 import { Product } from '@components/products/product';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from 'config/firebase';
+import { database } from '@interfaces/firestore';
 
-export default function Slug(props: { product: IProduct }) {
-  const { product } = props;
+export default function Slug(props: { product: IProduct; hearts: number }) {
+  const { product, hearts } = props;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -20,7 +23,7 @@ export default function Slug(props: { product: IProduct }) {
       />
 
       <main className="flex flex-col items-center justify-center">
-        <Product product={product} />
+        <Product product={product} hearts={hearts} />
       </main>
     </div>
   );
@@ -139,7 +142,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const productVariants: {
     name: string;
     price: number;
-		hasDiscounts: boolean;
+    hasDiscounts: boolean;
     discountedFrom: number | null;
     discountedPrice: number | null;
     url: string | null;
@@ -163,11 +166,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
     });
   });
 
+	// Get hearts of the product from the database
+  let hearts = 0;
+
+  const productRef = doc(db, database.products, product.slug);
+  const productSnapshot = await getDoc(productRef);
+
+  if (productSnapshot.exists()) {
+    hearts = productSnapshot.data().hearts;
+  } else {
+    hearts = 0;
+  }
+
   return {
     props: {
       product: {
         sku: product.sku,
-				slug,
+        slug,
         title: product.title,
         price: product.price,
         url: product.image.url,
@@ -182,6 +197,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         hasVariants: product.productVariants.length ? true : false,
         hasColors: product.productColors.length ? true : false,
       } as unknown as IProduct,
+      hearts,
     },
   };
 };
