@@ -4,6 +4,7 @@ import { Meta } from '@components/seo/metatags';
 import { ICollection } from '@interfaces/collections';
 import { client } from 'config/apollo';
 import { GetStaticProps } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
@@ -30,9 +31,11 @@ export default function Collections(props: { catergories: ICollection[] }) {
                 >
                   <article className="group relative">
                     <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
-                      <img
+                      <Image
                         src={catergory.image.url}
                         alt={catergory.catergory}
+												layout="fill"
+												objectFit="cover"
                         className="w-full h-full object-center object-cover"
                       />
                     </div>
