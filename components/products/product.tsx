@@ -16,7 +16,7 @@ import { database } from '@interfaces/firestore';
 import { doc } from 'firebase/firestore';
 
 export const Product = (props: { product: IProduct; hearts: number }) => {
-	const { user, validating } = useBakesbyIshcontext();
+  const { user, validating } = useBakesbyIshcontext();
   const { product } = props;
 
   const { addItem } = useCart();
@@ -35,8 +35,10 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   );
   const [qty, setQty] = useState<number>(1);
 
-	const [productDoc] = useDocumentData(doc(db, database.products, product.slug));
-	const hearts = (productDoc?.hearts || props.hearts)
+  const [productDoc] = useDocumentData(
+    doc(db, database.products, product.slug)
+  );
+  const hearts = productDoc?.hearts || props.hearts;
 
   // Update the price when there are discounts for specific quantities
   useEffect(() => {
@@ -77,7 +79,7 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
 
     const selectedProduct = {
       id: product.sku,
-			slug: product.slug,
+      slug: product.slug,
       url: selectedVariant?.url || product.url,
       name: product.title,
       color: selectedVariantColor || selectedColor,
@@ -128,20 +130,20 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
               <h3 className="sr-only">Hearts</h3>
               <div className="flex items-center">
                 <div className="flex items-center">
-									{validating ? (
-										<Loader />
-									) : (
-										<>
-											{user ? (
-												<Hearts slug={product.slug} uid={user.uid} />
-											) : (
-												<HeartIcon className="w-9 h-9 text-red-600" />
-											)}
-										</>
-									)}
+                  {validating ? (
+                    <Loader />
+                  ) : (
+                    <>
+                      {user ? (
+                        <Hearts slug={product.slug} uid={user.uid} />
+                      ) : (
+                        <HeartIcon className="w-9 h-9 text-red-600" />
+                      )}
+                    </>
+                  )}
                 </div>
                 <span className="ml-3 text-sm font-medium text-rose-500 hover:text-rose-400">
-									{hearts} Hearts
+                  {hearts} Hearts
                 </span>
               </div>
             </div>

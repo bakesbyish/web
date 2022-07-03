@@ -10,6 +10,7 @@ import { Product } from '@components/products/product';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from 'config/firebase';
 import { database } from '@interfaces/firestore';
+import { WriteComments } from '@components/comments/write-comments';
 
 export default function Slug(props: { product: IProduct; hearts: number }) {
   const { product, hearts } = props;
@@ -20,10 +21,12 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
         title={product.title}
         description={product.description}
         image={product.url}
+				price={product.price.toString()}
       />
 
       <main className="flex flex-col items-center justify-center">
         <Product product={product} hearts={hearts} />
+				<WriteComments slug={product.slug} />
       </main>
     </div>
   );
