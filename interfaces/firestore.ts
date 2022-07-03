@@ -1,9 +1,9 @@
 export interface IUser {
-	uid: string;
-	username: string;
-	email: string;
-	displayName: string;
-	photoURL: string;
+  uid: string;
+  username: string;
+  email: string;
+  displayName: string;
+  photoURL: string;
 }
 
 export interface IUserDocument {
@@ -35,16 +35,18 @@ enum Usernames {
 }
 
 enum Products {
-	hearts = 'hearts'
+  hearts = 'hearts',
+  comments = 'comments',
+  users = 'users',
 }
 
 export const database = {
   users: 'users',
   usernames: 'usernames',
-	products: 'products',
+  products: 'products',
   collections: {
     users: Users,
     usernames: Usernames,
-		products: Products
+    products: Products,
   },
 };
