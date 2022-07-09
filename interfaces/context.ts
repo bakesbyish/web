@@ -1,11 +1,16 @@
 import { Dispatch, SetStateAction } from 'react';
 import { KeyedMutator } from 'swr';
-import { IUser } from './firestore';
+import { IComment, IUser } from './firestore';
 
 export interface IBakesByIshContext {
   user: IUser | null;
   validating: boolean;
   cartOpen: boolean;
   setCartOpen: Dispatch<SetStateAction<boolean>>;
-	mutate: KeyedMutator<any>
+  mutate: KeyedMutator<any>;
+}
+
+export interface ICommentsContext {
+  comments: IComment[];
+  setComments: Dispatch<SetStateAction<IComment[]>>;
 }

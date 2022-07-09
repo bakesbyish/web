@@ -50,3 +50,12 @@ export const database = {
     products: Products,
   },
 };
+
+export interface IComment {
+  uid: string;
+	cid: string;
+  comment: string;
+  displayName: string;
+  photoURL: string;
+  createdAt: number;
+}

@@ -1,10 +1,11 @@
 import { Loader } from '@components/utils/loader';
+import { useCommentsContext } from '@context/comments';
 import { useBakesbyIshcontext } from '@context/context';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { database } from '@interfaces/firestore';
+import { database, IComment } from '@interfaces/firestore';
 import { classNames } from '@lib/utils';
 import { realtime } from 'config/firebase';
-import { ref, set } from 'firebase/database';
+import { ref, serverTimestamp, set } from 'firebase/database';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,6 +13,7 @@ import * as yup from 'yup';
 
 export const WriteComments = (props: { slug: string }) => {
   const { user, validating } = useBakesbyIshcontext();
+	const { setComments } = useCommentsContext();
   const [loading, setLoading] = useState<boolean>(false);
 
   const formSchema = yup.object().shape({
@@ -36,15 +38,37 @@ export const WriteComments = (props: { slug: string }) => {
     const { comment } = data;
     setLoading(true);
     if (user) {
+      const cid = user.uid + Date.now().toString();
+
       await set(
         ref(
           realtime,
-          `${database.products}/${props.slug}/${database.collections.products.comments}/${database.collections.products.users}/${user.uid}`
+          `${database.products}/${props.slug}/${database.collections.products.comments}/${database.collections.products.users}/${cid}`
         ),
         {
+          uid: user.uid,
+          cid,
           comment: comment,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          createdAt: serverTimestamp(),
+          likes: {
+            likes: 0,
+          },
+          dislikes: {
+            dislikes: 0,
+          },
         }
       );
+
+			setComments(previousComments => [...previousComments, {
+				cid,
+				uid: user.uid,
+				displayName: user.displayName,
+				photoURL: user.photoURL,
+				comment
+			} as IComment])
+
     }
     setLoading(false);
   };
