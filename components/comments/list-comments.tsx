@@ -1,5 +1,6 @@
 import { Loader } from '@components/utils/loader';
 import { useCommentsContext } from '@context/comments';
+import { useBakesbyIshcontext } from '@context/context';
 import { IComment } from '@interfaces/firestore';
 import { realtime } from 'config/firebase';
 import {
@@ -13,12 +14,14 @@ import {
 } from 'firebase/database';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { LikesDislikes } from './likes-dislikes';
 
 const LIMIT = 1;
 
 export const ListComments = (props: { slug: string }) => {
   const { slug } = props;
   const { comments, setComments } = useCommentsContext();
+  const { user } = useBakesbyIshcontext();
 
   const [lastCreatedAt, setLastCreatedAt] = useState<number | null>(null);
   const [hideLoadMore, setHideLoadMore] = useState<boolean>(false);
@@ -119,16 +122,20 @@ export const ListComments = (props: { slug: string }) => {
                 key={index}
                 className="mb-4 w-full rounded-lg py-1 px-1 border border-gray-600"
               >
-                <div className="flex items-center py-2 px-3 dark:border-gray-600 gap-2">
-                  <Image
-                    src={comment.photoURL}
-                    alt={comment.displayName}
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
+                <div className="flex items-center justify-between py-2 px-3 dark:border-gray-600">
+                  <div className="flex items-center justify-center gap-2">
+                    <Image
+                      src={comment.photoURL}
+                      alt={comment.displayName}
+                      width={30}
+                      height={30}
+                      className="rounded-full"
+                    />
 
-                  <h1>{comment.displayName}</h1>
+                    <h1>{comment.displayName}</h1>
+                  </div>
+
+                  <LikesDislikes slug={slug} cid={comment.cid} />
                 </div>
                 <div className="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
                   <label className="sr-only">Your comment</label>
