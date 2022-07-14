@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { DeleteComment } from './delete-comment';
 import { LikesDislikes } from './likes-dislikes';
 
-const LIMIT = 1;
+const LIMIT = 5;
 
 export const ListComments = (props: { slug: string }) => {
   const { slug } = props;
