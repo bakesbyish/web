@@ -1,13 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 
-export default function MyModal(props: {
+export const Modal = (props: {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   heading: string;
   content: string;
   buttonText: string;
-}) {
+}) => {
   const { isOpen, setIsOpen, heading, content, buttonText } = props;
 
   const closeModal = () => {
@@ -67,4 +67,4 @@ export default function MyModal(props: {
       </Dialog>
     </Transition>
   );
-}
+};
