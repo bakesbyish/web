@@ -1,6 +1,5 @@
 import { Loader } from '@components/utils/loader';
 import { useCommentsContext } from '@context/comments';
-import { useBakesbyIshcontext } from '@context/context';
 import { IComment } from '@interfaces/firestore';
 import { realtime } from 'config/firebase';
 import {
@@ -14,6 +13,7 @@ import {
 } from 'firebase/database';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { DeleteComment } from './delete-comment';
 import { LikesDislikes } from './likes-dislikes';
 
 const LIMIT = 1;
@@ -21,7 +21,6 @@ const LIMIT = 1;
 export const ListComments = (props: { slug: string }) => {
   const { slug } = props;
   const { comments, setComments } = useCommentsContext();
-  const { user } = useBakesbyIshcontext();
 
   const [lastCreatedAt, setLastCreatedAt] = useState<number | null>(null);
   const [hideLoadMore, setHideLoadMore] = useState<boolean>(false);
@@ -123,7 +122,7 @@ export const ListComments = (props: { slug: string }) => {
                 className="mb-4 w-full rounded-lg py-1 px-1 border border-gray-600"
               >
                 <div className="flex items-center justify-between py-2 px-3 dark:border-gray-600">
-                  <div className="flex items-center justify-center gap-2">
+                  <section className="flex items-center justify-center gap-2">
                     <Image
                       src={comment.photoURL}
                       alt={comment.displayName}
@@ -133,9 +132,16 @@ export const ListComments = (props: { slug: string }) => {
                     />
 
                     <h1>{comment.displayName}</h1>
-                  </div>
+                  </section>
 
-                  <LikesDislikes slug={slug} cid={comment.cid} />
+                  <section className="flex items-center justify-center gap-2">
+                    <DeleteComment
+                      ownerUid={comment.uid}
+                      cid={comment.cid}
+                      slug={slug}
+                    />
+                    <LikesDislikes slug={slug} cid={comment.cid} />
+                  </section>
                 </div>
                 <div className="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
                   <label className="sr-only">Your comment</label>
