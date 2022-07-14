@@ -132,7 +132,9 @@ export const LikesDislikes = (props: { slug: string; cid: string }) => {
                       onClick={async () => await addLike()}
                       className="w-6 h-6"
                     />
-                    <span className="ml-1">{(likeCount as any).likes}</span>
+                    <span className="ml-1 cursor-pointer">
+                      {(likeCount as any)?.likes}
+                    </span>
                   </>
                 ) : (
                   <>
@@ -141,7 +143,9 @@ export const LikesDislikes = (props: { slug: string; cid: string }) => {
                       onClick={async () => await addLike()}
                       className="w-6 h-6"
                     />
-                    <span className="ml-1">{(likeCount as any).likes}</span>
+                    <span className="ml-1 cursor-pointer">
+                      {(likeCount as any)?.likes}
+                    </span>
                   </>
                 )}
               </>
@@ -158,10 +162,10 @@ export const LikesDislikes = (props: { slug: string; cid: string }) => {
                     <SolidThumbDownIcon
                       type="button"
                       onClick={async () => await addDislike()}
-                      className="w-6 h-6"
+                      className="w-6 h-6 cursor-pointer"
                     />
                     <span className="ml-1">
-                      {(dislikeCount as any).dislikes}
+                      {(dislikeCount as any)?.dislikes}
                     </span>
                   </>
                 ) : (
@@ -169,10 +173,10 @@ export const LikesDislikes = (props: { slug: string; cid: string }) => {
                     <OutlineThumbDownIcon
                       type="button"
                       onClick={async () => await addDislike()}
-                      className="w-6 h-6"
+                      className="w-6 h-6 cursor-pointer"
                     />
                     <span className="ml-1">
-                      {(dislikeCount as any).dislikes}
+                      {(dislikeCount as any)?.dislikes}
                     </span>
                   </>
                 )}
@@ -187,13 +191,13 @@ export const LikesDislikes = (props: { slug: string; cid: string }) => {
             onClick={() => console.log('Log in to like or dislike')}
             className="w-6 h-6 cursor-pointer"
           />
-          <span className="ml-1">{(likeCount as any).likes}</span>
+          <span className="ml-1">{(likeCount as any)?.likes}</span>
           <OutlineThumbDownIcon
             type="button"
             onClick={() => console.log('Log in to like or dislike')}
             className="w-6 h-6 cursor-pointer"
           />
-          <span className="ml-1">{(dislikeCount as any).dislikes}</span>
+          <span className="ml-1">{(dislikeCount as any)?.dislikes}</span>
         </div>
       )}
     </>
