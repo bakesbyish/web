@@ -63,7 +63,7 @@ export interface IShopDataStream {
 
 export interface IProduct {
   sku: string;
-	slug: string;
+  slug: string;
   title: string;
   price: number;
   url: string;
@@ -95,9 +95,11 @@ export interface IProduct {
 export interface ICart {
   id: string;
   url: string;
-	slug: string;
+  slug: string;
   name: string;
   color: string | null;
   size: string | null;
   price: number;
+  quantity: number;
+  itemTotal: number;
 }

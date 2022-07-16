@@ -73,7 +73,7 @@ export const Meta = (props: IMeta) => {
       <meta property="og:site_name" content="Bakes By Ish" />
 
       {/* For Facebook */}
-      <meta property="fb:admins" content="Facebook numberic ID" />
+      <meta property="fb:admins" content="221988029638214" />
 
       {props.price && (
         <>

@@ -14,9 +14,9 @@ type OnlyString<T> = { [k in StringKeys<T>]: string };
 
 /**
  * @description - Get the index of an array of object contaning a specific value of an object
- * @params - array - The array
- * @params - key - The key of the object that needs to be matched
- * @params - value - The value that the key needs to match to return the index
+ * @param - array - The array
+ * @param - key - The key of the object that needs to be matched
+ * @param - value - The value that the key needs to match to return the index
  * @returns {number} - Return the index where the key matches the object key in the array
  * */
 export const getIndex = <T extends OnlyString<T>>(
@@ -25,4 +25,22 @@ export const getIndex = <T extends OnlyString<T>>(
   value: string | number
 ): number => {
   return array.findIndex((array) => array[key] === value);
+};
+
+/**
+ * @description - Get the prefix when the day of the month is given
+ * @param {number} day - The day that needs the prefix
+ * @returns {string} - The prefix of corresponding to the day
+ **/
+export const getPrefixForTheDay = (day: number): string => {
+  switch (day) {
+    case 1 || 21:
+      return 'st';
+    case 2 || 22:
+      return 'nd';
+    case 3 || 23:
+      return 'rd';
+    default:
+      return 'th';
+  }
 };

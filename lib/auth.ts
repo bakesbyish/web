@@ -9,9 +9,9 @@ import { doc, writeBatch } from 'firebase/firestore';
 export const createSession = async (idToken: string) => {
   const response = await fetch('/api/auth/login', {
     method: 'POST',
-		headers: {
-			"Content-Type": "application/json"
-		},
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       idToken,
     }),
@@ -48,6 +48,14 @@ export const commitUserData = async (
   });
 
   await batch.commit();
+};
+
+/**
+ * @description - Get the idToken of the user
+ * @returns {string | null} - idToken of the user
+ * */
+export const getIdToken = async (): Promise<string | undefined> => {
+  return await auth.currentUser?.getIdToken(true);
 };
 
 /**

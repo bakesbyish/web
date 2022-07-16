@@ -141,7 +141,7 @@ export const Cart = () => {
                             ? items.reduce(
                                 (appended, current) =>
                                   appended +
-                                  (current.price ? current.price : 0),
+                                  (current.itemTotal ? current.itemTotal : 0),
                                 0
                               )
                             : 0}

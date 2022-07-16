@@ -1,5 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import { classNames } from "@lib/utils";
+import { Dispatch, Fragment, SetStateAction } from "react";
 
 export const Modal = (props: {
   isOpen: boolean;
@@ -7,8 +8,10 @@ export const Modal = (props: {
   heading: string;
   content: string;
   buttonText: string;
+  onModalClose: () => void;
 }) => {
-  const { isOpen, setIsOpen, heading, content, buttonText } = props;
+  const { isOpen, setIsOpen, heading, content, buttonText, onModalClose } =
+    props;
 
   const closeModal = () => {
     setIsOpen(false);
@@ -26,7 +29,7 @@ export const Modal = (props: {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -54,8 +57,14 @@ export const Modal = (props: {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
+                    className={classNames(
+                      "inline-flex justify-center rounded-md border border-transparent bg-rose-300 px-4 py-2 text-sm font-medium text-blue-900",
+                      "hover:bg-rose-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2",
+                    )}
+                    onClick={() => {
+                      closeModal();
+                      onModalClose();
+                    }}
                   >
                     {buttonText}
                   </button>
