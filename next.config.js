@@ -7,7 +7,8 @@ const nextConfig = {
       'loremflickr.com',
       'ik.imagekit.io',
       'lh3.googleusercontent.com',
-      'avatars.dicebear.com'
+      'avatars.dicebear.com',
+       'firebasestorage.googleapis.com'
     ],
   },
 };
