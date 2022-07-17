@@ -19,7 +19,9 @@ export interface IUserDocument {
   username: string;
   displayName: string;
   email: string;
+  about: string | null;
   photoURL: string;
+  coverPhoto: string | null;
   contactNumber: number | null;
   address: IAddress | null;
 }
@@ -47,6 +49,7 @@ export interface IOrder {
   visible: boolean;
   shippingProvider: ShippingProviders;
   shippingPrice: number | null;
+  deliveryTime: number;
 }
 
 enum Users {
@@ -57,6 +60,8 @@ enum Users {
   photoURL = 'photoURL',
   contactNumber = 'contactNumber',
   address = 'address',
+  about = 'about',
+  coverPhoto = 'coverPhoto',
 }
 
 enum Usernames {
@@ -84,6 +89,7 @@ enum Orders {
   visible = 'visible',
   shippingProvider = 'shippingProvider',
   shippingPrice = 'shippingPrice',
+  deliveryTime = 'deliveryTime',
 }
 
 export const database = {
