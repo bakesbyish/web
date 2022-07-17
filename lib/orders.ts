@@ -19,10 +19,12 @@ export const getOrderStatus = (status: OrderStatus): string => {
 /**
  * @description - Get the Description related to the order status
  * @param {OrderStatus} status - The status of the order
+ * @param [number] deliveryTime - The delivery time of the order if the order is shipping
  * @returns {string | null} description - The description related to the order status
  **/
 export const getOrderDetails = (
-  status: OrderStatus
+  status: OrderStatus,
+  deliveryTime?: number
 ): { description: string | null } => {
   let description: string | null = null;
   switch (status) {
@@ -30,10 +32,12 @@ export const getOrderDetails = (
       description = 'We may call/text to confirm';
       return { description };
     case 'shipping':
-      description = 'Your package will arrive within 2hours';
+      description = deliveryTime
+        ? `Your package will arrive in ${deliveryTime} Hours`
+        : 'Your package will arrive soon';
       return { description };
     case 'shipped':
-      description = "Your order has been shipped";
+      description = 'Your order has been shipped';
       return { description };
   }
 };

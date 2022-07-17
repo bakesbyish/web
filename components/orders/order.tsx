@@ -1,21 +1,35 @@
 import { FacebookIcon } from '@components/icons/facebook';
+import { Loader } from '@components/utils/loader';
 import { TrashIcon } from '@heroicons/react/outline';
-import { IOrder } from '@interfaces/firestore';
+import { database, IOrder } from '@interfaces/firestore';
 import { getJSDate } from '@lib/firestore';
 import { getOrderDetails, getOrderStatus } from '@lib/orders';
 import { getPrefixForTheDay } from '@lib/utils';
+import { db } from 'config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Item } from './item';
 import { OrderStatusIcon } from './order-status-icon';
 
-export const Order = ({
-  oid,
-  orderedAt,
-  items,
-  discount,
-  discountCode,
-  shippingPrice,
-  orderStatus,
-}: IOrder) => {
+export const Order = (props: {
+  index: number;
+  order: IOrder;
+  setOrders: Dispatch<SetStateAction<IOrder[]>>;
+}) => {
+  const { order, setOrders, index } = props;
+  const {
+    oid,
+    orderedAt,
+    items,
+    discount,
+    discountCode,
+    shippingPrice,
+    orderStatus,
+    deliveryTime,
+    shippingProvider,
+  } = order;
+  const [removingOrder, setRemovingOrder] = useState<boolean>(false);
+
   const time = getJSDate(orderedAt);
   const subTotal = items.length
     ? items.reduce(
@@ -34,18 +48,53 @@ export const Order = ({
               // Notify the user via a toast
               navigator.clipboard.writeText(oid);
             }}
-            className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all"
+            className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all"
           >
-            Order #{oid}
+            #{oid}
           </h1>
           <p className="text-base font-medium leading-6 underline">
-            {time.getDay()}
-            {getPrefixForTheDay(time.getDay())} {time.getMonth()}{' '}
-            {time.getFullYear()} at {time.getHours()}:{time.getMinutes()}
+            {time.getDate()}
+            {getPrefixForTheDay(time.getDate())}{' '}
+            {time.toLocaleString('default', { month: 'long' })}{' '}
+            {time.getFullYear()} at{' '}
+            {time.toLocaleString('en-US', {
+              hour: 'numeric',
+              minute: 'numeric',
+              hour12: true,
+            })}
           </p>
         </div>
 
-        <TrashIcon className="w-10 h-10 text-red-600 mt-6" />
+        {orderStatus === 'shipped' ? (
+          <button
+            disabled={removingOrder}
+            onClick={async () => {
+              setRemovingOrder(true);
+              const orderRef = doc(db, database.orders, oid);
+              await updateDoc(orderRef, {
+                [database.collections.orders.visible]: false,
+              });
+
+              setOrders((previousOrders) => [
+                ...previousOrders.slice(0, index),
+                ...previousOrders.slice(index + 1),
+              ]);
+
+              setRemovingOrder(false);
+            }}
+          >
+            {removingOrder ? (
+              <span className="mt-6">
+                <Loader />
+              </span>
+            ) : (
+              <TrashIcon
+                type="button"
+                className="w-8 h-8 text-red-600 cursor-pointer"
+              />
+            )}
+          </button>
+        ) : null}
       </div>
       <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch  w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
         <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
@@ -78,7 +127,8 @@ export const Order = ({
                       </span>
                     </p>
                     <p className="text-base leading-4 text-gray-600 dark:text-slate-300">
-                      -LKR {discount} ({(parseFloat(discount) * 100) / subTotal}
+                      -LKR {discount} (
+                      {((parseFloat(discount) * 100) / subTotal).toFixed(1)}
                       %)
                     </p>
                   </div>
@@ -89,7 +139,7 @@ export const Order = ({
                       Shipping
                     </p>
                     <p className="text-base leading-4 text-gray-600 dark:text-slate-300">
-                      {shippingPrice}
+                      LKR {shippingPrice}
                     </p>
                   </div>
                 ) : null}
@@ -112,13 +162,16 @@ export const Order = ({
               </h3>
               <div className="flex justify-between items-start w-full">
                 <div className="flex justify-center items-center space-x-4">
-                  <div className="w-8 h-8">
-										<OrderStatusIcon status={orderStatus} />
-                  </div>
+                  <>
+                    <OrderStatusIcon
+                      status={orderStatus}
+                      shippingProvider={shippingProvider}
+                    />
+                  </>
                   <div className="flex flex-col justify-start items-center">
                     <p className="text-lg leading-6 font-semibold text-gray-800 dark:text-white">
                       <span className="font-normal">
-												{getOrderDetails(orderStatus).description}
+                        {getOrderDetails(orderStatus, deliveryTime).description}
                       </span>
                     </p>
                   </div>
