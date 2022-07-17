@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { KeyedMutator } from 'swr';
-import { IComment, IUser } from './firestore';
+import { IComment, IUser, IUserDocument } from './firestore';
 
 export interface IBakesByIshContext {
   user: IUser | null;
@@ -13,4 +13,8 @@ export interface IBakesByIshContext {
 export interface ICommentsContext {
   comments: IComment[];
   setComments: Dispatch<SetStateAction<IComment[]>>;
+}
+
+export interface IProfileContext {
+  user: IUserDocument | undefined;
 }
