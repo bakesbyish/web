@@ -6,6 +6,7 @@ export function middleware(req: NextRequest) {
 
   // Get the user session
   const session = req.cookies.get('__session') || null;
+  const maintenance = false;
 
   // Handle collections with no page number
   if (url.pathname.startsWith('/collections/')) {
@@ -18,7 +19,14 @@ export function middleware(req: NextRequest) {
   // Make profile page unavailable for unauthenticated users
   if (url.pathname.startsWith('/profile')) {
     if (!session) {
-      url.pathname = '/';
+      url.pathname = '/register';
+    }
+  }
+
+  // Make orders page unavailable for unauthenticated users
+  if (url.pathname.startsWith('/orders')) {
+    if (!session) {
+      url.pathname = '/register';
     }
   }
 
@@ -30,6 +38,11 @@ export function middleware(req: NextRequest) {
     if (session) {
       url.pathname = '/';
     }
+  }
+
+  // Disable the maintenance page when there is not maintainance
+  if (url.pathname.startsWith('/maintenance') && !maintenance) {
+    url.pathname = '/';
   }
 
   return NextResponse.rewrite(url);
