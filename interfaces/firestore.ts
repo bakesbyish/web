@@ -24,6 +24,7 @@ export interface IUserDocument {
   coverPhoto: string | null;
   contactNumber: number | null;
   address: IAddress | null;
+  notifications?: boolean;
 }
 
 export type ITimestamp = {
@@ -59,9 +60,12 @@ enum Users {
   displayName = 'displayName',
   photoURL = 'photoURL',
   contactNumber = 'contactNumber',
-  address = 'address',
+  address = 'address.address',
+  state = 'address.state',
+  city = 'address.city',
   about = 'about',
   coverPhoto = 'coverPhoto',
+  notifications = 'notifications',
 }
 
 enum Usernames {
