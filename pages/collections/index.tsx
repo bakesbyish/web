@@ -2,7 +2,10 @@ import { gql } from '@apollo/client';
 import { Layout } from '@components/layout/layout';
 import { Meta } from '@components/seo/metatags';
 import { ICollection } from '@interfaces/collections';
+import { classNames } from '@lib/utils';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { client } from 'config/apollo';
+import { sanity, urlFor } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,12 +33,17 @@ export default function Collections(props: { catergories: ICollection[] }) {
                   key={index}
                 >
                   <article className="group relative">
-                    <div className="relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
+                    <div
+                      className={classNames(
+                        'relative w-full h-80 bg-white rounded-lg overflow-hidden group-hover:opacity-75 sm:aspect-w-2',
+                        'sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1'
+                      )}
+                    >
                       <Image
                         src={catergory.image.url}
                         alt={catergory.catergory}
-												layout="fill"
-												objectFit="cover"
+                        layout="fill"
+                        objectFit="cover"
                         className="w-full h-full object-center object-cover"
                       />
                     </div>
@@ -58,25 +66,40 @@ export default function Collections(props: { catergories: ICollection[] }) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = (await client.query({
-    query: gql`
-      query {
-        catergories(orderBy: createdAt_DESC) {
-          catergory
-          catergorySlug
-          catergoryDescription
-          image {
-            url
-          }
-        }
-      }
-    `,
-  })) as { data: { catergories: ICollection[] } };
+  // Get collections data
+  const collectionsData = (await sanity.fetch(
+    `*[_type == "categories"] | order(_createdAt asc){
+				title,
+				slug {
+					current
+				},
+				image,
+				description
+			}`
+  )) as {
+    title: string;
+    slug: {
+      current: string;
+    };
+    image: SanityImageSource;
+    description: string;
+  }[];
 
-  const { catergories } = data;
+  const collections: ICollection[] = [];
+
+  collectionsData.map((collection) => {
+    collections.push({
+      catergory: collection.title,
+      catergorySlug: collection.slug.current,
+      image: {
+        url: urlFor(collection.image).url(),
+      },
+      catergoryDescription: collection.description,
+    });
+  });
 
   return {
-    props: { catergories },
+    props: { catergories: collections },
     revalidate: 10,
   };
 };
