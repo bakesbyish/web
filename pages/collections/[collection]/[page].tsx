@@ -15,6 +15,9 @@ import Link from 'next/link';
 import { ReactElement, useEffect } from 'react';
 import { Layout } from '@components/layout/layout';
 import { CollectionPagination } from '@components/pagination/collections';
+import { sanity } from 'config/sanity';
+
+const LIMIT = 1;
 
 export default function Page(props: {
   page: string;
@@ -87,82 +90,42 @@ export default function Page(props: {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const collections: string[] = [];
-  const collectionData = await client.query({
-    query: gql`
-      query {
-        catergories {
-          catergorySlug
-        }
-      }
-    `,
+  const slugsData = (await sanity.fetch(
+    `*[_type == "categories"] | order(_createdAt asc){
+				"slug": slug.current
+			}`
+  )) as {
+    slug: string;
+  }[];
+
+  const slugs = slugsData.map((slug) => {
+    return slug.slug;
   });
-  collectionData.data.catergories.map(
-    (data: { __typename: string; catergorySlug: string }) =>
-      collections.push(data.catergorySlug)
-  );
 
   const paths: { params: { collection: string; page: string } }[] = [];
 
-  await (async () => {
-    for (let index = 0; collections[index]; index++) {
-      const collection = collections[index] as string;
+  for (const slug of slugs) {
+    const data = (await sanity.fetch(
+      `*[_type == "categories" && slug.current == "${slug}"]{
+					"count": count(*[_type == "products" && references(^._id)]{title})
+				}`
+    )) as {
+      count: number;
+    }[];
 
-      await (async () => {
-        let cursor: string | null = null;
-        let hasNextPage = true;
+    const { count } = data[0];
+    const pages =
+      count % LIMIT ? Math.floor(count / LIMIT) + 1 : Math.floor(count / LIMIT);
 
-        let page = 0;
-        while (hasNextPage) {
-          const { data } = await client.query({
-            query: gql`
-              query ($cursor: String, $catergorySlug: String) {
-                productsConnection(
-                  orderBy: createdAt_DESC
-                  where: {
-                    catergories_every: {
-                      AND: { catergorySlug: $catergorySlug }
-                    }
-                  }
-                  first: 1
-                  after: $cursor
-                ) {
-                  pageInfo {
-                    endCursor
-                    hasNextPage
-                  }
-                }
-              }
-            `,
-            variables: {
-              cursor,
-              catergorySlug: collection,
-            },
-          });
-
-          page++;
-          const docRef = doc(db, 'admin', 'collections', 'map', collection);
-          await setDoc(
-            docRef,
-            {
-              [page]: cursor,
-            },
-            { merge: true }
-          );
-
-          paths.push({
-            params: {
-              collection,
-              page: page.toString(),
-            },
-          });
-
-          cursor = data.productsConnection.pageInfo.endCursor as string;
-          hasNextPage = data.productsConnection.pageInfo.hasNextPage;
-        }
-      })();
+    for (let page = 1; page <= pages; page++) {
+      paths.push({
+        params: {
+          collection: slug,
+          page: page.toString(),
+        },
+      });
     }
-  })();
+  }
 
   return {
     paths,
@@ -177,130 +140,53 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { collection, page } = context.params as IParams;
+  const data = (await sanity.fetch(
+    `*[_type == "categories" && slug.current == "${collection}"]{
+				"products": *[_type == "products" && references(^._id)][${
+          (parseInt(page) - 1) * LIMIT
+        }...${parseInt(page) * LIMIT}]{
+					title,
+					"slug": slug.current,
+					sku,
+					description,
+					"image": {
+						"url": image.asset -> url
+					},
+					price,
+					"hasVariants": defined(count(productVariants))
+				},
+				"collections": {
+					"catergory": title,
+					"catergorySlug": slug.current,
+					"catergoryDescription": description,
+					"image": {
+						"url": image.asset -> url
+					}
+				},
+				"totalPages": count(*[_type == "products" && references(^._id)]{title})
+			}`
+  )) as {
+    products: ICollectionProduct[];
+    collections: ICollection[];
+    totalPages: number;
+  }[];
 
-  const cursorsRef = doc(db, 'admin', 'collections', 'map', collection);
-  const cursorsData = await getDoc(cursorsRef);
-  const cursors = cursorsData.data();
-
-  if (!cursors) {
+  if (!data.length) {
     return {
       notFound: true,
     };
   }
 
-  const cursor = cursors[page];
+  const { products, collections, totalPages } = data[0];
 
-  if (cursor === undefined) {
+  if (!products.length) {
     return {
-      notFound: true,
-    };
-  }
-
-  const { data } = await client.query({
-    query: gql`
-      query ($cursor: String, $catergorySlug: String) {
-        productsConnection(
-          orderBy: createdAt_DESC
-          where: {
-            catergories_every: { AND: { catergorySlug: $catergorySlug } }
-          }
-          first: 1
-          after: $cursor
-        ) {
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-          edges {
-            node {
-              title
-              slug
-              sku
-              description
-              image {
-                url
-              }
-              price
-              productVariants {
-                id
-              }
-            }
-          }
-        }
-      }
-    `,
-    variables: {
-      cursor,
-      catergorySlug: collection,
-    },
-  });
-
-  const productsData = data.productsConnection.edges;
-
-  if (!productsData) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const products: ICollectionProduct[] = [];
-  productsData.map((product: { node: ICollectionProduct }) => {
-    products.push({
-      title: product.node.title,
-      slug: product.node.slug,
-      sku: product.node.sku,
-      image: {
-        url: product.node.image.url,
+      redirect: {
+        destination: `/collections/${collection}/${totalPages}`,
+        permanent: false,
       },
-      price: product.node.price,
-      hasVariants: product.node.productVariants?.length ? true : false,
-    });
-  });
-
-  const catergoryData = await client.query({
-    query: gql`
-      query ($collection: String) {
-        catergories(where: { catergorySlug: $collection }, first: 1) {
-          catergory
-          catergoryDescription
-          image {
-            url
-          }
-        }
-      }
-    `,
-    variables: {
-      collection,
-    },
-  });
-
-  const collections: ICollection = {
-    catergory: catergoryData.data.catergories[0].catergory,
-    catergorySlug: collection,
-    catergoryDescription:
-      catergoryData.data.catergories[0].catergoryDescription,
-    image: {
-      url: catergoryData.data.catergories[0].image.url,
-    },
-  };
-
-  const totalPageData = await client.query({
-    query: gql`
-      query ($collection: String) {
-        catergories(where: { catergorySlug: $collection }) {
-          products {
-            id
-          }
-        }
-      }
-    `,
-    variables: {
-      collection,
-    },
-  });
-
-  const totalPages =
-    totalPageData.data.catergories[0].products.length.toString();
+    };
+  }
 
   return {
     props: {
