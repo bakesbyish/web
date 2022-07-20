@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { ICollection } from '@interfaces/collections';
+import { classNames } from '@lib/utils';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -38,7 +39,10 @@ export const CollectionPagination = (props: {
             router.push(`/collections/${collections.catergorySlug}/${newPage}`);
           }}
           disabled={parseInt(props.page) === 1}
-          className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-white/80 bg-white hover:bg-gray-50 dark:bg-gray-700 disabled:hidden"
+          className={classNames(
+            'relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm',
+            'font-medium rounded-md text-gray-700 dark:text-white/80 bg-white hover:bg-gray-50 dark:bg-gray-700 disabled:hidden'
+          )}
         >
           Previous
         </button>
@@ -50,7 +54,10 @@ export const CollectionPagination = (props: {
             router.push(`/collections/${collections.catergorySlug}/${newPage}`);
           }}
           disabled={parseInt(props.page) === parseInt(props.totalPages)}
-          className="ml-3 relative inline-flex items-center px-6 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 dark:text-white/80 bg-white dark:bg-gray-700 hover:bg-gray-50 disabled:hidden"
+          className={classNames(
+            'ml-3 relative inline-flex items-center px-6 py-2 border border-gray-300 text-sm font-medium rounded-md',
+            'text-gray-700 dark:text-white/80 bg-white dark:bg-gray-700 hover:bg-gray-50 disabled:hidden'
+          )}
         >
           ⠀Next⠀
         </button>

@@ -17,7 +17,7 @@ import { Layout } from '@components/layout/layout';
 import { CollectionPagination } from '@components/pagination/collections';
 import { sanity } from 'config/sanity';
 
-const LIMIT = 1;
+const LIMIT = 20;
 
 export default function Page(props: {
   page: string;
@@ -39,45 +39,48 @@ export default function Page(props: {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <Meta
         title={collections.catergory}
         description={collections.catergoryDescription}
         image={collections.image.url}
       />
 
-      <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center min-h-screen">
-        {products?.map((product) => (
-          <Link href={`/shop/${product.slug}`} key={product.sku} passHref>
-            <article className="group">
-              <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-                <Image
-                  src={product.image.url}
-                  alt={product.title}
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-center object-cover group-hover:opacity-75"
-                />
-              </div>
-              <div className="flex flex-row justify-between">
-                <div className="flex flex-col">
-                  <h3 className="mt-4 text-sm text-gray-700 dark:text-white">
-                    {product.title}
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                    {product.price}
-                  </p>
-                </div>
+      <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">
+				<h1 className="text-3xl font-bold mt-4 mb-8">Collections</h1>
+				<div className="flex items-center justify-center sm:gap-8 flex-wrap">
+					{products?.map((product) => (
+						<Link href={`/shop/${product.slug}`} key={product.sku} passHref>
+							<article className="group mt-6 sm:mt-0">
+								<div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+									<Image
+										src={product.image.url}
+										alt={product.title}
+										width={300}
+										height={300}
+										className="w-full h-full object-center object-cover group-hover:opacity-75"
+									/>
+								</div>
+								<div className="flex flex-row justify-between">
+									<div className="flex flex-col">
+										<h3 className="mt-4 text-sm text-gray-700 dark:text-white">
+											{product.title}
+										</h3>
+										<p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+											LKR {product.price}
+										</p>
+									</div>
 
-                {product.hasVariants ? (
-                  <CogIcon className="w-6 h-6 mt-5" />
-                ) : (
-                  <ShoppingCartIcon className="w-6 h-6 mt-5" />
-                )}
-              </div>
-            </article>
-          </Link>
-        ))}
+									{product.hasVariants ? (
+										<CogIcon className="w-6 h-6 mt-5" />
+									) : (
+										<ShoppingCartIcon className="w-6 h-6 mt-5" />
+									)}
+								</div>
+							</article>
+						</Link>
+					))}
+				</div>
 
         <CollectionPagination
           page={page}
@@ -163,12 +166,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 						"url": image.asset -> url
 					}
 				},
-				"totalPages": count(*[_type == "products" && references(^._id)]{title})
+				"totalProductsInCollection": count(*[_type == "products" && references(^._id)]{title})
 			}`
   )) as {
     products: ICollectionProduct[];
     collections: ICollection[];
-    totalPages: number;
+    totalProductsInCollection: number;
   }[];
 
   if (!data.length) {
@@ -177,7 +180,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  const { products, collections, totalPages } = data[0];
+  const { products, collections, totalProductsInCollection } = data[0];
+  const totalPages =
+    totalProductsInCollection % LIMIT
+      ? Math.floor(totalProductsInCollection / LIMIT) + 1
+      : Math.floor(totalProductsInCollection / LIMIT);
 
   if (!products.length) {
     return {

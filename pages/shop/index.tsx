@@ -9,7 +9,7 @@ import { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
 import { SWRConfig } from 'swr';
 
-const LIMIT = 2;
+const LIMIT = 20;
 
 export default function Shop(props: {
   fallback: { products: IShopProducts[] };
@@ -17,7 +17,7 @@ export default function Shop(props: {
   const { fallback } = props;
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen py-20">
       <Meta
         title={'Shop'}
         description={
