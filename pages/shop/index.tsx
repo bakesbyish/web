@@ -4,12 +4,15 @@ import { ShopProducts } from '@components/products/shop';
 import { Meta } from '@components/seo/metatags';
 import { IShopProducts, IShopDataStream } from '@interfaces/products';
 import { client } from 'config/apollo';
+import { sanity } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
 import { SWRConfig } from 'swr';
 
+const LIMIT = 2;
+
 export default function Shop(props: {
-  fallback: { products: IShopProducts[]; cursor: string; hasNextPage: boolean };
+  fallback: { products: IShopProducts[] };
 }) {
   const { fallback } = props;
 
@@ -24,7 +27,7 @@ export default function Shop(props: {
 
       <main className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 py-10">
         <SWRConfig value={{ fallback }}>
-          <ShopProducts products={fallback.products} />
+          <ShopProducts products={fallback.products} LIMIT={LIMIT} />
         </SWRConfig>
       </main>
     </div>
@@ -32,69 +35,24 @@ export default function Shop(props: {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = (await client.query({
-    query: gql`
-      query {
-        productsConnection(orderBy: createdAt_DESC, after: null, first: 20) {
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-          edges {
-            node {
-              sku
-              title
-              slug
-              price
-              image {
-                url
-              }
-              productVariants {
-                id
-              }
-            }
-          }
-        }
-      }
-    `,
-  })) as IShopDataStream;
-
-  const cursor = data.productsConnection.pageInfo.endCursor;
-  const hasNextPage = data.productsConnection.pageInfo.hasNextPage;
-
-  const products: IShopProducts[] = [];
-
-  if (!data.productsConnection.edges.length) {
-    return {
-      props: {
-        fallback: {
-          products,
-          cursor,
-          hasNextPage,
-        },
-      },
-    };
-  }
-
-  data.productsConnection.edges.map((productNode) => {
-    const { node } = productNode;
-
-    products.push({
-      sku: node.sku,
-      title: node.title,
-      slug: node.slug,
-      price: node.price,
-      url: node.image.url,
-      hasVariants: node.productVariants.length ? true : false,
-    });
-  });
+  const products = (await sanity.fetch(
+    `*[_type == "products"][0...${LIMIT}]{
+				sku,
+				title,
+				"slug": slug.current,
+				price,
+				"url": image.asset -> url,
+				"hasVariants": defined(count(productVariants[] -> title))
+			}`
+  )) as IShopProducts[];
+  const totalProducts = await sanity.fetch(`count(*[_type == "products"])`);
+  const hasNextPage = totalProducts > LIMIT ? true : false;
+  const cursor = 2;
 
   return {
     props: {
       fallback: {
         products,
-        cursor,
-        hasNextPage,
       },
     },
     revalidate: 10,

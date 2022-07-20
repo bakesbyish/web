@@ -7,7 +7,11 @@ import { useInView } from 'react-cool-inview';
 import { useCart } from 'react-use-cart';
 import useSWRInfinite from 'swr/infinite';
 
-export const ShopProducts = (props: { products: IShopProducts[] }) => {
+export const ShopProducts = (props: {
+  products: IShopProducts[];
+  LIMIT: number;
+}) => {
+  const { LIMIT } = props;
   const { addItem } = useCart();
 
   const [end, setEnd] = useState<boolean>(false);
@@ -23,16 +27,16 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
 
   // Define the key function to paginate the data fetched
   const getKey = (pageIndex: number, previousPageData: any) => {
-    if (previousPageData && !previousPageData.hasNextPage) {
+    if (previousPageData && !previousPageData.products.length) {
       setEnd(true);
       return null;
     }
 
     if (pageIndex === 0) {
-      return '/api/shop/get-products';
+      return `/api/shop/get-products?page=1&limit=${LIMIT}`;
     }
 
-    return `/api/shop/get-products?cursor=${previousPageData.cursor}`;
+    return `/api/shop/get-products?page=${pageIndex + 1}&limit=${LIMIT}`;
   };
 
   const { data, size, setSize } = useSWRInfinite(getKey, fetcher);
