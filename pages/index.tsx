@@ -72,71 +72,27 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // Get data for trending products
-  const trendingProductsData = (await sanity.fetch(
-    `*[_type == "products" && trending == true] | order(_createdAt desc)[0..3] {
+  const trendingProducts = (await sanity.fetch(
+    `*[_type == "products" && trending == true] | order(_createdAt desc)[0..3]{
 				title,
-				slug {
-					current
-				},
+				"slug": slug.current,
 				sku,
-				image,
-				price
+				"image": {
+					"url": image.asset -> url
+				}
 			}`
-  )) as {
-    title: string;
-    slug: {
-      current: string;
-    };
-    sku: number;
-    image: SanityImageSource;
-    price: number;
-  }[];
+  )) as ICollectionProduct[];
 
-  const trendingProducts: ICollectionProduct[] = [];
-
-  trendingProductsData.map((product) => {
-    trendingProducts.push({
-      title: product.title,
-      slug: product.slug.current,
-      sku: product.sku,
-      image: {
-        url: urlFor(product.image).url(),
-      },
-    });
-  });
-
-  // Get data for collections
-  const collectionData = (await sanity.fetch(
+  const collections = (await sanity.fetch(
     `*[_type == "categories"] | order(_createdAt desc)[0..2]{
-				title,
-				slug {
-					current
+				"catergory": title,
+				"catergorySlug": slug.current,
+				"image":{
+					"url": image.asset -> url
 				},
-				image,
-				description
+				"catergoryDescription": description
 			}`
-  )) as {
-    title: string;
-    slug: {
-      current: string;
-    };
-    image: SanityImageSource;
-    description: string;
-  }[];
-
-  const collections: ICollectionCard[] = [];
-
-  collectionData.map((collection) => {
-    collections.push({
-      catergory: collection.title,
-      catergorySlug: collection.slug.current,
-      image: {
-        url: urlFor(collection.image).url(),
-      },
-      catergoryDescription: collection.description,
-    });
-  });
+  )) as ICollectionCard[];
 
   return {
     props: {
