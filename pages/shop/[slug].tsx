@@ -73,33 +73,32 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as IParams;
 
   const data = (await sanity.fetch(
-    `*[_type == "products" && slug.current == "${slug}"] {
-		"product": {
-			sku,
-			"slug": slug.current,
-			title,
-			price,
-			"url": image.asset -> url,
-			description,
-			unit,
-			"hasDiscounts": discounted,
-			"discountedFrom": discountedFrom,
-			"discountedPrice": discountedPrice,
-			"productVariants": *[_type == "variants" && _id in *[_type == "products" && slug.current == "${slug}"].productVariants[]._ref] {
-				"variantColors": *[_type == "colors" && _id in *[_type == "variants" && _id in *[_type == "products" && slug.current == "${slug}"].productVariants[]._ref].variantColors[]._ref]{
-					"color": colorHex.hex,
-		 },
-		 "name": title,
-		 price,
-		 "hasDiscounts": discounted,
-		 "discountedFrom": dicountedFrom,
-		 "discountedPrice": dicountedPrice,
-		 "url": image.asset -> url
-		},
-		 "productColors": *[_type == "colors" && _id in *[_type == "products" && slug.current == "${slug}"].productColors[]._ref]{
-				"color": colorHex.hex,
-			},
-		}
+    `*[_type == "products" && slug.current == "${slug}"]{
+			"product": {
+				sku,
+				"slug": slug.current,
+				title,
+				price,
+				"url": image.asset -> url,
+				description,
+				unit,
+				"hasDiscounts": discounted,
+				"discountedFrom": discountedFrom,
+				"discountedPrice": discountedPrice,
+				"productVariants": productVariants[] -> {
+					"name": title,
+					"hasDiscounts": discounted,
+					"discountedFrom": dicountedFrom,
+					"discountedPrice": dicountedPrice,
+					"url": image.asset -> url,
+					"variantColors": variantColors[] -> {
+						"color": colorHex.hex
+					}
+				},
+				"productColors": productColors[] -> {
+					"color": colorHex.hex
+				}
+			}
 	}`
   )) as { product: IProduct }[];
 
@@ -114,7 +113,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log(product.productVariants[1].variantColors);
 
   // Update the product with the required feilds
-  product.hasColors = product.productColors.length ? true : false;
+  product.hasColors = product.productColors?.length ? true : false;
   product.hasVariants = product.productVariants ? true : false;
 
   // Get hearts of the product from the database
