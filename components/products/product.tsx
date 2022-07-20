@@ -30,6 +30,15 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   const [selectedColor, setSelectedColor] = useState(
     product.hasColors ? product.productColors[0].color : null
   );
+
+  const [image, setImage] = useState<string>(
+    selectedVariant
+      ? selectedVariant?.url
+        ? selectedVariant.url
+        : product.url
+      : product.url
+  );
+
   const [price, setPrice] = useState<number>(
     selectedVariant?.price || product.price
   );
@@ -40,7 +49,8 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   );
   const hearts = productDoc?.hearts || props.hearts;
 
-  // Update the price when there are discounts for specific quantities
+  // Update the price when there are
+  // discounts when specific quantities are brought
   useEffect(() => {
     if (selectedVariant) {
       if (selectedVariant.hasDiscounts) {
@@ -64,6 +74,12 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
       );
     }
   }, [qty, selectedVariant, product]);
+
+  useEffect(() => {
+    selectedVariant
+      ? setImage(selectedVariant?.url ? selectedVariant.url : product.url)
+      : null;
+  }, [selectedVariant, product.url]);
 
   const handleQtyChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
@@ -97,12 +113,13 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
         <div className="mt-6 max-w-2xl mx-auto px-3 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-1">
           <div
             className={classNames(
-              'aspect-w-4 aspect-h-4 sm:rounded-lg sm:mx-auto sm:aspect-w-8 sm:aspect-h-4 sm:w-96 sm:h-96 lg:aspect-w-8 lg:aspect-h-2 lg:w-96 lg:h-96 justify-self-center'
+              'aspect-w-4 aspect-h-4 sm:rounded-lg sm:mx-auto sm:aspect-w-8 sm:aspect-h-4 sm:w-96 sm:h-96',
+              'lg:aspect-w-8 lg:aspect-h-2 lg:w-96 lg:h-96 justify-self-center'
             )}
           >
             <Image
               priority={true}
-              src={props.product.url || product.url}
+              src={image}
               alt={product.title}
               layout="fill"
               className="w-full h-full object-center object-cover rounded-lg"
@@ -111,7 +128,11 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
         </div>
 
         {/* Product info */}
-        <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+        <div
+          className={classNames(
+            'max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-16 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8'
+          )}
+        >
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
               {product.title}
@@ -150,20 +171,22 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
 
             <form onSubmit={handleSubmit} className="mt-10">
               {/* Colors */}
-              {selectedVariantColor && (
+              {selectedVariantColor ? (
                 <Color
                   value={selectedVariantColor}
                   setValue={setSelectedVariantColor}
                   colors={selectedVariant?.variantColors}
                 />
-              )}
-
-              {selectedColor && (
-                <Color
-                  value={selectedColor}
-                  setValue={setSelectedColor}
-                  colors={product.productColors}
-                />
+              ) : (
+                <>
+                  {selectedColor ? (
+                    <Color
+                      value={selectedColor}
+                      setValue={setSelectedColor}
+                      colors={product.productColors}
+                    />
+                  ) : null}
+                </>
               )}
 
               {/* variants */}
@@ -264,7 +287,11 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
                   prefix="g"
                   className="text-center bg-slate-100 dark:bg-gray-700 py-2 w-32 rounded-lg"
                 />
-                {product.unit ? product.unit : null}
+                {product.unit
+                  ? product.unit === 'pcs'
+                    ? null
+                    : product.unit
+                  : null}
                 <MinusIcon
                   onClick={() => {
                     setQty(qty > 1 ? qty - 1 : 1);
@@ -276,7 +303,8 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
               <button
                 type="submit"
                 className={classNames(
-                  'mt-10 w-full bg-rose-300 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-black hover:bg-rose-400',
+                  'mt-10 w-full bg-rose-300 border border-transparent rounded-md py-3 px-8 flex items-center justify-center',
+                  'text-base font-medium text-black hover:bg-rose-400',
                   'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-400'
                 )}
               >

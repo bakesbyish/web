@@ -36,10 +36,8 @@ export const Color = (props: {
               </RadioGroup.Label>
               <span
                 aria-hidden="true"
-                className={classNames(
-                  `bg-${option.color}-600`,
-                  'h-8 w-8 border border-black border-opacity-10 rounded-full'
-                )}
+                style={{ backgroundColor: `${option.color}` }}
+                className="h-8 w-8 border border-black border-opacity-10 rounded-full"
               />
             </RadioGroup.Option>
           ))}

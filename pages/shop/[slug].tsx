@@ -11,6 +11,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from 'config/firebase';
 import { database } from '@interfaces/firestore';
 import { Comments } from '@components/comments/comments';
+import { sanity } from 'config/sanity';
 
 export default function Slug(props: { product: IProduct; hearts: number }) {
   const { product, hearts } = props;
@@ -21,12 +22,12 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
         title={product.title}
         description={product.description}
         image={product.url}
-				price={product.price.toString()}
+        price={product.price.toString()}
       />
 
       <main className="flex flex-col items-center justify-center py-10">
         <Product product={product} hearts={hearts} />
-				<Comments slug={product.slug} />
+        <Comments slug={product.slug} />
       </main>
     </div>
   );
@@ -71,105 +72,52 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as IParams;
 
-  const { data } = (await client.query({
-    query: gql`
-      query ($slug: String) {
-        products(where: { slug: $slug }) {
-          sku
-          title
-          slug
-          price
-          image {
-            url
-          }
-          description
-          unit
-          discountFrom
-          discountedPrice
-          productVariants {
-            name
-            price
-            discountedFrom
-            discountedPrice
-            variantImage {
-              url
-            }
-            variantColors {
-              color
-            }
-          }
-          productColors {
-            color
-          }
-        }
-      }
-    `,
-    variables: {
-      slug,
-    },
-  })) as {
-    data: {
-      products: {
-        sku: string;
-        title: string;
-        slug: string;
-        price: number;
-        image: {
-          url: string;
-        };
-        description: string;
-        unit: null | string;
-        discountFrom: number | null;
-        discountedPrice: number | null;
-        productVariants: {
-          name: string;
-          price: number;
-          discountedFrom: number | null;
-          discountedPrice: number | null;
-          variantImage: {
-            url: string;
-          } | null;
-          variantColors: {
-            color: string;
-          }[];
-        }[];
-        productColors: {
-          color: string;
-        }[];
-      }[];
+  const data = (await sanity.fetch(
+    `*[_type == "products" && slug.current == "${slug}"] {
+		"product": {
+			sku,
+			"slug": slug.current,
+			title,
+			price,
+			"url": image.asset -> url,
+			description,
+			unit,
+			"hasDiscounts": discounted,
+			"discountedFrom": discountedFrom,
+			"discountedPrice": discountedPrice,
+			"productVariants": *[_type == "variants" && _id in *[_type == "products" && slug.current == "${slug}"].productVariants[]._ref] {
+				"variantColors": *[_type == "colors" && _id in *[_type == "variants" && _id in *[_type == "products" && slug.current == "${slug}"].productVariants[]._ref].variantColors[]._ref]{
+					"color": colorHex.hex,
+		 },
+		 "name": title,
+		 price,
+		 "hasDiscounts": discounted,
+		 "discountedFrom": dicountedFrom,
+		 "discountedPrice": dicountedPrice,
+		 "url": image.asset -> url
+		},
+		 "productColors": *[_type == "colors" && _id in *[_type == "products" && slug.current == "${slug}"].productColors[]._ref]{
+				"color": colorHex.hex,
+			},
+		}
+	}`
+  )) as { product: IProduct }[];
+
+  if (!data.length) {
+    return {
+      notFound: true,
     };
-  };
+  }
 
-  const product = data.products[0];
+  let { product } = data[0];
 
-  const productVariants: {
-    name: string;
-    price: number;
-    hasDiscounts: boolean;
-    discountedFrom: number | null;
-    discountedPrice: number | null;
-    url: string | null;
-    variantColors:
-      | {
-          color: string;
-        }[]
-      | [];
-  }[] = [];
+  console.log(product.productVariants[1].variantColors);
 
-  product.productVariants.map((variant) => {
-    productVariants.push({
-      name: variant.name,
-      price: variant.price,
-      hasDiscounts:
-        variant.discountedFrom && variant.discountedPrice ? true : false,
-      discountedFrom: variant.discountedFrom || null,
-      discountedPrice: variant.discountedPrice || null,
-      url: variant.variantImage ? variant.variantImage.url : null,
-      variantColors: variant.variantColors,
-    });
-  });
+  // Update the product with the required feilds
+  product.hasColors = product.productColors.length ? true : false;
+  product.hasVariants = product.productVariants ? true : false;
 
-	// Get hearts of the product from the database
+  // Get hearts of the product from the database
   let hearts = 0;
 
   const productRef = doc(db, database.products, product.slug);
@@ -183,23 +131,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   return {
     props: {
-      product: {
-        sku: product.sku,
-        slug,
-        title: product.title,
-        price: product.price,
-        url: product.image.url,
-        description: product.description,
-        unit: product.unit,
-        hasDiscounts:
-          product.discountFrom && product.discountedPrice ? true : false,
-        discountedFrom: product.discountFrom || null,
-        discountedPrice: product.discountedPrice || null,
-        productVariants,
-        productColors: product.productColors,
-        hasVariants: product.productVariants.length ? true : false,
-        hasColors: product.productColors.length ? true : false,
-      } as unknown as IProduct,
+      product,
       hearts,
     },
   };
