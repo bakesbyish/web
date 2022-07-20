@@ -97,7 +97,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 				},
 				"productColors": productColors[] -> {
 					"color": colorHex.hex
-				}
+				},
+				"hasColors": defined(count(productColors[] -> colorHex)),
+				"hasVariants": defined(count(productVariants[] -> title))
 			}
 	}`
   )) as { product: IProduct }[];
@@ -108,13 +110,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
     };
   }
 
-  let { product } = data[0];
+  const { product } = data[0];
 
   console.log(product.productVariants[1].variantColors);
-
-  // Update the product with the required feilds
-  product.hasColors = product.productColors?.length ? true : false;
-  product.hasVariants = product.productVariants ? true : false;
 
   // Get hearts of the product from the database
   let hearts = 0;
