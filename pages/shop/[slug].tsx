@@ -87,6 +87,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 				"discountedPrice": discountedPrice,
 				"productVariants": productVariants[] -> {
 					"name": title,
+					price,
 					"hasDiscounts": discounted,
 					"discountedFrom": dicountedFrom,
 					"discountedPrice": dicountedPrice,
@@ -111,8 +112,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const { product } = data[0];
-
-  console.log(product.productVariants[1].variantColors);
 
   // Get hearts of the product from the database
   let hearts = 0;

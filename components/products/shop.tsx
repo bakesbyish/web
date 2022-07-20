@@ -97,7 +97,7 @@ export const ShopProducts = (props: { products: IShopProducts[] }) => {
                 onClick={() => {
                   const selectedProduct = {
                     id: product.sku.toString(),
-										slug: product.slug,
+                    slug: product.slug,
                     name: product.title,
                     url: product.url,
                     color: null,
