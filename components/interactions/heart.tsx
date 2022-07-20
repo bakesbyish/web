@@ -8,6 +8,7 @@ import { HeartIcon as OutLineHeartIcon } from '@heroicons/react/outline';
 
 export const Hearts = (props: { slug: string; uid: string }) => {
   const { slug, uid } = props;
+	console.log(uid)
 
   // Reference the product document
   const productRef = doc(db, "products", slug);

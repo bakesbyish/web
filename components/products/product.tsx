@@ -24,9 +24,11 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   const [selectedVariant, setSelectedVariant] = useState(
     product.hasVariants ? product.productVariants[0] : null
   );
+
   const [selectedVariantColor, setSelectedVariantColor] = useState(
     selectedVariant ? selectedVariant.variantColors?.[0].color || null : null
   );
+
   const [selectedColor, setSelectedColor] = useState(
     product.hasColors ? product.productColors[0].color : null
   );
@@ -42,12 +44,15 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   const [price, setPrice] = useState<number>(
     selectedVariant?.price || product.price
   );
+
   const [qty, setQty] = useState<number>(1);
 
-  const [productDoc] = useDocumentData(
+  const [heartDoc, loading] = useDocumentData(
     doc(db, database.products, product.slug)
   );
-  const hearts = productDoc?.hearts || props.hearts;
+
+  let hearts = props.hearts;
+  !loading ? (hearts = heartDoc?.hearts) : null;
 
   // Update the price when there are
   // discounts when specific quantities are brought
