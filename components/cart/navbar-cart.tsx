@@ -13,7 +13,7 @@ export const Cart = () => {
 				setCartOpen(true)
 			}}
       className={classNames(
-        'py-4 px-1 mr-0 sm:mr-2 relative border-2 border-transparent text-pink-500 rounded-full hover:text-rose-400',
+        'py-4 px-1 mr-0 sm:mr-2 relative text-pink-500 rounded-full hover:text-rose-400',
         'transition duration-150 ease-in-out'
       )}
       aria-label="Cart"
@@ -24,8 +24,7 @@ export const Cart = () => {
         <span className="absolute inset-0 object-right-top -mr-6">
           <div
             className={classNames(
-              'animate-pulse',
-              'inline-flex items-center px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-rose-300 text-black'
+              'inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-semibold leading-4 bg-rose-300 text-black'
             )}
           >
 						{items.length}
