@@ -33,7 +33,7 @@ export const Theme = () => {
             currentTheme === 'dark' ? setTheme('light') : setTheme('dark');
           }}
           className={`${
-            currentTheme === 'dark' ? 'bg-rose-300' : 'bg-gray-200'
+            currentTheme === 'dark' ? 'bg-rose-400' : 'bg-gray-200'
           } relative inline-flex h-6 w-11 items-center rounded-full`}
         >
           <span className="sr-only">Enable notifications</span>

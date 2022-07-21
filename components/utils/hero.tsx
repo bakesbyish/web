@@ -106,7 +106,7 @@ export const Hero = () => {
               </div>
 
               <Link href="/shop">
-                <a className="inline-block text-center bg-rose-400 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-rose-400">
+                <a className="inline-block text-center bg-rose-400 border border-transparent rounded-md py-3 px-8 font-medium text-black hover:bg-rose-400">
                   Shop
                 </a>
               </Link>

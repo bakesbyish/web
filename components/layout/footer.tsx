@@ -20,9 +20,9 @@ export const Footer = () => {
             </a>
           </li>
           <li>
-						<div className="">
-							<Theme />
-						</div>
+            <div className="">
+              <Theme />
+            </div>
           </li>
         </ul>
       </div>

@@ -168,7 +168,7 @@ export const Cart = () => {
                             onClick={() => setCartOpen(false)}
                             href="#"
                             className={classNames(
-                              'flex items-center justify-center rounded-md border border-transparent bg-rose-300 px-6 py-3',
+                              'flex items-center justify-center rounded-md border border-transparent bg-rose-400 px-6 py-3',
                               'text-base font-medium text-black shadow-sm hover:bg-rose-400'
                             )}
                           >
