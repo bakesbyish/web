@@ -56,7 +56,7 @@ const Hits = (props: { searchState: any; searchResults: any }) => {
                       {product.title}
                     </h3>
                     <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                      {product.price}
+                      LKR {product.price}
                     </p>
                   </div>
                 </div>
