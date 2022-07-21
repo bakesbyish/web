@@ -99,6 +99,7 @@ export interface ICart {
   slug: string;
   name: string;
   color: string | null;
+  colorHex: string | null;
   size: string | null;
   price: number;
   quantity: number;
