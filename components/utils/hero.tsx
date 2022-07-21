@@ -28,7 +28,7 @@ export const Hero = () => {
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
                         <Image
-                          src="/hero/1.jpg"
+                          src="/hero/1.webp"
                           alt="Bakes By Ish Image 1"
                           height={1400}
                           width={1000}
@@ -37,7 +37,7 @@ export const Hero = () => {
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/2.jpg"
+                          src="/hero/2.webp"
                           alt="Bakes By Ish Image 2"
                           height={1400}
                           width={1000}
@@ -48,7 +48,7 @@ export const Hero = () => {
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/3.jpg"
+                          src="/hero/3.webp"
                           alt="Bakes By Ish Image 3"
                           height={1400}
                           width={1000}
@@ -57,7 +57,7 @@ export const Hero = () => {
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/4.jpg"
+                          src="/hero/4.webp"
                           alt="Bakes By Ish Image 4"
                           height={1400}
                           width={1000}
@@ -66,7 +66,7 @@ export const Hero = () => {
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/5.jpg"
+                          src="/hero/5.webp"
                           alt="Bakes By Ish Image 5"
                           height={1400}
                           width={1000}
@@ -77,7 +77,7 @@ export const Hero = () => {
                     <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/6.jpg"
+                          src="/hero/6.webp"
                           alt="Bakes By Ish Image 6"
                           height={1400}
                           width={1000}
@@ -86,7 +86,7 @@ export const Hero = () => {
                       </div>
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
-                          src="/hero/7.jpg"
+                          src="/hero/7.webp"
                           alt="Bakes By Ish Image 7"
                           height={1400}
                           width={1000}
