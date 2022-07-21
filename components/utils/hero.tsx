@@ -29,6 +29,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
                         <Image
                           src="/hero/1.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 1"
                           height={1400}
                           width={1000}
@@ -38,6 +39,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/2.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 2"
                           height={1400}
                           width={1000}
@@ -49,6 +51,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/3.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 3"
                           height={1400}
                           width={1000}
@@ -58,6 +61,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/4.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 4"
                           height={1400}
                           width={1000}
@@ -67,6 +71,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/5.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 5"
                           height={1400}
                           width={1000}
@@ -78,6 +83,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/6.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 6"
                           height={1400}
                           width={1000}
@@ -87,6 +93,7 @@ export const Hero = () => {
                       <div className="w-44 h-64 rounded-lg overflow-hidden">
                         <Image
                           src="/hero/7.webp"
+                          priority={true}
                           alt="Bakes By Ish Image 7"
                           height={1400}
                           width={1000}
@@ -99,7 +106,7 @@ export const Hero = () => {
               </div>
 
               <Link href="/shop">
-                <a className="inline-block text-center bg-rose-300 border border-transparent rounded-md py-3 px-8 font-medium text-slate-500 hover:bg-rose-400">
+                <a className="inline-block text-center bg-rose-400 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-rose-400">
                   Shop
                 </a>
               </Link>
