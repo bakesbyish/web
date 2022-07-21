@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
 
   // Get the user session
   const session = req.cookies.get('__session') || null;
-  const maintenance = false;
+  const maintenance = true;
 
   // Block the site if the site is in maintainance
   if (maintenance) {
@@ -55,5 +55,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/collections/:path/:path*', '/profile', '/login', '/register'],
+  matcher: ['/collections/:path/:path*', '/profile', '/login', '/register'. '/'],
 };
