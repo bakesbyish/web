@@ -15,8 +15,6 @@ export const Cart = () => {
   };
   const { cartOpen, setCartOpen } = useBakesbyIshcontext();
 
-  console.log(items[0]?.colorHex);
-
   return (
     <Transition.Root show={cartOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={setCartOpen}>
