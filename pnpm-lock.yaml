@@ -48,6 +48,7 @@ specifiers:
   react-dom: 18.1.0
   react-firebase-hooks: ^5.0.3
   react-hook-form: ^7.33.0
+  react-hot-toast: ^2.3.0
   react-instantsearch-dom: ^6.29.0
   react-use-cart: ^1.13.0
   swr: ^1.3.0
@@ -89,6 +90,7 @@ dependencies:
   react-dom: 18.1.0_react@18.1.0
   react-firebase-hooks: 5.0.3_oqyuzxf3jhhjcry35ff4gaxgse
   react-hook-form: 7.33.0_react@18.1.0
+  react-hot-toast: 2.3.0_ef5jwxihqo6n7gxfmzogljlgcm
   react-instantsearch-dom: 6.29.0_g3pfdiaqzxzttnxa5euizx77ca
   react-use-cart: 1.13.0_react@18.1.0
   swr: 1.3.0_react@18.1.0
@@ -2706,6 +2708,12 @@ packages:
       slash: 3.0.0
     dev: true
 
+  /goober/2.1.10:
+    resolution: {integrity: sha512-7PpuQMH10jaTWm33sQgBQvz45pHR8N4l3Cu3WMGEWmHShAcTuuP7I+5/DwKo39fwti5A80WAjvqgz6SSlgWmGA==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
+
   /google-auth-library/7.14.1:
     resolution: {integrity: sha512-5Rk7iLNDFhFeBYc3s8l1CqzbEBcdhwR193RlD4vSNFajIcINKI8W8P0JLmBpwymHqqWbX34pJDQu39cSy/6RsA==}
     engines: {node: '>=10'}
@@ -3940,6 +3948,20 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.1.0
+    dev: false
+
+  /react-hot-toast/2.3.0_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-/RxV+bfjld7tSJR1SCLzMAXgFuNW7fCpK6+vbYqfmbGSWcqTMz2rizrvfWKvtcPH5HK0NqxmBaC5SrAy1F42zA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      goober: 2.1.10
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    transitivePeerDependencies:
+      - csstype
     dev: false
 
   /react-instantsearch-core/6.29.0_3zo37ewazksgzb36kco6ej77gq:
