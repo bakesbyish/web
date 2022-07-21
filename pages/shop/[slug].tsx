@@ -12,9 +12,22 @@ import { db } from 'config/firebase';
 import { database } from '@interfaces/firestore';
 import { Comments } from '@components/comments/comments';
 import { sanity } from 'config/sanity';
+import { useRouter } from 'next/router';
+import { Loader } from '@components/utils/loader';
 
 export default function Slug(props: { product: IProduct; hearts: number }) {
   const { product, hearts } = props;
+  const router = useRouter();
+
+  // Display the loader if the page is generated for the first time
+  // on user request
+  if (router.isFallback) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen">
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -34,30 +47,13 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = (await client.query({
-    query: gql`
-      query {
-        products {
-          slug
-        }
-      }
-    `,
-  })) as {
-    data: {
-      products: {
-        slug: string;
-      }[];
-    };
-  };
-
-  const paths = data.products.map((productSlug) => {
-    const { slug } = productSlug;
-    return {
-      params: {
-        slug,
-      },
-    };
-  });
+  const paths = await sanity.fetch(
+    `*[_type == "products"]{
+				"params": {
+						"slug": slug.current
+					}
+			}`
+  );
 
   return {
     paths,
