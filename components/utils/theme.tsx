@@ -21,11 +21,11 @@ export const Theme = () => {
     <Switch.Group>
       <div className="flex item-center">
         <Switch.Label className="mr-4">
-					{currentTheme === "dark" ? (
-						<SunIcon className="w-6 h-6" />
-					) : (
-						<MoonIcon className="w-6 h-6" />
-					)}
+          {currentTheme === 'dark' ? (
+            <SunIcon className="w-6 h-6" />
+          ) : (
+            <MoonIcon className="w-6 h-6" />
+          )}
         </Switch.Label>
         <Switch
           checked={currentTheme === 'dark'}
@@ -38,7 +38,7 @@ export const Theme = () => {
         >
           <span className="sr-only">Enable notifications</span>
           <span
-            className={`transform transition ease-in-out duration-200 inline-block h-4 w-4 transform rounded-full bg-white
+            className={`transform transition ease-in-out duration-200 inline-block h-4 w-4 rounded-full bg-white
 						${currentTheme === 'dark' ? 'translate-x-6 ' : 'translate-x-1'}
 					`}
           />
