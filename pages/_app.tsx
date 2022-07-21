@@ -6,6 +6,7 @@ import { CartProvider } from 'react-use-cart';
 import { BakesbyIshContext } from '@context/context';
 import { useUserData } from '@hooks/use-user-data';
 import '../styles/globals.css';
+import { ProgressBar } from '@components/utils/progress';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         mutate,
       }}
     >
+      <ProgressBar />
       <CartProvider>
         <ThemeProvider enableSystem={true} attribute={'class'}>
           {getLayout(<Component {...pageProps} />)}
