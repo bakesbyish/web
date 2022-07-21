@@ -8,6 +8,12 @@ export function middleware(req: NextRequest) {
   const session = req.cookies.get('__session') || null;
   const maintenance = false;
 
+  // Block the site if the site is in maintainance
+  if (maintenance) {
+    url.pathname = `/maintenance`;
+    console.log('hello world');
+  }
+
   // Handle collections with no page number
   if (url.pathname.startsWith('/collections/')) {
     if (url.pathname.split('/').length === 3) {
