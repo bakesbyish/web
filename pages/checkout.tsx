@@ -21,7 +21,7 @@ export default function Checkout(props: {
 
   return (
     <div className="flex flex-col item-center justify-center min-h-screen">
-      <CheckoutComponent />
+      <CheckoutComponent address={address} contactNumber={contactNumber} />
     </div>
   );
 }

@@ -496,7 +496,7 @@ export const Checkout = (props: {
                         id="city"
                         autoComplete="address-level2"
                         {...register('city')}
-                        className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-400 sm:text-sm dark:text-white"
+                        className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-400 sm:text-sm dark:text-black"
                       />
                       {errors.city && (
                         <p className="text-red-600 text-sm">
