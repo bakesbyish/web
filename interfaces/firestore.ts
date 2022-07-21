@@ -22,7 +22,7 @@ export interface IUserDocument {
   about: string | null;
   photoURL: string;
   coverPhoto: string | null;
-  contactNumber: number | null;
+  contactNumber: string | null;
   address: IAddress | null;
   notifications?: boolean;
 }

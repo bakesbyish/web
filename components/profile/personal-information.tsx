@@ -47,8 +47,14 @@ export const PersonalInformation = () => {
     state: yup
       .string()
       .required()
-      .min(2, 'City must be greater than 2 characters')
-      .max(20, 'City must be smaller than 20 characters'),
+      .min(2, 'City must be greater than 2 characters'),
+    contactNumber: yup
+      .string()
+      .matches(
+        /^(?:0|94|\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|4|5|6|7|8)\d)\d{6}$/,
+        'Contact number is invalid'
+      )
+      .required(),
   });
 
   interface IFormInterface {
@@ -58,6 +64,7 @@ export const PersonalInformation = () => {
     address: string;
     city: string;
     state: string;
+    contactNumber: string;
   }
 
   const { register, formState, handleSubmit, reset } = useForm<IFormInterface>({
@@ -69,6 +76,7 @@ export const PersonalInformation = () => {
       address: user?.address?.address ? user.address.address : undefined,
       city: user?.address?.city ? user.address.city : undefined,
       state: user?.address?.state ? user.address.state : undefined,
+      contactNumber: user?.contactNumber ? user.contactNumber : undefined,
     },
   });
   const { errors } = formState;
@@ -116,6 +124,12 @@ export const PersonalInformation = () => {
       });
     }
 
+    if (data.contactNumber !== user?.contactNumber) {
+      await updateDoc(userRef, {
+        [ref.contactNumber]: data.contactNumber,
+      });
+    }
+
     reset({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -123,6 +137,7 @@ export const PersonalInformation = () => {
       address: data.address,
       state: data.state,
       city: data.city,
+      contactNumber: data.contactNumber,
     });
     setLoading(false);
   };
@@ -267,6 +282,27 @@ export const PersonalInformation = () => {
                     {errors.state && (
                       <p className="text-sm text-red-600 mt-2">
                         {errors.state.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                    <label
+                      htmlFor="region"
+                      className="block text-sm font-medium text-gray-700 dark:text-white"
+                    >
+                      Contact number
+                    </label>
+                    <input
+                      type="text"
+                      id="province"
+                      {...register('contactNumber')}
+                      autoComplete="contact-number"
+                      className="mt-1 focus:ring-rose-400 focus:border-rose-400 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:text-black"
+                    />
+                    {errors.contactNumber && (
+                      <p className="text-sm text-red-600 mt-2">
+                        {errors.contactNumber.message}
                       </p>
                     )}
                   </div>

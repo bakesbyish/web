@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = withIronSessionSsr(
     const userSnapshot = await getDoc(userRef);
 
     const { address, contactNumber } = userSnapshot.data() as IUserDocument;
+    console.log(address, contactNumber);
 
     return {
       props: {
