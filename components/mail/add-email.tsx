@@ -1,5 +1,6 @@
 import { Loader } from '@components/utils/loader';
 import { CheckCircleIcon, MailIcon, XIcon } from '@heroicons/react/solid';
+import { classNames } from '@lib/utils';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 type State = 'idle' | 'loading' | 'succsess' | 'error';
@@ -75,7 +76,10 @@ export const AddEmail = () => {
         <input
           id="email"
           type="text"
-          className="px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
+          className={classNames(
+            'px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600',
+            'focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300'
+          )}
           placeholder="Email Address"
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setMail(event.target.value);
@@ -88,7 +92,10 @@ export const AddEmail = () => {
           disabled={state === 'loading'}
           type="submit"
           aria-label="Subscribe to BAKESBYISH mailing list"
-          className="max-w-xs px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-rose-300 rounded-lg lg:w-auto lg:mx-4 hover:bg-rose-400 focus:outline-none focus:bg-blue-400"
+          className={classNames(
+            'max-w-xs px-4 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors',
+            'duration-200 transform bg-rose-400 rounded-lg lg:w-auto lg:mx-4 hover:bg-rose-400 focus:outline-none focus:bg-blue-400'
+          )}
         >
           <StatusIcon state={state} />
         </button>
