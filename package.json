@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.6",
     "@firebase/app-compat": "^0.1.27",
     "@firebase/app-types": "^0.7.0",
     "@headlessui/react": "^1.6.4",
