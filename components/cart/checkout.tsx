@@ -208,7 +208,7 @@ export const Checkout = (props: {
                                 {item.name}
                               </h3>
                               <p className="text-gray-900 dark:text-white">
-                                {item.price}
+                                LKR {item.price}
                               </p>
                               <p className="text-gray-500 dark:text-white/80">
                                 {item.color}
@@ -339,7 +339,7 @@ export const Checkout = (props: {
                         {item.name}
                       </h3>
                       <p className="text-gray-900 dark:text-white">
-                        {item.price}
+                        LKR {item.price}
                       </p>
                       <p className="text-gray-500 dark:text-white/80">
                         {item.color}
