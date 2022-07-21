@@ -7,6 +7,7 @@ import { BakesbyIshContext } from '@context/context';
 import { useUserData } from '@hooks/use-user-data';
 import '../styles/globals.css';
 import { ProgressBar } from '@components/utils/progress';
+import { Toast } from '@components/utils/toast';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -35,6 +36,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <ProgressBar />
       <CartProvider>
         <ThemeProvider enableSystem={true} attribute={'class'}>
+          <Toast />
           {getLayout(<Component {...pageProps} />)}
         </ThemeProvider>
       </CartProvider>
