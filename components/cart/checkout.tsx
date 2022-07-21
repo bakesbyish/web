@@ -3,7 +3,7 @@ import { useBakesbyIshcontext } from '@context/context';
 import { Disclosure } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { database, IAddress } from '@interfaces/firestore';
-import { notifyOrder, sendWhatsAppMessage } from '@lib/communication';
+import { notifyOrder } from '@lib/communication';
 import { ICheckoutForm } from '@lib/forms';
 import { validateDiscount } from '@lib/products';
 import { classNames } from '@lib/utils';

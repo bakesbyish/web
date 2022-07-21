@@ -101,6 +101,7 @@ export const ShopProducts = (props: {
                 onClick={() => {
                   const selectedProduct = {
                     id: product.sku.toString(),
+                    sku: product.sku,
                     slug: product.slug,
                     name: product.title,
                     url: product.url,
@@ -118,7 +119,7 @@ export const ShopProducts = (props: {
         </article>
       ))}
 
-      {!end && <button  onClick={fetchMoreProducts}>Load More</button>}
+      {!end && <button onClick={fetchMoreProducts}>Load More</button>}
     </>
   );
 };

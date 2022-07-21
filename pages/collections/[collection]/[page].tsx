@@ -91,6 +91,7 @@ export default function Page(props: {
                     onClick={() => {
                       const selectedProduct = {
                         id: product.sku.toString(),
+                        sku: product.sku,
                         slug: product.slug,
                         name: product.title,
                         url: product.image.url,

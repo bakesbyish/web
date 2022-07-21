@@ -94,6 +94,7 @@ export interface IProduct {
 
 export interface ICart {
   id: string;
+  sku: number;
   url: string;
   slug: string;
   name: string;

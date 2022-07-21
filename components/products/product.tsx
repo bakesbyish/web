@@ -130,6 +130,7 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
 
     const selectedProduct = {
       id,
+      sku: parseInt(product.sku),
       slug: product.slug,
       url: selectedVariant?.url || product.url,
       name: product.title,
