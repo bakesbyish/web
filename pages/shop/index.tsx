@@ -1,9 +1,7 @@
-import { gql } from '@apollo/client';
 import { Layout } from '@components/layout/layout';
 import { ShopProducts } from '@components/products/shop';
 import { Meta } from '@components/seo/metatags';
 import { IShopProducts, IShopDataStream } from '@interfaces/products';
-import { client } from 'config/apollo';
 import { sanity } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import { ReactElement } from 'react';

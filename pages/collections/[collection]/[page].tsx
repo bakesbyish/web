@@ -1,9 +1,7 @@
-import { gql } from '@apollo/client';
 import { Meta } from '@components/seo/metatags';
 import { Loader } from '@components/utils/loader';
 import { ICart, ICollectionProduct } from '@interfaces/products';
 import { ICollection } from '@interfaces/collections';
-import { client } from 'config/apollo';
 import { db } from 'config/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { GetStaticPaths, GetStaticProps } from 'next';

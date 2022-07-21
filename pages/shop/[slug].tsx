@@ -1,6 +1,4 @@
-import { gql } from '@apollo/client';
 import { Layout } from '@components/layout/layout';
-import { client } from 'config/apollo';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { ReactElement } from 'react';

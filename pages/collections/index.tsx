@@ -1,10 +1,8 @@
-import { gql } from '@apollo/client';
 import { Layout } from '@components/layout/layout';
 import { Meta } from '@components/seo/metatags';
 import { ICollection } from '@interfaces/collections';
 import { classNames } from '@lib/utils';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { client } from 'config/apollo';
 import { sanity, urlFor } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import Image from 'next/image';

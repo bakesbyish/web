@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 import { Layout } from '@components/layout/layout';
 import { Meta } from '@components/seo/metatags';
 import { Collections } from '@components/utils/collections-card';
@@ -7,7 +6,6 @@ import { Loader } from '@components/utils/loader';
 import { Trending } from '@components/utils/trending';
 import { ICollectionCard, ICollectionProduct } from '@interfaces/products';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { client } from 'config/apollo';
 import { sanity, urlFor } from 'config/sanity';
 import { collection } from 'firebase/firestore';
 import { GetStaticProps } from 'next';
