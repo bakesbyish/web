@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useInView } from 'react-cool-inview';
+import toast from 'react-hot-toast';
 import { useCart } from 'react-use-cart';
 import useSWRInfinite from 'swr/infinite';
 
@@ -110,6 +111,7 @@ export const ShopProducts = (props: {
                     price: product.price,
                   } as ICart;
 
+                  toast(`${product.title} added to cart`);
                   addItem(selectedProduct, 1);
                 }}
                 className="w-6 h-6 mt-5 cursor-pointer"

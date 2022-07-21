@@ -23,10 +23,10 @@ import { ResetPassword } from '@components/auth/reset-password';
 import Link from 'next/link';
 import { useBakesbyIshcontext } from '@context/context';
 import { useRouter } from 'next/router';
+import { classNames } from '@lib/utils';
 
 export default function Login() {
-
-	const { mutate } = useBakesbyIshcontext();
+  const { mutate } = useBakesbyIshcontext();
 
   const [passwordVisible, setPasswordVisble] = useState<boolean>(false);
   const [resetPassword, setResetPassword] = useState<boolean>(false);
@@ -34,7 +34,7 @@ export default function Login() {
 
   const [loading] = useProvider();
 
-	const router = useRouter();
+  const router = useRouter();
 
   const formSchema = yup.object().shape({
     email: yup
@@ -65,8 +65,8 @@ export default function Login() {
 
         try {
           await createSession(idToken);
-					mutate();
-					router.push("/")
+          mutate();
+          router.push('/');
         } catch (error) {
           setLogginIn(false);
           console.error(error);
@@ -116,7 +116,10 @@ export default function Login() {
                   onClick={() =>
                     signInWithRedirect(auth, new GoogleAuthProvider())
                   }
-                  className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
+                  className={classNames(
+                    'focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg',
+                    'border-gray-700 flex items-center w-full mt-10'
+                  )}
                 >
                   <GoogleIcon width={5} height={5} />
                   <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -129,7 +132,10 @@ export default function Login() {
                   onClick={() =>
                     signInWithRedirect(auth, new FacebookAuthProvider())
                   }
-                  className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4"
+                  className={classNames(
+                    'focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg',
+                    'border-gray-700 flex items-center w-full mt-4'
+                  )}
                 >
                   <FacebookIcon height={5} width={5} />
                   <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -142,7 +148,10 @@ export default function Login() {
                   onClick={() =>
                     signInWithRedirect(auth, new TwitterAuthProvider())
                   }
-                  className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4"
+                  className={classNames(
+                    'focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700',
+                    'flex items-center w-full mt-4'
+                  )}
                 >
                   <TwitterIcon width={5} height={5} />
                   <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -203,7 +212,10 @@ export default function Login() {
                       role="button"
                       aria-label="Login"
                       disabled={logginIn}
-                      className="focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full"
+                      className={classNames(
+                        'focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none',
+                        'text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full'
+                      )}
                     >
                       {logginIn ? <Loader width={4} height={4} /> : 'Login'}
                     </button>

@@ -8,6 +8,7 @@ import { getPrefixForTheDay } from '@lib/utils';
 import { db } from 'config/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Dispatch, SetStateAction, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Item } from './item';
 import { OrderStatusIcon } from './order-status-icon';
 
@@ -45,7 +46,7 @@ export const Order = (props: {
         <div className="flex justify-start item-start space-y-2 flex-col ">
           <h1
             onClick={() => {
-              // Notify the user via a toast
+              toast.success('order# copied to clipboard');
               navigator.clipboard.writeText(oid);
             }}
             className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all"

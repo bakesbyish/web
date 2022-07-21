@@ -23,6 +23,7 @@ import { useRouter } from 'next/router';
 import { send } from 'process';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useCart } from 'react-use-cart';
 import * as yup from 'yup';
 
@@ -94,8 +95,8 @@ export const Checkout = (props: {
 
     const status = await notifyOrder(items, data, discountCode);
 
-    // Add a toast if fails
     if (Number(status) !== 200) {
+      toast.error('Something went wrong please try again');
       setLoading(false);
       return;
     }

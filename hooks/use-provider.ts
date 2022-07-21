@@ -4,6 +4,7 @@ import { auth } from 'config/firebase';
 import { getAdditionalUserInfo, getRedirectResult } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 /**
  * @description - Get the result from the redirect and sign in the user
@@ -23,6 +24,7 @@ export const useProvider = (): [
         setLoading(true);
 
         if (getAdditionalUserInfo(result)?.isNewUser) {
+          toast.loading('Creating account');
           const { uid, displayName, email } = result.user;
 
           // Generate a username for the user
@@ -42,7 +44,13 @@ export const useProvider = (): [
               displayName as string,
               photoURL
             );
+
+            toast.dismiss();
+            toast.success('Account created succsessfullt');
           } catch (error) {
+            toast.error(
+              'An error occured while creating your,Please try again later'
+            );
             setLoading(false);
             console.error(error);
           }

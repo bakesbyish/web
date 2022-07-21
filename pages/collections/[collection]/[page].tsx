@@ -3,7 +3,7 @@ import { Loader } from '@components/utils/loader';
 import { ICart, ICollectionProduct } from '@interfaces/products';
 import { ICollection } from '@interfaces/collections';
 import { db } from 'config/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
@@ -15,6 +15,7 @@ import { Layout } from '@components/layout/layout';
 import { CollectionPagination } from '@components/pagination/collections';
 import { sanity } from 'config/sanity';
 import { useCart } from 'react-use-cart';
+import toast from 'react-hot-toast';
 
 const LIMIT = 20;
 
@@ -98,6 +99,7 @@ export default function Page(props: {
                         price: product.price,
                       } as ICart;
 
+                      toast(`${product.title} added to cart`);
                       addItem(selectedProduct, 1);
                     }}
                     className="w-6 h-6 mt-5"

@@ -23,6 +23,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { commitUserData, createSession } from '@lib/auth';
 import { useBakesbyIshcontext } from '@context/context';
 import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 export default function Register() {
   const { mutate } = useBakesbyIshcontext();
@@ -68,6 +69,7 @@ export default function Register() {
 
   const onFormSubmit = (data: IFormInputs) => {
     const { email, password } = data;
+    toast.loading('Creating account');
     setCreatingAccount(true);
 
     createUserWithEmailAndPassword(auth, email, password).then(
@@ -94,9 +96,14 @@ export default function Register() {
           const idToken = await user.getIdToken();
 
           await createSession(idToken);
+          toast.dismiss();
+          toast.success('Account created succsessfully');
           mutate();
           router.push('/');
         } catch (error) {
+          toast.error(
+            'An error occurred while creating the account,please try again'
+          );
           setCreatingAccount(false);
           console.log(error);
         }

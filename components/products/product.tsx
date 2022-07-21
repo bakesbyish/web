@@ -15,6 +15,7 @@ import { db } from 'config/firebase';
 import { database } from '@interfaces/firestore';
 import { doc } from 'firebase/firestore';
 import { GetColorName } from 'hex-color-to-color-name';
+import toast from 'react-hot-toast';
 
 export const Product = (props: { product: IProduct; hearts: number }) => {
   const { user, validating } = useBakesbyIshcontext();
@@ -148,6 +149,7 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
       price: verifiedPrice,
     } as ICart;
 
+    toast(`${product.title} added to cart`);
     addItem(selectedProduct, qty);
   };
 
