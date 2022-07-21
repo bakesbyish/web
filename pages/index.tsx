@@ -12,7 +12,7 @@ import { sanity, urlFor } from 'config/sanity';
 import { collection } from 'firebase/firestore';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { useInView } from 'react-cool-inview';
 
 // Lazy loaded components

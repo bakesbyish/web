@@ -14,12 +14,13 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { db } from 'config/firebase';
 import { database } from '@interfaces/firestore';
 import { doc } from 'firebase/firestore';
+import { GetColorName } from 'hex-color-to-color-name';
 
 export const Product = (props: { product: IProduct; hearts: number }) => {
   const { user, validating } = useBakesbyIshcontext();
   const { product } = props;
 
-  const { addItem } = useCart();
+  const { addItem, getItem } = useCart();
 
   const [selectedVariant, setSelectedVariant] = useState(
     product.hasVariants ? product.productVariants[0] : null
@@ -98,14 +99,47 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
   const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const id = selectedVariant
+      ? selectedVariantColor
+        ? `${product.sku}-${selectedVariant.name}-${selectedVariantColor}`
+        : selectedColor
+        ? `${product.sku}-${selectedVariant.name}-${selectedColor}`
+        : `${product.sku}-${selectedVariant.name}`
+      : selectedColor
+      ? `${product.sku}-${selectedColor}`
+      : product.sku.toString();
+
+    const itemOnCart = getItem(id) as ICart | undefined;
+    const quantity = itemOnCart?.quantity ? qty + itemOnCart.quantity : qty;
+
+    const verifiedPrice = selectedVariant
+      ? selectedVariant.hasDiscounts
+        ? quantity >= (selectedVariant as any).discountedFrom
+          ? (selectedVariant.discountedPrice as number)
+          : (selectedVariant.price as number)
+        : product.hasDiscounts
+        ? quantity >= (product as any).discountedFrom
+          ? (product.discountedPrice as number)
+          : (selectedVariant.price as number)
+        : (product.price as number)
+      : product.hasDiscounts
+      ? quantity >= (product as any).discountedFrom
+        ? (product.discountedPrice as number)
+        : (product.price as number)
+      : (product.price as number);
+
     const selectedProduct = {
-      id: product.sku,
+      id,
       slug: product.slug,
       url: selectedVariant?.url || product.url,
       name: product.title,
-      color: selectedVariantColor || selectedColor,
+      color: selectedVariantColor
+        ? GetColorName(selectedVariantColor)
+        : selectedColor
+        ? GetColorName(selectedColor)
+        : null,
       size: selectedVariant?.name || null,
-      price: price,
+      price: verifiedPrice,
     } as ICart;
 
     addItem(selectedProduct, qty);
