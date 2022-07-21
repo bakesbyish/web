@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { Meta } from '@components/seo/metatags';
 import { Loader } from '@components/utils/loader';
-import { ICollectionProduct } from '@interfaces/products';
+import { ICart, ICollectionProduct } from '@interfaces/products';
 import { ICollection } from '@interfaces/collections';
 import { client } from 'config/apollo';
 import { db } from 'config/firebase';
@@ -16,6 +16,7 @@ import { ReactElement, useEffect } from 'react';
 import { Layout } from '@components/layout/layout';
 import { CollectionPagination } from '@components/pagination/collections';
 import { sanity } from 'config/sanity';
+import { useCart } from 'react-use-cart';
 
 const LIMIT = 20;
 
@@ -26,6 +27,7 @@ export default function Page(props: {
   collections: ICollection;
 }) {
   const { page, totalPages, products, collections } = props;
+  const { addItem } = useCart();
   const router = useRouter();
 
   // Display the loader if the page is generated for the first time
@@ -47,40 +49,65 @@ export default function Page(props: {
       />
 
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">
-				<h1 className="text-3xl font-bold mt-4 mb-8">Collections</h1>
-				<div className="flex items-center justify-center sm:gap-8 flex-wrap">
-					{products?.map((product) => (
-						<Link href={`/shop/${product.slug}`} key={product.sku} passHref>
-							<article className="group mt-6 sm:mt-0">
-								<div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-									<Image
-										src={product.image.url}
-										alt={product.title}
-										width={300}
-										height={300}
-										className="w-full h-full object-center object-cover group-hover:opacity-75"
-									/>
-								</div>
-								<div className="flex flex-row justify-between">
-									<div className="flex flex-col">
-										<h3 className="mt-4 text-sm text-gray-700 dark:text-white">
-											{product.title}
-										</h3>
-										<p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-											LKR {product.price}
-										</p>
-									</div>
+        <section className="flex flex-col items-center justify-center gap-2 mb-8 sm:mb-16">
+          <h1 className="text-3xl font-bold text-center">
+            {collections.catergory}
+          </h1>
+          <p className="break-words text-center">
+            {collections.catergoryDescription}
+          </p>
+        </section>
+        <div className="flex items-center justify-center sm:gap-8 flex-wrap">
+          {products?.map((product) => (
+            <article key={product.sku} className="group mt-6 sm:mt-0">
+              <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+                <Link href={`/shop/${product.slug}`} passHref>
+                  <a>
+                    <Image
+                      src={product.image.url}
+                      alt={product.title}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-center object-cover group-hover:opacity-75"
+                    />
+                  </a>
+                </Link>
+              </div>
+              <div className="flex flex-row justify-between">
+                <div className="flex flex-col">
+                  <h3 className="mt-4 text-sm text-gray-700 dark:text-white">
+                    {product.title}
+                  </h3>
+                  <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
+                    LKR {product.price}
+                  </p>
+                </div>
 
-									{product.hasVariants ? (
-										<CogIcon className="w-6 h-6 mt-5" />
-									) : (
-										<ShoppingCartIcon className="w-6 h-6 mt-5" />
-									)}
-								</div>
-							</article>
-						</Link>
-					))}
-				</div>
+                {product.hasVariants ? (
+                  <CogIcon className="w-6 h-6 mt-5" />
+                ) : (
+                  <ShoppingCartIcon
+                    type="button"
+                    onClick={() => {
+                      const selectedProduct = {
+                        id: product.sku.toString(),
+                        slug: product.slug,
+                        name: product.title,
+                        url: product.image.url,
+                        color: null,
+                        size: null,
+                        price: product.price,
+                      } as ICart;
+
+                      addItem(selectedProduct, 1);
+                    }}
+                    className="w-6 h-6 mt-5"
+                  />
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
 
         <CollectionPagination
           page={page}

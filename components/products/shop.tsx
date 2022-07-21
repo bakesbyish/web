@@ -118,7 +118,7 @@ export const ShopProducts = (props: {
         </article>
       ))}
 
-      {!end && <button onClick={fetchMoreProducts}>Load More</button>}
+      {!end && <button  onClick={fetchMoreProducts}>Load More</button>}
     </>
   );
 };
