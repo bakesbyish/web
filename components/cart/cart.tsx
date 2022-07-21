@@ -5,10 +5,17 @@ import { useCart } from 'react-use-cart';
 import { useBakesbyIshcontext } from '@context/context';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ICart } from '@interfaces/products';
+import { classNames } from '@lib/utils';
 
 export const Cart = () => {
-  const { items, removeItem } = useCart();
+  const { items, removeItem } = useCart() as unknown as {
+    items: ICart[];
+    removeItem: (item: string) => void;
+  };
   const { cartOpen, setCartOpen } = useBakesbyIshcontext();
+
+  console.log(items[0]?.colorHex);
 
   return (
     <Transition.Root show={cartOpen} as={Fragment}>
@@ -67,7 +74,14 @@ export const Cart = () => {
                               <>
                                 {items.map((item) => (
                                   <li key={item.id} className="flex py-6">
-                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                    <div
+                                      style={{
+                                        border: item.colorHex
+                                          ? `solid ${item.colorHex}`
+                                          : 'solid #e2e8f0',
+                                      }}
+                                      className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md"
+                                    >
                                       <Link
                                         href={`/shop/${item.slug}`}
                                         passHref
@@ -155,7 +169,10 @@ export const Cart = () => {
                           <a
                             onClick={() => setCartOpen(false)}
                             href="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-rose-300 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-rose-400"
+                            className={classNames(
+                              'flex items-center justify-center rounded-md border border-transparent bg-rose-300 px-6 py-3',
+                              'text-base font-medium text-black shadow-sm hover:bg-rose-400'
+                            )}
                           >
                             Checkout
                           </a>

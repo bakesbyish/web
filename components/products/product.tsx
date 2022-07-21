@@ -139,6 +139,11 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
         : selectedColor
         ? GetColorName(selectedColor)
         : null,
+      colorHex: selectedVariantColor
+        ? selectedVariantColor
+        : selectedColor
+        ? selectedColor
+        : null,
       size: selectedVariant?.name || null,
       price: verifiedPrice,
     } as ICart;
