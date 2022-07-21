@@ -8,9 +8,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_FIREBASE_APP_ID: string;
     NEXT_PUBLIC_FIREBASE_DATABASE_URL: string;
     NEXT_PUBLIC_MEASUREMENT_ID: string;
-    NEXT_PUBLIC_ROUTE_USERNAME: string;
-    NEXT_PUBLIC_ROUTE_PASSOWORD: string;
-    NEXT_PUBLIC_GRAPHCMS_CONTENT_API: string;
     NEXT_PUBLIC_GOOGLE_MAPS_API: string;
     NEXT_PUBLIC_ALGOLIA_APP_ID: string;
     NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY: string;
@@ -21,8 +18,6 @@ declare namespace NodeJS {
     FIREBASE_ADMIN_PRIVATE_KEY: string;
     FIREBASE_ADMIN_STORAGE_BUCKET: string;
     SESSION_PASSWORD: string;
-    ROUTE_USERNAME: string;
-    ROUTE_PASSWORD: string;
     SEND_GRID_API: string;
     SMTP_USER: string;
     SMTP_PASSWORD: string;
