@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import algoliasearch from 'algoliasearch';
-import { client } from 'config/apollo';
-import { gql } from '@apollo/client';
+import { sanity } from 'config/sanity';
 
 // Initialize algolia index
 const algolia = algoliasearch(
@@ -19,63 +18,29 @@ export default async function addAllProducts(
     return res.status(405).send('Method not allowed');
   }
 
-  const { data } = (await client.query({
-    query: gql`
-      query {
-        products {
-          sku
-          title
-          slug
-          description
-          price
-          image {
-            url
-          }
-        }
-      }
-    `,
-  })) as {
-    data: {
-      products: {
-        sku: number;
-        title: string;
-        slug: string;
-        description: string;
-        price: number;
-        image: {
-          url: string;
-        };
-      }[];
-    };
-  };
+  const products = await sanity.fetch(
+    `*[_type == "products"] {
+				"objectID": sku,
+				title,
+				"slug": slug.current,
+				description,
+				price,
+				"image": image.asset -> url,
+				"variants": productVariants[] -> title
+			}`
+  );
 
-  if (!data) {
+  if (!products) {
     return res.status(500).send('Internal server error');
   }
 
   try {
-    const products = data.products.map((product) => {
-      return {
-        objectID: product.sku,
-        title: product.title,
-        slug: product.slug,
-        description: product.description,
-        price: product.price,
-        image: product.image.url,
-      };
-    });
-
-    try {
-      await index.saveObjects(products);
-      return res
-        .status(200)
-        .send('Algolia all products index updated succsessfully');
-    } catch (error) {
-      console.error(error);
-      return res.status(500).send('Error updating the algolia index');
-    }
+    await index.saveObjects(products);
+    return res
+      .status(200)
+      .send('Algolia all products index updated succsessfully');
   } catch (error) {
     console.error(error);
-    return res.status(500).send('Internal server error');
+    return res.status(500).send('Error updating the algolia index');
   }
 }
