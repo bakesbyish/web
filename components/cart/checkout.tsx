@@ -144,7 +144,7 @@ export const Checkout = (props: {
 
   return items.length ? (
     <>
-      <main className="flex flex-col items-center justify-center py-20">
+      <main className="flex flex-col items-center justify-center py-10 sm:py-20">
         <div className="lg:min-h-full lg:overflow-hidden lg:flex lg:flex-row-reverse">
           <div className="px-4 py-6 sm:px-6 lg:hidden">
             <div className="max-w-lg mx-auto flex">
@@ -168,9 +168,9 @@ export const Checkout = (props: {
           {/* Mobile order summary */}
           <section
             aria-labelledby="order-heading"
-            className="bg-gray-50 dark:bg-gray-900 px-4 py-6 sm:px-6 lg:hidden"
+            className="bg-gray-50 dark:bg-gray-900 py-6 lg:hidden"
           >
-            <Disclosure as="div" className="max-w-lg mx-auto">
+            <Disclosure as="div" className="w-80 px-2 mx-auto">
               {({ open }) => (
                 <>
                   <div className="flex items-center justify-between">
@@ -199,8 +199,8 @@ export const Checkout = (props: {
                           <Image
                             src={item.url}
                             alt={item.name}
-                            width={200}
-                            height={200}
+                            width={125}
+                            height={125}
                             className="flex-none w-40 h-40 object-center object-cover bg-gray-200 rounded-md"
                           />
                           <div className="flex flex-col justify-between space-y-4">
