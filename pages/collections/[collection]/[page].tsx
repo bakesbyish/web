@@ -41,14 +41,6 @@ export default function Page(props: {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta
-        title={collections.catergory}
-        url={`https://bakesbyish.com/collections/${collections.catergorySlug}/${page}`}
-        description={collections.catergoryDescription}
-        image={collections.image.url}
-        collectionSlug={collections.catergorySlug}
-      />
-
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">
         <section className="flex flex-col items-center justify-center gap-2 mb-8 sm:mb-16">
           <h1 className="text-3xl font-bold text-center">

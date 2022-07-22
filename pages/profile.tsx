@@ -3,7 +3,7 @@ import { Border } from '@components/profile/border';
 import { Notifications } from '@components/profile/notifications';
 import { PersonalInformation } from '@components/profile/personal-information';
 import { Profile } from '@components/profile/profile';
-import { Meta } from '@components/seo/metatags';
+import { DefaultSeo } from '@components/seo/default';
 import { Loader } from '@components/utils/loader';
 import { ProfileContext } from '@context/profile';
 import { database, IUser, IUserDocument } from '@interfaces/firestore';
@@ -23,30 +23,35 @@ export default function ProfilePage(props: { uid: string }) {
   ) as unknown[] as [IUserDocument | undefined, boolean];
 
   return !loading ? (
-    <ProfileContext.Provider
-      value={{
-        user,
-      }}
-    >
-      <div className="flex flex-col items-center justify-center min-h-screen py-20">
-        <Meta
-          title={"Manage your profile"}
-          url={'https://bakesbyish.com/profile'}
-        />
-
-        <main className="flex flex-col items-center justify-center max-w-7xl">
-          <Profile />
-          <Border />
-          <PersonalInformation />
-          <Border />
-          <Notifications />
-        </main>
-      </div>
-    </ProfileContext.Provider>
+    <>
+      <DefaultSeo
+        title={user?.displayName || 'Profile'}
+        disableRobots={true}
+        url={'/profile'}
+      />
+      <ProfileContext.Provider
+        value={{
+          user,
+        }}
+      >
+        <div className="flex flex-col items-center justify-center min-h-screen py-20">
+          <main className="flex flex-col items-center justify-center max-w-7xl">
+            <Profile />
+            <Border />
+            <PersonalInformation />
+            <Border />
+            <Notifications />
+          </main>
+        </div>
+      </ProfileContext.Provider>
+    </>
   ) : (
-    <main className="flex flex-col items-center justify-center min-h-screen">
-      <Loader />
-    </main>
+    <>
+      <DefaultSeo title={'Profile'} disableRobots={true} url={'/login'} />
+      <main className="flex flex-col items-center justify-center min-h-screen">
+        <Loader />
+      </main>
+    </>
   );
 }
 

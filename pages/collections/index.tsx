@@ -1,5 +1,5 @@
 import { Layout } from '@components/layout/layout';
-import { Meta } from '@components/seo/metatags';
+import { DefaultSeo } from '@components/seo/default';
 import { ICollection } from '@interfaces/collections';
 import { classNames } from '@lib/utils';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
@@ -14,11 +14,11 @@ export default function Collections(props: { catergories: ICollection[] }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta
-        title={'Browse all the collections'}
-        url={'https://bakesbyish.com/collections'}
+      <DefaultSeo
+        title={'Collections'}
+        description={'Browse all categoriess in one convinent place'}
+				url={'/collections'}
       />
-
       <main className="bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto py-16 sm:py-24 lg:py-32 lg:max-w-none">

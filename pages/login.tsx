@@ -1,5 +1,4 @@
 import { Layout } from '@components/layout/layout';
-import { Meta } from '@components/seo/metatags';
 import { EyeIcon } from '@heroicons/react/outline';
 import { FacebookIcon } from '@components/icons/facebook';
 import { ReactElement, useState } from 'react';
@@ -24,6 +23,7 @@ import Link from 'next/link';
 import { useBakesbyIshcontext } from '@context/context';
 import { useRouter } from 'next/router';
 import { classNames } from '@lib/utils';
+import { DefaultSeo } from '@components/seo/default';
 
 export default function Login() {
   const { mutate } = useBakesbyIshcontext();
@@ -79,8 +79,12 @@ export default function Login() {
   };
 
   return !loading ? (
-    <div>
-      <Meta title={"Login"} url={'https://bakesbyish.com/login'} />
+    <>
+      <DefaultSeo
+        title={'Login'}
+        description={'Login to your account'}
+        url={'/login'}
+      />
 
       <main>
         <div className="min-h-screen bg-white dark:bg-gray-800 w-full pt-0 pb-16 sm:py-16 px-4">
@@ -238,7 +242,7 @@ export default function Login() {
           </div>
         </div>
       </main>
-    </div>
+    </>
   ) : (
     <main className="flex flex-col items-center justify-center min-h-screen">
       <Loader />

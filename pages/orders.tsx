@@ -1,6 +1,6 @@
 import { Layout } from '@components/layout/layout';
 import { Order } from '@components/orders/order';
-import { Meta } from '@components/seo/metatags';
+import { DefaultSeo } from '@components/seo/default';
 import { Loader } from '@components/utils/loader';
 import { useBakesbyIshcontext } from '@context/context';
 import { database, IOrder } from '@interfaces/firestore';
@@ -107,11 +107,7 @@ export default function Orders(props: { uid: string }) {
 
   return !loading ? (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta
-        title={"Your previous orders"}
-        url={'https://bakesbyish.com/orders'}
-      />
-
+      <DefaultSeo title={'Your orders'} disableRobots={true} url={'/orders'} />
       {orders.length ? (
         <main className="flex flex-col items-center justify-center py-20">
           <h1 className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all">

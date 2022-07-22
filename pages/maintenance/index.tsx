@@ -1,13 +1,13 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import { AddEmail } from '@components/mail/add-email';
+import { DefaultSeo } from '@components/seo/default';
 
 export default function Maintenance() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Head>
-        <title>Under maintenance</title>
-      </Head>
+			<DefaultSeo
+				title={"Under maintainance"}
+			/>
       <main className="container">
         <nav className="flex flex-row items-center justify-center gap-2 mt-16">
           <Image

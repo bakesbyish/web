@@ -1,5 +1,4 @@
 import { Layout } from '@components/layout/layout';
-import { Meta } from '@components/seo/metatags';
 import { GetServerSideProps } from 'next';
 import { ReactElement, useEffect, useRef, useState } from 'react';
 import { findResultsState } from 'react-instantsearch-dom/server';
@@ -48,11 +47,6 @@ export default function SearchPage(props: {
 
   return (
     <div className="felx flex-col items-center justify-center min-h-screen">
-      <Meta
-        title={"Search"}
-        url={"https://bakesbyish.com/search"}
-        description={"Search all products"}
-      />
 
       <main className="flex flex-col items-center justify-center mt-10">
         <Search

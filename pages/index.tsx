@@ -1,5 +1,5 @@
 import { Layout } from '@components/layout/layout';
-import { Meta } from '@components/seo/metatags';
+import { DefaultSeo } from '@components/seo/default';
 import { Collections } from '@components/utils/collections-card';
 import { Hero } from '@components/utils/hero';
 import { Loader } from '@components/utils/loader';
@@ -44,8 +44,7 @@ export default function Home(props: {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta title={'Home'} url={"https://bakesbyish.com"} />
-
+      <DefaultSeo />
       <main className="flex flex-col items-center justify-center">
         <Hero />
         <Trending trendingProducts={trendingProducts} />

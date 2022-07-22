@@ -5,9 +5,9 @@ import { ThemeProvider } from 'next-themes';
 import { CartProvider } from 'react-use-cart';
 import { BakesbyIshContext } from '@context/context';
 import { useUserData } from '@hooks/use-user-data';
-import '../styles/globals.css';
 import { ProgressBar } from '@components/utils/progress';
 import { Toast } from '@components/utils/toast';
+import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

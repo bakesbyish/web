@@ -1,5 +1,4 @@
 import { Layout } from '@components/layout/layout';
-import { Meta } from '@components/seo/metatags';
 import { EyeIcon } from '@heroicons/react/outline';
 import { FacebookIcon } from '@components/icons/facebook';
 import { ReactElement, useState } from 'react';
@@ -24,6 +23,8 @@ import { commitUserData, createSession } from '@lib/auth';
 import { useBakesbyIshcontext } from '@context/context';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { classNames } from '@lib/utils';
+import { DefaultSeo } from '@components/seo/default';
 
 export default function Register() {
   const { mutate } = useBakesbyIshcontext();
@@ -112,9 +113,14 @@ export default function Register() {
   };
 
   return !loading ? (
-    <div>
-      <Meta title={"Register"} url={'https://bakesbyish.com/register'} />
-
+    <>
+      <DefaultSeo
+        title={'Register'}
+        description={
+          'Register with Bakes By Ish to easily manage, review and schedule your baking orders'
+        }
+        url={'/register'}
+      />
       <main>
         <div className="h-full bg-white dark:bg-gray-800 w-full pt-0 pb-16 sm:py-16 px-4">
           <div className="flex flex-col items-center justify-center">
@@ -148,7 +154,10 @@ export default function Register() {
                 onClick={() =>
                   signInWithRedirect(auth, new GoogleAuthProvider())
                 }
-                className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
+                className={classNames(
+                  'focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700',
+                  'flex items-center w-full mt-10'
+                )}
               >
                 <GoogleIcon width={5} height={5} />
                 <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -161,7 +170,10 @@ export default function Register() {
                 onClick={() =>
                   signInWithRedirect(auth, new FacebookAuthProvider())
                 }
-                className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4"
+                className={classNames(
+                  'focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border',
+                  'rounded-lg border-gray-700 flex items-center w-full mt-4'
+                )}
               >
                 <FacebookIcon height={5} width={5} />
                 <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -174,7 +186,10 @@ export default function Register() {
                 onClick={() =>
                   signInWithRedirect(auth, new TwitterAuthProvider())
                 }
-                className="focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-4"
+                className={classNames(
+                  'focus:outline-none  focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg',
+                  'border-gray-700 flex items-center w-full mt-4'
+                )}
               >
                 <TwitterIcon width={5} height={5} />
                 <p className="text-base font-medium ml-4 text-gray-700 dark:text-white">
@@ -260,7 +275,10 @@ export default function Register() {
                   <button
                     role="button"
                     aria-label="create my account"
-                    className="focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full"
+                    className={classNames(
+                      'focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black',
+                      'focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full'
+                    )}
                   >
                     {creatingAccount ? (
                       <Loader width={4} height={4} />
@@ -274,7 +292,7 @@ export default function Register() {
           </div>
         </div>
       </main>
-    </div>
+    </>
   ) : (
     <main className="flex flex-col items-center justify-center min-h-screen">
       <Loader />

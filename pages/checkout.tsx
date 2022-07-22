@@ -1,3 +1,4 @@
+import { DefaultSeo } from '@components/seo/default';
 import { Loader } from '@components/utils/loader';
 import { database, IAddress, IUserDocument } from '@interfaces/firestore';
 import { ISession } from '@interfaces/session';
@@ -21,6 +22,11 @@ export default function Checkout(props: {
 
   return (
     <div className="flex flex-col item-center justify-center min-h-screen">
+      <DefaultSeo
+        title={'Checkout'}
+        description={'Get your items to your home and pay later'}
+        url={'/checkout'}
+      />
       <CheckoutComponent address={address} contactNumber={contactNumber} />
     </div>
   );
