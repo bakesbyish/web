@@ -190,7 +190,7 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
           <div className="mt-4 lg:mt-0 lg:row-span-3">
             <h2 className="sr-only">Product information</h2>
             <p className="text-3xl text-gray-900 dark:text-white">
-              LKR {price}
+              LKR {price.toLocaleString()}
             </p>
 
             {/* Hearts */}

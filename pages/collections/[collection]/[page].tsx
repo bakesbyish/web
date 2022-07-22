@@ -78,7 +78,7 @@ export default function Page(props: {
                     {product.title}
                   </h3>
                   <p className="mt-1 text-lg font-medium text-gray-900 dark:text-white">
-                    LKR {product.price}
+                    LKR {product.price?.toLocaleString()}
                   </p>
                 </div>
 

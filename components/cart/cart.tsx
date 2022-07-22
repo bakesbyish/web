@@ -104,7 +104,9 @@ export const Cart = () => {
                                               <a>{item.name}</a>
                                             </Link>
                                           </h3>
-                                          <p className="ml-4">{item.price}</p>
+                                          <p className="ml-4">
+                                            {item.price.toLocaleString()}
+                                          </p>
                                         </div>
                                         <p className="mt-1 text-sm text-gray-500 dark:text-white/80">
                                           {item.size ? item.size : null}
@@ -149,14 +151,15 @@ export const Cart = () => {
                         <p>Subtotal</p>
                         <p>
                           LKR{' '}
-                          {items.length
+                          {(items.length
                             ? items.reduce(
                                 (appended, current) =>
                                   appended +
                                   (current.itemTotal ? current.itemTotal : 0),
                                 0
                               )
-                            : 0}
+                            : 0
+                          ).toLocaleString()}
                         </p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500 dark:text-white/80">

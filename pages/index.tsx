@@ -13,7 +13,6 @@ import dynamic from 'next/dynamic';
 import { ReactElement, useState } from 'react';
 import { useInView } from 'react-cool-inview';
 
-// Lazy loaded components
 const Newsletter = dynamic<any>(
   () => import('@components/utils/newsletter').then((mod) => mod.Newsletter),
   {

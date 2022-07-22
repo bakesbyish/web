@@ -209,7 +209,7 @@ export const Checkout = (props: {
                                 {item.name}
                               </h3>
                               <p className="text-gray-900 dark:text-white">
-                                LKR {item.price}
+                                LKR {item.price.toLocaleString()}
                               </p>
                               <p className="text-gray-500 dark:text-white/80">
                                 {item.color}
@@ -281,7 +281,7 @@ export const Checkout = (props: {
                       <div className="flex justify-between">
                         <dt>Subtotal</dt>
                         <dd className="text-gray-900 dark:text-white">
-                          LKR {subtotal}
+                          LKR {subtotal.toLocaleString()}
                         </dd>
                       </div>
 
@@ -294,7 +294,7 @@ export const Checkout = (props: {
                             </span>
                           </dt>
                           <dd className="text-gray-900 dark:text-white">
-                            - LKR {discount}
+                            - LKR {discount.toLocaleString()}
                           </dd>
                         </div>
                       )}
@@ -304,7 +304,10 @@ export const Checkout = (props: {
                   <p className="flex items-center justify-between text-sm font-medium text-gray-900 dark:text-white border-t border-gray-200 pt-6 mt-6">
                     <span className="text-base">Total</span>
                     <span className="text-base">
-                      LKR {discount ? subtotal - discount : subtotal}
+                      LKR{' '}
+                      {discount
+                        ? (subtotal - discount).toLocaleString()
+                        : subtotal.toLocaleString()}
                     </span>
                   </p>
                 </>
@@ -340,7 +343,7 @@ export const Checkout = (props: {
                         {item.name}
                       </h3>
                       <p className="text-gray-900 dark:text-white">
-                        LKR {item.price}
+                        LKR {item.price.toLocaleString()}
                       </p>
                       <p className="text-gray-500 dark:text-white/80">
                         {item.color}
@@ -410,7 +413,7 @@ export const Checkout = (props: {
                 <div className="flex justify-between">
                   <dt>Subtotal</dt>
                   <dd className="text-gray-900 dark:text-white">
-                    LKR {subtotal}
+                    LKR {subtotal.toLocaleString()}
                   </dd>
                 </div>
 
@@ -423,7 +426,7 @@ export const Checkout = (props: {
                       </span>
                     </dt>
                     <dd className="text-gray-900 dark:text-white">
-                      - LKR {discount}
+                      - LKR {discount.toLocaleString()}
                     </dd>
                   </div>
                 )}
@@ -431,7 +434,10 @@ export const Checkout = (props: {
                 <div className="flex items-center justify-between border-t border-gray-200 dark:border-slate-400 text-gray-900 dark:text-white pt-6">
                   <dt className="text-base">Total</dt>
                   <dd className="text-base">
-                    LKR {discount ? subtotal - discount : subtotal}
+                    LKR{' '}
+                    {discount
+                      ? (subtotal - discount).toLocaleString()
+                      : subtotal.toLocaleString()}
                   </dd>
                 </div>
               </dl>
@@ -565,7 +571,12 @@ export const Checkout = (props: {
                   {loading ? (
                     <Loader width={5} height={5} />
                   ) : (
-                    <>Pay LKR {discount ? subtotal - discount : subtotal}</>
+                    <>
+                      Pay LKR{' '}
+                      {discount
+                        ? (subtotal - discount).toLocaleString()
+                        : subtotal.toLocaleString()}
+                    </>
                   )}
                 </button>
               </form>
