@@ -11,6 +11,7 @@ import { collection } from 'firebase/firestore';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import { ReactElement, useState } from 'react';
+import { useInView } from 'react-cool-inview';
 
 // Lazy loaded components
 const Newsletter = dynamic<any>(
@@ -38,6 +39,10 @@ export default function Home(props: {
 }) {
   const { trendingProducts, collections } = props;
 
+  const { observe, inView } = useInView({
+    onEnter: ({ unobserve }) => unobserve(),
+  });
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Meta title={'Home'} />
@@ -46,8 +51,14 @@ export default function Home(props: {
         <Hero />
         <Trending trendingProducts={trendingProducts} />
         <Collections collections={collections} />
-        <Newsletter />
-        <GeoLocation />
+        <div ref={observe} className="w-full">
+          {inView ? (
+            <>
+              <Newsletter />
+              <GeoLocation />
+            </>
+          ) : null}
+        </div>
       </main>
     </div>
   );
