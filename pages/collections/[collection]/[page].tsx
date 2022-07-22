@@ -43,8 +43,10 @@ export default function Page(props: {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Meta
         title={collections.catergory}
+        url={`https://bakesbyish.com/collections/${collections.catergorySlug}/${page}`}
         description={collections.catergoryDescription}
         image={collections.image.url}
+        collectionSlug={collections.catergorySlug}
       />
 
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">

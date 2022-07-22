@@ -14,7 +14,10 @@ export default function Collections(props: { catergories: ICollection[] }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta title="Browse all the collections" />
+      <Meta
+        title={'Browse all the collections'}
+        url={'https://bakesbyish.com/collections'}
+      />
 
       <main className="bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

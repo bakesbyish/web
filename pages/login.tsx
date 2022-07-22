@@ -80,7 +80,7 @@ export default function Login() {
 
   return !loading ? (
     <div>
-      <Meta title="Login" />
+      <Meta title={"Login"} url={'https://bakesbyish.com/login'} />
 
       <main>
         <div className="min-h-screen bg-white dark:bg-gray-800 w-full pt-0 pb-16 sm:py-16 px-4">

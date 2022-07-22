@@ -21,6 +21,7 @@ export default function Shop(props: {
         description={
           'Island wide delivery, for the finest and higest quality cake tools for the lowest possible price'
         }
+        url={'https://bakesbyish.com/shop'}
       />
 
       <main className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 py-10">

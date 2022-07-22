@@ -48,7 +48,11 @@ export default function SearchPage(props: {
 
   return (
     <div className="felx flex-col items-center justify-center min-h-screen">
-      <Meta title="Search" />
+      <Meta
+        title={"Search"}
+        url={"https://bakesbyish.com/search"}
+        description={"Search all products"}
+      />
 
       <main className="flex flex-col items-center justify-center mt-10">
         <Search

@@ -31,9 +31,37 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <Meta
         title={product.title}
+        url={`https://bakesbyish.com/shop/${product.slug}`}
         description={product.description}
         image={product.url}
         price={product.price.toString()}
+        slug={product.slug}
+        html={`
+					{
+						"@context": "https://schema.org/",
+						"@type": "Product",
+						"name": "${product.title}",
+						"image": [
+							"${product.url}",
+						 ],
+						"description": "${product.description}",
+						"sku": "${product.sku}",
+						},
+						"aggregateRating": {
+							"@type": "AggregateRating",
+							"ratingValue": "${hearts}",
+							"reviewCount": "${hearts}"
+						},
+						"offers": {
+							"@type": "Offer",
+							"url": "https://bakesbyish.com/shop/${product.slug}",
+							"priceCurrency": "LKR",
+							"price": "${product.price}",
+							"itemCondition": "https://schema.org/UsedCondition",
+							"availability": "https://schema.org/InStock"
+						}
+					}
+				`}
       />
 
       <main className="flex flex-col items-center justify-center py-10">

@@ -44,7 +44,7 @@ export default function Home(props: {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta title={'Home'} />
+      <Meta title={'Home'} url={"https://bakesbyish.com"} />
 
       <main className="flex flex-col items-center justify-center">
         <Hero />

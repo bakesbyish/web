@@ -113,7 +113,7 @@ export default function Register() {
 
   return !loading ? (
     <div>
-      <Meta title="Register" />
+      <Meta title={"Register"} url={'https://bakesbyish.com/register'} />
 
       <main>
         <div className="h-full bg-white dark:bg-gray-800 w-full pt-0 pb-16 sm:py-16 px-4">

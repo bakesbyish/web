@@ -107,7 +107,10 @@ export default function Orders(props: { uid: string }) {
 
   return !loading ? (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <Meta title="Your previous orders" />
+      <Meta
+        title={"Your previous orders"}
+        url={'https://bakesbyish.com/orders'}
+      />
 
       {orders.length ? (
         <main className="flex flex-col items-center justify-center py-20">

@@ -29,7 +29,10 @@ export default function ProfilePage(props: { uid: string }) {
       }}
     >
       <div className="flex flex-col items-center justify-center min-h-screen py-20">
-        <Meta title="Manage your profile" />
+        <Meta
+          title={"Manage your profile"}
+          url={'https://bakesbyish.com/profile'}
+        />
 
         <main className="flex flex-col items-center justify-center max-w-7xl">
           <Profile />
