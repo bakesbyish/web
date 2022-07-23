@@ -8,10 +8,7 @@ interface IDefaultSeo {
   disableRobots?: boolean;
 }
 
-const URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://www.bakesbyish.com'
-    : 'https://develop.bakesbyish.com';
+const URL = 'https://develop.bakesbyish.com';
 
 export const DefaultSeo = (props: IDefaultSeo) => {
   const title = props.title ? `${props.title} | Bakes By Ish` : 'Bakes By Ish';
