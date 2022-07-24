@@ -15,7 +15,7 @@ export const DefaultSeo = (props: IDefaultSeo) => {
   const description = props.description
     ? props.description
     : 'The one stope for all your baking needs';
-  const image = props.image ? props.image : `${URL}/banner.webp`;
+  const image = props.image ? props.image : `${URL}/banner.jpg`;
   const url = props.url ? `${URL}${props.url}` : URL;
   const robots = props.disableRobots ? true : false;
 
