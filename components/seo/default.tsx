@@ -29,27 +29,23 @@ export const DefaultSeo = (props: IDefaultSeo) => {
       <link rel="canonical" href={url} />
 
       {/* OpenGraph metatags */}
-      <meta property="og:title" content={title} key="ogtitle" />
-      <meta property="og:description" content={description} key="ogdesc" />
-      <meta property="og:url" content={url} key="ogurl" />
-      <meta property="og:image" content={image} key="ogimage" />
-      <meta property="og:site_name" content={'Bakes By Ish'} key="ogsitename" />
-      <meta property="og:title" content={title} key="ogtitle" />
-      <meta property="og:description" content={description} key="ogdesc" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={image} />
+      <meta property="og:site_name" content={'Bakes By Ish'} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
 
       {/* Twitter metatags */}
-      <meta name="twitter:card" content="summary" key="twcard" />
-      <meta name="twitter:creator" content={'@bakesbyish'} key="twhandle" />
-      <meta name="twitter:site" content="@bakesbyish" key="twsite" />
-      <meta
-        name="twitter:description"
-        content={description}
-        key="twdescription"
-      />
-      <meta name="twitter:image" content={image} key="twimage" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@bakesbyish" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={url} />
 
       {/* Facebook metatags */}
-      <meta property="fb:admins" content="221988029638214" key="fbadmin" />
+      <meta property="fb:admins" content="221988029638214" />
 
       {/* Hide the page from robots */}
       {robots ? <meta name="robots" content="noindex" /> : null}
