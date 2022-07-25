@@ -66,19 +66,6 @@ export const ShopSeo = (props: IShopSeo) => {
 							"@type": "Brand",
 							"name": "ACME"
 						},
-						"review": {
-							"@type": "Review",
-							"reviewRating": {
-								"@type": "Rating",
-								"ratingValue": "${hearts}",
-								"bestRating": "1"
-							}
-						},
-						"aggregateRating": {
-							"@type": "AggregateRating",
-							"ratingValue": "${hearts}",
-							"reviewCount": "${hearts}"
-						},
 						"offers": {
 							"@type": "Offer",
 							"url": "${url}",
