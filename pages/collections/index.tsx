@@ -17,7 +17,7 @@ export default function Collections(props: { catergories: ICollection[] }) {
       <DefaultSeo
         title={'Collections'}
         description={'Browse all categoriess in one convinent place'}
-				url={'/collections'}
+        url={'/collections'}
       />
       <main className="bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -15,6 +15,7 @@ import { CollectionPagination } from '@components/pagination/collections';
 import { sanity } from 'config/sanity';
 import { useCart } from 'react-use-cart';
 import toast from 'react-hot-toast';
+import { DefaultSeo } from '@components/seo/default';
 
 const LIMIT = 20;
 
@@ -40,6 +41,12 @@ export default function Page(props: {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
+      <DefaultSeo
+        title={collections.catergory}
+        description={collections.catergoryDescription}
+        image={collections.image.url}
+        url={`/collections/${collections.catergorySlug}`}
+      />
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">
         <section className="flex flex-col items-center justify-center gap-2 mb-8 sm:mb-16">
           <h1 className="text-3xl font-bold text-center">
