@@ -72,7 +72,7 @@ export const ShopSeo = (props: IShopSeo) => {
 								"@type": "Rating",
 								"ratingValue": "${hearts}",
 								"bestRating": "1"
-							},
+							}
 						},
 						"aggregateRating": {
 							"@type": "AggregateRating",
