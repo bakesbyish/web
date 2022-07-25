@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 interface IShopSeo {
+  sku: number;
   title: string;
   description: string;
   url: string;
@@ -11,7 +12,8 @@ interface IShopSeo {
 }
 
 export const ShopSeo = (props: IShopSeo) => {
-  const { title, description, url, image, price, slug, collection } = props;
+  const { sku, title, description, url, image, price, slug, collection } =
+    props;
   return (
     <Head>
       {/* Facebook */}
@@ -46,13 +48,10 @@ export const ShopSeo = (props: IShopSeo) => {
 						"@type": "Product",
 						"name": "Executive Anvil",
 						"image": [
-							"https://example.com/photos/1x1/photo.jpg",
-							"https://example.com/photos/4x3/photo.jpg",
-							"https://example.com/photos/16x9/photo.jpg"
+							"${image}",
 						 ],
-						"description": "Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height.",
-						"sku": "0446310786",
-						"mpn": "925872",
+						"description": "${description}",
+						"sku": "${sku}",
 						"brand": {
 							"@type": "Brand",
 							"name": "ACME"
@@ -64,10 +63,6 @@ export const ShopSeo = (props: IShopSeo) => {
 								"ratingValue": "4",
 								"bestRating": "5"
 							},
-							"author": {
-								"@type": "Person",
-								"name": "Fred Benson"
-							}
 						},
 						"aggregateRating": {
 							"@type": "AggregateRating",
@@ -76,10 +71,9 @@ export const ShopSeo = (props: IShopSeo) => {
 						},
 						"offers": {
 							"@type": "Offer",
-							"url": "https://example.com/anvil",
-							"priceCurrency": "USD",
-							"price": "119.99",
-							"priceValidUntil": "2020-11-20",
+							"url": "${url}",
+							"priceCurrency": "LKR",
+							"price": "${price}",
 							"itemCondition": "https://schema.org/UsedCondition",
 							"availability": "https://schema.org/InStock"
 						}
