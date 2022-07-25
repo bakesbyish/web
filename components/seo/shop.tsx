@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 interface IShopSeo {
-  sku: number;
+  sku: string;
   title: string;
   description: string;
   url: string;
