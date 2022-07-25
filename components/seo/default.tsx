@@ -38,11 +38,11 @@ export const DefaultSeo = (props: IDefaultSeo) => {
       <meta property="og:description" content={description} />
 
       {/* Twitter metatags */}
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@bakesbyish" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={url} />
+      <meta name="twitter:image" content={image} />
 
       {/* Facebook metatags */}
       <meta property="fb:admins" content="221988029638214" />
