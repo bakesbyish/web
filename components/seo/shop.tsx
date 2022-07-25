@@ -49,10 +49,47 @@ export const ShopSeo = (props: IShopSeo) => {
         <meta property="product:item_group_id" content={collection} />
       ) : null}
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {hearts ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `
+					{
+						"@context": "https://schema.org/",
+						"@type": "Product",
+						"name": "${title}",
+						"image": [
+							"${image}"
+						 ],
+						"description": "${description}",
+						"sku": "${sku}",
+						"brand": {
+							"@type": "Brand",
+							"name": "ACME"
+						},
+						"aggregateRating": {
+							"@type": "AggregateRating",
+							"ratingValue": "5",
+							"reviewCount": "${hearts}"
+						},
+						"offers": {
+							"@type": "Offer",
+							"url": "${url}",
+							"priceCurrency": "LKR",
+							"price": "${price}",
+							"itemCondition": "https://schema.org/UsedCondition",
+							"availability": "https://schema.org/InStock"
+						}
+					}
+					`,
+          }}
+          key="google-product-jsonld"
+        />
+      ) : (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: `
 					{
 						"@context": "https://schema.org/",
 						"@type": "Product",
@@ -76,9 +113,10 @@ export const ShopSeo = (props: IShopSeo) => {
 						}
 					}
 					`,
-        }}
-        key="google-product-jsonld"
-      />
+          }}
+          key="google-product-jsonld"
+        />
+      )}
     </Head>
   );
 };
