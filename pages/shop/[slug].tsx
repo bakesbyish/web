@@ -30,6 +30,7 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ShopSeo
+				sku={product.sku}
         title={product.title}
         description={product.description}
         url={`/shop/${product.slug}`}
