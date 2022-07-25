@@ -11,6 +11,7 @@ import { Comments } from '@components/comments/comments';
 import { sanity } from 'config/sanity';
 import { useRouter } from 'next/router';
 import { Loader } from '@components/utils/loader';
+import { ShopSeo } from '@components/seo/shop';
 
 export default function Slug(props: { product: IProduct; hearts: number }) {
   const { product, hearts } = props;
@@ -28,6 +29,16 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
+      <ShopSeo
+        title={product.title}
+        description={product.description}
+        url={`/shop/${product.slug}`}
+        image={product.url}
+        price={product.price}
+        slug={product.slug}
+        collection={product.hasCollections ? product.collections[0] : null}
+      />
+
       <main className="flex flex-col items-center justify-center py-10">
         <Product product={product} hearts={hearts} />
         <Comments slug={product.slug} />
@@ -69,6 +80,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 				description,
 				unit,
 				"hasDiscounts": discounted,
+				"hasCollections": defined(count(categories[] -> slug.current)),
+				"collections": categories[] -> slug.current,
 				"discountedFrom": discountedFrom,
 				"discountedPrice": discountedPrice,
 				"productVariants": productVariants[] -> {
