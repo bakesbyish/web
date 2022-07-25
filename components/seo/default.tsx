@@ -56,7 +56,7 @@ export const DefaultSeo = (props: IDefaultSeo) => {
       {/* Breadcrumbs for Google */}
       {paths ? (
         <script
-          type="application/ls+json"
+          type="application/ld+json"
           dangerouslySetInnerHTML={getBreadCrumbs(paths, URL)}
         />
       ) : null}

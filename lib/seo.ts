@@ -10,14 +10,16 @@ export const getBreadCrumbs = (
   paths: IPaths[],
   URL: string
 ): { __html: string } => {
-  const listItems: { [key: string]: string }[] = [];
+  const listItems: string[] = [];
   paths.map((path, index) => {
-    listItems.push({
-      '@type': 'ListItem',
-      position: (index + 1).toString(),
-      name: path.name,
-      item: `${URL}/${path.url}`,
-    });
+    listItems.push(
+      JSON.stringify({
+        '@type': 'ListItem',
+        position: (index + 1).toString(),
+        name: path.name,
+        item: `${URL}/${path.url}`,
+      })
+    );
   });
 
   return {
@@ -25,7 +27,7 @@ export const getBreadCrumbs = (
 		{
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "itemListElement": ${listItems}
+      "itemListElement": [${listItems.toString()}]
     }
 		`,
   };
