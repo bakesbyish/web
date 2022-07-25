@@ -16,7 +16,15 @@ export default function Shop(props: {
 
   return (
     <div className="flex flex-col items-center min-h-screen py-20">
-      <DefaultSeo title="Shop" />
+      <DefaultSeo
+        title="Shop"
+        paths={[
+          {
+            name: 'shop',
+            url: '/shop',
+          },
+        ]}
+      />
       <main className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 py-10">
         <SWRConfig value={{ fallback }}>
           <ShopProducts products={fallback.products} LIMIT={LIMIT} />

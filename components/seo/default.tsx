@@ -1,14 +1,16 @@
+import { IPaths } from '@interfaces/seo';
+import { getBreadCrumbs } from '@lib/seo';
+import { URL } from 'config';
 import Head from 'next/head';
 
 interface IDefaultSeo {
   title?: string;
   description?: string;
   image?: string;
+  paths?: IPaths[];
   url?: string;
   disableRobots?: boolean;
 }
-
-const URL = 'https://develop.bakesbyish.com';
 
 export const DefaultSeo = (props: IDefaultSeo) => {
   const title = props.title ? `${props.title} | Bakes By Ish` : 'Bakes By Ish';
@@ -16,6 +18,7 @@ export const DefaultSeo = (props: IDefaultSeo) => {
     ? props.description
     : 'The one stope for all your baking needs';
   const image = props.image ? props.image : `${URL}/banner.jpg`;
+  const paths = props.paths ? props.paths : null;
   const url = props.url ? `${URL}${props.url}` : URL;
   const robots = props.disableRobots ? true : false;
 
@@ -49,6 +52,14 @@ export const DefaultSeo = (props: IDefaultSeo) => {
 
       {/* Hide the page from robots */}
       {robots ? <meta name="robots" content="noindex" /> : null}
+
+      {/* Breadcrumbs for Google */}
+      {paths ? (
+        <script
+          type="application/ls+json"
+          dangerouslySetInnerHTML={getBreadCrumbs(paths, URL)}
+        />
+      ) : null}
     </Head>
   );
 };

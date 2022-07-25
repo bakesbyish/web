@@ -1,3 +1,6 @@
+import { IPaths } from '@interfaces/seo';
+import { getBreadCrumbs } from '@lib/seo';
+import { URL } from 'config';
 import Head from 'next/head';
 
 interface IShopSeo {
@@ -10,6 +13,7 @@ interface IShopSeo {
   slug: string;
   collection: string | null;
   hearts: number;
+  paths: IPaths[];
 }
 
 export const ShopSeo = (props: IShopSeo) => {
@@ -23,6 +27,7 @@ export const ShopSeo = (props: IShopSeo) => {
     slug,
     collection,
     hearts,
+    paths,
   } = props;
   return (
     <Head>
@@ -117,6 +122,11 @@ export const ShopSeo = (props: IShopSeo) => {
           key="google-product-jsonld"
         />
       )}
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={getBreadCrumbs(paths, URL)}
+      />
     </Head>
   );
 };

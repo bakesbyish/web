@@ -83,6 +83,12 @@ export default function Login() {
       <DefaultSeo
         title={'Login'}
         description={'Login to your account'}
+        paths={[
+          {
+            name: 'login',
+            url: '/login',
+          },
+        ]}
         url={'/login'}
       />
 

@@ -45,6 +45,16 @@ export default function Page(props: {
         title={collections.catergory}
         description={collections.catergoryDescription}
         image={collections.image.url}
+        paths={[
+          {
+            name: 'collections',
+            url: '/collections',
+          },
+          {
+            name: `${collections.catergory.toLowerCase()}`,
+            url: `/collections/${collections.catergorySlug}`,
+          },
+        ]}
         url={`/collections/${collections.catergorySlug}`}
       />
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">

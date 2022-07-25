@@ -119,6 +119,10 @@ export default function Register() {
         description={
           'Register with Bakes By Ish to easily manage, review and schedule your baking orders'
         }
+				paths={[{
+					name: 'register',
+					url: '/regsiter'
+				}]}
         url={'/register'}
       />
       <main>

@@ -39,6 +39,16 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
         slug={product.slug}
         collection={product.hasCollections ? product.collections[0] : null}
         hearts={hearts}
+        paths={[
+          {
+            name: 'shop',
+            url: '/shop',
+          },
+          {
+            name: `${product.title.toLowerCase()}`,
+            url: `/shop/${product.slug}`,
+          },
+        ]}
       />
 
       <main className="flex flex-col items-center justify-center py-10">

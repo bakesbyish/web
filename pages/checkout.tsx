@@ -25,6 +25,12 @@ export default function Checkout(props: {
       <DefaultSeo
         title={'Checkout'}
         description={'Get your items to your home and pay later'}
+        paths={[
+          {
+            name: 'checkout',
+            url: '/checkout',
+          },
+        ]}
         url={'/checkout'}
       />
       <CheckoutComponent address={address} contactNumber={contactNumber} />
