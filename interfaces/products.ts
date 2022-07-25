@@ -69,6 +69,8 @@ export interface IProduct {
   url: string;
   description: string;
   unit: null | string;
+  hasCollections: boolean;
+  collections: string[];
   hasDiscounts: boolean;
   discountedFrom: number | null;
   discountedPrice: number | null;
