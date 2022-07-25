@@ -56,9 +56,9 @@ export const ShopSeo = (props: IShopSeo) => {
 					{
 						"@context": "https://schema.org/",
 						"@type": "Product",
-						"name": "Executive Anvil",
+						"name": "${title}",
 						"image": [
-							"${image}",
+							"${image}"
 						 ],
 						"description": "${description}",
 						"sku": "${sku}",
