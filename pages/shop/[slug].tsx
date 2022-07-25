@@ -30,7 +30,7 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <ShopSeo
-				sku={product.sku}
+        sku={product.sku}
         title={product.title}
         description={product.description}
         url={`/shop/${product.slug}`}
@@ -38,6 +38,7 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
         price={product.price}
         slug={product.slug}
         collection={product.hasCollections ? product.collections[0] : null}
+        hearts={hearts}
       />
 
       <main className="flex flex-col items-center justify-center py-10">

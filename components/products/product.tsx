@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { HeartIcon } from '@heroicons/react/solid';
+import { CollectionIcon, HeartIcon } from '@heroicons/react/solid';
 import { RadioGroup } from '@headlessui/react';
 import { ICart, IProduct } from '@interfaces/products';
 import { classNames } from '@lib/utils';
@@ -16,6 +16,7 @@ import { database } from '@interfaces/firestore';
 import { doc } from 'firebase/firestore';
 import { GetColorName } from 'hex-color-to-color-name';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 export const Product = (props: { product: IProduct; hearts: number }) => {
   const { user, validating } = useBakesbyIshcontext();
@@ -181,8 +182,17 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
           )}
         >
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl">
-              {product.title}
+            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-3xl flex items-center gap-2">
+              {product.hasCollections ? (
+                <>
+                  <CollectionIcon className="w-7 h-7" />
+                  <Link href={`/collections/${product.collections[0]}`}>
+                    <a className="hover:underline">{product.title}</a>
+                  </Link>
+                </>
+              ) : (
+                <span>{product.title}</span>
+              )}
             </h1>
           </div>
 

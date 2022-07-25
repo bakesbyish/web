@@ -9,11 +9,21 @@ interface IShopSeo {
   price: number;
   slug: string;
   collection: string | null;
+  hearts: number;
 }
 
 export const ShopSeo = (props: IShopSeo) => {
-  const { sku, title, description, url, image, price, slug, collection } =
-    props;
+  const {
+    sku,
+    title,
+    description,
+    url,
+    image,
+    price,
+    slug,
+    collection,
+    hearts,
+  } = props;
   return (
     <Head>
       {/* Facebook */}
@@ -60,14 +70,14 @@ export const ShopSeo = (props: IShopSeo) => {
 							"@type": "Review",
 							"reviewRating": {
 								"@type": "Rating",
-								"ratingValue": "4",
-								"bestRating": "5"
+								"ratingValue": "${hearts}",
+								"bestRating": "1"
 							},
 						},
 						"aggregateRating": {
 							"@type": "AggregateRating",
-							"ratingValue": "4.4",
-							"reviewCount": "89"
+							"ratingValue": "${hearts}",
+							"reviewCount": "${hearts}"
 						},
 						"offers": {
 							"@type": "Offer",
