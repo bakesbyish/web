@@ -13,7 +13,7 @@ export default class MyDocument extends Document {
 								{
 									partytown = {
 										lib: "/_next/static/~partytown/",
-										forward: ["gtag"]           
+										forward: ["fbq"]           
 									};
 								}
 							`,
