@@ -12,7 +12,7 @@ interface IShopSeo {
   image: string;
   price: number;
   slug: string;
-  brand: string | null;
+  brand: string | undefined;
   collection: string | null;
   hearts: number;
   paths: IPaths[];

@@ -37,6 +37,7 @@ export default function Slug(props: { product: IProduct; hearts: number }) {
         image={product.url}
         price={product.price}
         slug={product.slug}
+        brand={product.brand?.title}
         collection={product.hasCollections ? product.collections[0] : null}
         hearts={hearts}
         paths={[
