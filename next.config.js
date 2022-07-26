@@ -12,6 +12,9 @@ const nextConfig = {
       "cdn.sanity.io",
     ],
   },
+  experimental: {
+    nextScriptWorkers: true,
+  },
 };
 
 module.exports = nextConfig;
