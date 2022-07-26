@@ -60,6 +60,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }}
       />
 
+      <div id="fb-root"></div>
+      <div id="fb-customer-chat" className="fb-customerchat"></div>
       <Script id="fb-messenger" strategy="worker">
         {`
             var chatbox = document.getElementById('fb-customer-chat');
