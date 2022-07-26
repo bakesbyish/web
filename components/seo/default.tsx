@@ -39,8 +39,6 @@ export const DefaultSeo = (props: IDefaultSeo) => {
         <meta property="og:url" content={url} />
         <meta property="og:image" content={image} />
         <meta property="og:site_name" content={'Bakes By Ish'} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
 
         {/* Twitter metatags */}
         <meta name="twitter:card" content="summary" />

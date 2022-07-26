@@ -6,6 +6,7 @@ import { Search } from '@components/search/search';
 import { useRouter } from 'next/router';
 import algoliasearch from 'algoliasearch';
 import qs from 'qs';
+import { SearchSeo } from '@components/seo/search';
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
@@ -47,7 +48,7 @@ export default function SearchPage(props: {
 
   return (
     <div className="felx flex-col items-center justify-center min-h-screen">
-
+      <SearchSeo />
       <main className="flex flex-col items-center justify-center mt-10">
         <Search
           {...DEFAULT_PROPS}
