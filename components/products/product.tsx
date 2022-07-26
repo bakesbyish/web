@@ -181,6 +181,15 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
               layout="fill"
               className="w-full h-full object-center object-cover rounded-lg"
             />
+            {product.brand ? (
+              <Image
+                src={product?.brand.url}
+                alt={product.brand?.title}
+                width={50}
+                height={50}
+                className="z-50 cursor-pointer w-10 h-10"
+              />
+            ) : null}
           </div>
         </div>
 
