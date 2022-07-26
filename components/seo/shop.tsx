@@ -12,6 +12,7 @@ interface IShopSeo {
   image: string;
   price: number;
   slug: string;
+  brand: string | null;
   collection: string | null;
   hearts: number;
   paths: IPaths[];
@@ -26,6 +27,7 @@ export const ShopSeo = (props: IShopSeo) => {
     image,
     price,
     slug,
+    brand,
     collection,
     hearts,
     paths,
@@ -73,10 +75,16 @@ export const ShopSeo = (props: IShopSeo) => {
 						 ],
 						"description": "${description}",
 						"sku": "${sku}",
-						"brand": {
-							"@type": "Brand",
-							"name": "ACME"
-						},
+						${
+              brand
+                ? {
+                    brand: {
+                      '@type': 'Brand',
+                      name: '${brand}',
+                    },
+                  }
+                : null
+            }
 						"aggregateRating": {
 							"@type": "AggregateRating",
 							"ratingValue": "5",
@@ -111,10 +119,16 @@ export const ShopSeo = (props: IShopSeo) => {
 						 ],
 						"description": "${description}",
 						"sku": "${sku}",
-						"brand": {
-							"@type": "Brand",
-							"name": "ACME"
-						},
+						${
+              brand
+                ? {
+                    brand: {
+                      '@type': 'Brand',
+                      name: '${brand}',
+                    },
+                  }
+                : null
+            }
 						"offers": {
 							"@type": "Offer",
 							"url": "${url}",

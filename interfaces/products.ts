@@ -67,6 +67,7 @@ export interface IProduct {
   title: string;
   price: number;
   url: string;
+  brand: { title: string; slug: string; url: string } | null;
   description: string;
   unit: null | string;
   hasCollections: boolean;
