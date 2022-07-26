@@ -6,6 +6,27 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <script
+            data-partytown-config
+            dangerouslySetInnerHTML={{
+              __html: `
+								{
+									resolveUrl={function(url) {
+											if (url.hostname === "connect.facebook.net") {
+												var proxyUrl = new URL('https://my-reverse-proxy.com/');
+												proxyUrl.searchParams.append('url', url.href);
+												return proxyUrl;
+											}
+											return url;
+										},
+										forward: [
+											"fbq"
+										]
+									}
+							`,
+            }}
+          />
+
           <noscript>
             <img
               height="1"
