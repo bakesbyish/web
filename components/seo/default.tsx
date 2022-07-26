@@ -61,6 +61,7 @@ export const DefaultSeo = (props: IDefaultSeo) => {
         <Script
           id="google-bread-crumbs"
           type="application/ld+json"
+          strategy="worker"
           dangerouslySetInnerHTML={getBreadCrumbs(paths, URL)}
         />
       ) : null}
