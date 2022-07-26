@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
       <div id="fb-root"></div>
       <div id="fb-customer-chat" className="fb-customerchat"></div>
-      <Script id="fb-messenger" strategy="worker">
+      <Script id="fb-messenger" strategy="lazyOnload">
         {`
             var chatbox = document.getElementById('fb-customer-chat');
             chatbox.setAttribute("page_id", "112675403902811");
