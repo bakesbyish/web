@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <>
       <Script
         id="fb-pixel"
-        strategy="worker"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             !function(f,b,e,v,n,t,s)
