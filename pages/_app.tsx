@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             window.fbAsyncInit = function() {
               FB.init({
                 xfbml            : true,
-                version          : 'v12.0'
+                version          : 'v14.0'
               });
             };
       
