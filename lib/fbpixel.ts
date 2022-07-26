@@ -12,12 +12,3 @@ export const pageview = () => {
 export const event = (name: string, options = {}) => {
   window.fbq('track', name, options);
 };
-
-/**
- * @description - Analayize custom events
- * @param {string} name - The name of the event
- * @param options - The options that should be applied
- **/
-export const customEvents = (name: string, options = {}) => {
-  window.fbq('trackCustom', name, options);
-};
