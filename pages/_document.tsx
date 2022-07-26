@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
               __html: `
 								{
 									partytown = {
-										resolveUrl={function(url) {
+										resolveUrl: function(url) {
 											if (url.hostname === "connect.facebook.net") {
 												var proxyUrl = new URL('https://cdn.builder.codes/api/v1/js-proxy');
 												proxyUrl.searchParams.append('url', url.href);
