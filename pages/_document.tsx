@@ -11,18 +11,11 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `
 								{
-									resolveUrl={function(url) {
-											if (url.hostname === "connect.facebook.net") {
-												var proxyUrl = new URL('https://my-reverse-proxy.com/');
-												proxyUrl.searchParams.append('url', url.href);
-												return proxyUrl;
-											}
-											return url;
-										},
-										forward: [
-											"fbq"
-										]
-									}
+									partytown = {
+										lib: "/_next/static/~partytown/",
+										forward: ["gtag"]           
+									};
+								}
 							`,
             }}
           />
