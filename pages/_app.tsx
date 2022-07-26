@@ -9,7 +9,6 @@ import { ProgressBar } from '@components/utils/progress';
 import { Toast } from '@components/utils/toast';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { pageview } from '@lib/tag-manager';
 import * as fbq from '@lib/fbpixel';
 import '../styles/globals.css';
 
@@ -31,9 +30,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     fbq.pageview();
 
-    const handleRouteChange = (url: string) => {
+    const handleRouteChange = () => {
       fbq.pageview();
-      pageview(url);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
