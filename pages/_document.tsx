@@ -12,6 +12,15 @@ export default class MyDocument extends Document {
               __html: `
 								{
 									partytown = {
+										resolveUrl={function(url) {
+											if (url.hostname === "connect.facebook.net") {
+												var proxyUrl = new URL('https://cdn.builder.codes/api/v1/js-proxy');
+												proxyUrl.searchParams.append('url', url.href);
+												proxyUrl.searchParams.append('apiKey', ${process.env.NEXT_PUBLIC_BUILDER_PUBLIC_API_KEY});
+												return proxyUrl;
+											}
+											return url;
+										},
 										lib: "/_next/static/~partytown/",
 										forward: ["fbq"]           
 									};
