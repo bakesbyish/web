@@ -22,7 +22,7 @@ export default class MyDocument extends Document {
 											return url;
 										},
 										lib: "/_next/static/~partytown/",
-										forward: ["fbq"]           
+										forward: ["fbq", "gtag"]           
 									};
 								}
 							`,

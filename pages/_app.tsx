@@ -8,9 +8,10 @@ import { useUserData } from '@hooks/use-user-data';
 import { ProgressBar } from '@components/utils/progress';
 import { Toast } from '@components/utils/toast';
 import { useRouter } from 'next/router';
-import * as fbq from '@lib/fbpixel';
-import '../styles/globals.css';
 import { ExternalScripts } from '@components/utils/scripts';
+import * as fbq from '@lib/fbpixel';
+import * as gtag from '@lib/gtag';
+import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,13 +31,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     fbq.pageview();
 
-    const handleRouteChange = () => {
+    const handleRouteChange = (url: string) => {
       fbq.pageview();
+      gtag.pageview(url);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
     };
   }, [router.events]);
 

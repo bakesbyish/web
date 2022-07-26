@@ -15,6 +15,7 @@ specifiers:
   '@tailwindcss/aspect-ratio': ^0.4.0
   '@tailwindcss/forms': ^0.5.2
   '@types/facebook-pixel': ^0.0.24
+  '@types/gtag.js': ^0.0.10
   '@types/lodash.debounce': ^4.0.7
   '@types/lodash.kebabcase': ^4.1.7
   '@types/node': 17.0.38
@@ -70,6 +71,7 @@ dependencies:
   '@sanity/image-url': 1.0.1
   '@sendgrid/client': 7.7.0
   '@types/facebook-pixel': 0.0.24
+  '@types/gtag.js': 0.0.10
   '@types/lodash.debounce': 4.0.7
   '@types/lodash.kebabcase': 4.1.7
   '@types/nodemailer': 6.4.4
@@ -1242,6 +1244,10 @@ packages:
 
   /@types/google.maps/3.49.1:
     resolution: {integrity: sha512-Sbl5anucT7LUcUxXsRxkCozHdXIkUiY+Tyru+OVl5rot0+VIZuuulmABC7X+nF7rL7BRTAguSBSAD/e/AfIkkA==}
+    dev: false
+
+  /@types/gtag.js/0.0.10:
+    resolution: {integrity: sha512-98Hy7woUb3jMAMXkZQwfIOYNyfxmI0+U4m0PpCGdnd/FHk0tDpQFCqgXdNkdEoXsKkcGya/2Gew1cAJjKJspVw==}
     dev: false
 
   /@types/json-schema/7.0.11:

@@ -1,5 +1,6 @@
 import Script from 'next/script';
 import * as fbq from '@lib/fbpixel';
+import * as gtag from '@lib/gtag';
 
 export const ExternalScripts = () => {
   return (
@@ -46,6 +47,25 @@ export const ExternalScripts = () => {
 					}(document, 'script', 'facebook-jssdk'));
 				`}
           </Script>
+
+          <Script
+            strategy="worker"
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+          />
+          <script
+            type="text/partytown"
+            dangerouslySetInnerHTML={{
+              __html: `
+								window.dataLayer = window.dataLayer || [];
+								window.gtag = function gtag(){window.dataLayer.push(arguments);}
+								gtag('js', new Date());
+
+								gtag('config', '${gtag.GA_TRACKING_ID}', { 
+										page_path: window.location.pathname,
+								});
+							`,
+            }}
+          />
         </>
       ) : null}
     </>
