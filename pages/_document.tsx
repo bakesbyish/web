@@ -16,7 +16,7 @@ export default class MyDocument extends Document {
 											if (url.hostname === "connect.facebook.net") {
 												var proxyUrl = new URL('https://cdn.builder.codes/api/v1/js-proxy');
 												proxyUrl.searchParams.append('url', url.href);
-												proxyUrl.searchParams.append('apiKey', "3d4a6996edc14651ad2f83bfc5f94f63");
+												proxyUrl.searchParams.append('apiKey', "${process.env.NEXT_PUBLIC_BUILDER_PUBLIC_API_KEY}");
 												return proxyUrl;
 											}
 											return url;
@@ -30,6 +30,7 @@ export default class MyDocument extends Document {
           />
 
           <noscript>
+            {/* eslint-disable-next-line */}
             <img
               height="1"
               width="1"
