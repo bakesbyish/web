@@ -1,5 +1,4 @@
 import { FB_PIXEL_ID } from '@lib/fbpixel';
-import { GTM_ID } from '@lib/tag-manager';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 export default class MyDocument extends Document {
@@ -23,7 +22,7 @@ export default class MyDocument extends Document {
 											return url;
 										},
 										lib: "/_next/static/~partytown/",
-										forward: ["fbq", "dataLayer.push"]           
+										forward: ["fbq"]           
 									};
 								}
 							`,
@@ -37,15 +36,6 @@ export default class MyDocument extends Document {
               width="1"
               style={{ display: 'none' }}
               src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
-            />
-          </noscript>
-
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
             />
           </noscript>
         </Head>

@@ -7,11 +7,11 @@ import { BakesbyIshContext } from '@context/context';
 import { useUserData } from '@hooks/use-user-data';
 import { ProgressBar } from '@components/utils/progress';
 import { Toast } from '@components/utils/toast';
-import * as fbq from '@lib/fbpixel';
-import '../styles/globals.css';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { GTM_ID, pageview } from '@lib/tag-manager';
+import { pageview } from '@lib/tag-manager';
+import * as fbq from '@lib/fbpixel';
+import '../styles/globals.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -58,20 +58,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', ${fbq.FB_PIXEL_ID});
-          `,
-        }}
-      />
-
-      <Script
-        id="gtag-base"
-        strategy="worker"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${GTM_ID}');
           `,
         }}
       />
