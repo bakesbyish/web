@@ -7,6 +7,7 @@ import { useInView } from 'react-cool-inview';
 import toast from 'react-hot-toast';
 import { useCart } from 'react-use-cart';
 import useSWRInfinite from 'swr/infinite';
+import * as fbq from '@lib/fbpixel';
 
 export const ShopProducts = (props: {
   products: IShopProducts[];
@@ -110,6 +111,14 @@ export const ShopProducts = (props: {
                     size: null,
                     price: product.price,
                   } as ICart;
+
+                  fbq.event('AddToCart', {
+                    content_ids: selectedProduct.sku,
+                    content_name: selectedProduct.name,
+                    content_type: selectedProduct.size,
+                    currency: 'LKR',
+                    value: selectedProduct.price,
+                  });
 
                   toast(`${product.title} added to cart`);
                   addItem(selectedProduct, 1);

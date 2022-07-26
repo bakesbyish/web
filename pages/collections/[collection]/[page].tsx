@@ -1,21 +1,20 @@
 import { Loader } from '@components/utils/loader';
 import { ICart, ICollectionProduct } from '@interfaces/products';
 import { ICollection } from '@interfaces/collections';
-import { db } from 'config/firebase';
-import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import Image from 'next/image';
 import { CogIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import { Layout } from '@components/layout/layout';
 import { CollectionPagination } from '@components/pagination/collections';
 import { sanity } from 'config/sanity';
 import { useCart } from 'react-use-cart';
 import toast from 'react-hot-toast';
 import { DefaultSeo } from '@components/seo/default';
+import * as fbq from '@lib/fbpixel';
 
 const LIMIT = 20;
 
@@ -108,6 +107,14 @@ export default function Page(props: {
                         size: null,
                         price: product.price,
                       } as ICart;
+
+                      fbq.event('AddToCart', {
+                        content_ids: selectedProduct.sku,
+                        content_name: selectedProduct.name,
+                        content_type: selectedProduct.size,
+                        currency: 'LKR',
+                        value: selectedProduct.price,
+                      });
 
                       toast(`${product.title} added to cart`);
                       addItem(selectedProduct, 1);

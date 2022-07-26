@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ICart } from '@interfaces/products';
 import { classNames } from '@lib/utils';
+import * as fbq from '@lib/fbpixel';
 
 export const Cart = () => {
   const { items, removeItem } = useCart() as unknown as {
@@ -168,7 +169,43 @@ export const Cart = () => {
                       <div className="mt-6">
                         <Link href="/checkout">
                           <a
-                            onClick={() => setCartOpen(false)}
+                            onClick={() => {
+                              const itemsQty = items.length
+                                ? items.reduce(
+                                    (appended, current) =>
+                                      appended +
+                                      (current.quantity ? current.quantity : 0),
+                                    0
+                                  )
+                                : 0;
+                              console.log(itemsQty);
+                              setCartOpen(false);
+                              fbq.event('InitiateCheckout', {
+                                currency: 'LKR',
+                                value: items.length
+                                  ? items.reduce(
+                                      (appended, current) =>
+                                        appended +
+                                        (current.itemTotal
+                                          ? current.itemTotal
+                                          : 0),
+                                      0
+                                    )
+                                  : 0,
+                                content_ids: items.map((item) => item.sku),
+                                contents: items.map((item) => item.name),
+                                num_items: items.length
+                                  ? items.reduce(
+                                      (appended, current) =>
+                                        appended +
+                                        (current.quantity
+                                          ? current.quantity
+                                          : 0),
+                                      0
+                                    )
+                                  : 0,
+                              });
+                            }}
                             href="#"
                             className={classNames(
                               'flex items-center justify-center rounded-md border border-transparent bg-rose-400 px-6 py-3',

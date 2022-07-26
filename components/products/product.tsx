@@ -17,6 +17,7 @@ import { doc } from 'firebase/firestore';
 import { GetColorName } from 'hex-color-to-color-name';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
+import * as fbq from '@lib/fbpixel';
 
 export const Product = (props: { product: IProduct; hearts: number }) => {
   const { user, validating } = useBakesbyIshcontext();
@@ -149,6 +150,14 @@ export const Product = (props: { product: IProduct; hearts: number }) => {
       size: selectedVariant?.name || null,
       price: verifiedPrice,
     } as ICart;
+
+    fbq.event('AddToCart', {
+      content_ids: selectedProduct.sku,
+      content_name: selectedProduct.name,
+      content_type: selectedProduct.size,
+      currency: 'LKR',
+      value: selectedProduct.price,
+    });
 
     toast(`${product.title} added to cart`);
     addItem(selectedProduct, qty);

@@ -2,30 +2,22 @@ import { Loader } from '@components/utils/loader';
 import { useBakesbyIshcontext } from '@context/context';
 import { Disclosure } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { database, IAddress } from '@interfaces/firestore';
+import { IAddress } from '@interfaces/firestore';
 import { notifyOrder } from '@lib/communication';
 import { ICheckoutForm } from '@lib/forms';
 import { validateDiscount } from '@lib/products';
 import { classNames } from '@lib/utils';
-import { db } from 'config/firebase';
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-} from 'firebase/firestore';
 import kebabCase from 'lodash.kebabcase';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { send } from 'process';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useCart } from 'react-use-cart';
 import * as yup from 'yup';
+import * as fbq from '@lib/fbpixel';
 
 const Modal = dynamic<any>(() =>
   import('@components/utils/modal').then((mod) => mod.Modal)
@@ -37,7 +29,6 @@ export const Checkout = (props: {
 }) => {
   const { address, contactNumber } = props;
   const { items, removeItem, emptyCart } = useCart();
-  const { user } = useBakesbyIshcontext();
 
   const subtotal = items.length
     ? items.reduce(
@@ -92,6 +83,13 @@ export const Checkout = (props: {
 
   const submitOrder = async (data: ICheckoutForm) => {
     setLoading(true);
+
+    fbq.event('Purchase', {
+      content_ids: items.map((item) => item.sku),
+      content_name: items.map((item) => item.name),
+      currency: 'LKR',
+      value: discount ? subtotal - discount : subtotal,
+    });
 
     const status = await notifyOrder(items, data, discountCode);
 
