@@ -60,12 +60,14 @@ export const ShopSeo = (props: IShopSeo) => {
       </Head>
 
       {hearts ? (
-        <Script
-          id="google-product-information"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+        <>
+          {brand ? (
+            <Script
+              id="google-product-information"
+              type="application/ld+json"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
 					{
 						"@context": "https://schema.org/",
 						"@type": "Product",
@@ -75,16 +77,10 @@ export const ShopSeo = (props: IShopSeo) => {
 						 ],
 						"description": "${description}",
 						"sku": "${sku}",
-						${
-              brand
-                ? {
-                    brand: {
-                      '@type': 'Brand',
-                      name: '${brand}',
-                    },
-                  }
-                : null
-            }
+						"brand": {
+							"@type": "Brand",
+							"name": "${brand}"
+						},
 						"aggregateRating": {
 							"@type": "AggregateRating",
 							"ratingValue": "5",
@@ -100,16 +96,16 @@ export const ShopSeo = (props: IShopSeo) => {
 						}
 					}
 					`,
-          }}
-          key="google-product-jsonld"
-        />
-      ) : (
-        <Script
-          id="google-product-information"
-          strategy="afterInteractive"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: `
+              }}
+              key="google-product-jsonld"
+            />
+          ) : (
+            <Script
+              id="google-product-information"
+              type="application/ld+json"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
 					{
 						"@context": "https://schema.org/",
 						"@type": "Product",
@@ -119,16 +115,11 @@ export const ShopSeo = (props: IShopSeo) => {
 						 ],
 						"description": "${description}",
 						"sku": "${sku}",
-						${
-              brand
-                ? {
-                    brand: {
-                      '@type': 'Brand',
-                      name: '${brand}',
-                    },
-                  }
-                : null
-            }
+						"aggregateRating": {
+							"@type": "AggregateRating",
+							"ratingValue": "5",
+							"reviewCount": "${hearts}"
+						},
 						"offers": {
 							"@type": "Offer",
 							"url": "${url}",
@@ -139,9 +130,77 @@ export const ShopSeo = (props: IShopSeo) => {
 						}
 					}
 					`,
-          }}
-          key="google-product-jsonld"
-        />
+              }}
+              key="google-product-jsonld"
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {brand ? (
+            <Script
+              id="google-product-information"
+              strategy="afterInteractive"
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: `
+					{
+						"@context": "https://schema.org/",
+						"@type": "Product",
+						"name": "${title}",
+						"image": [
+							"${image}"
+						 ],
+						"description": "${description}",
+						"sku": "${sku}",
+						"brand": {
+							"@type": "Brand",
+							"name": "${brand}"
+						},
+						"offers": {
+							"@type": "Offer",
+							"url": "${url}",
+							"priceCurrency": "LKR",
+							"price": "${price}",
+							"itemCondition": "https://schema.org/UsedCondition",
+							"availability": "https://schema.org/InStock"
+						}
+					}
+					`,
+              }}
+              key="google-product-jsonld"
+            />
+          ) : (
+            <Script
+              id="google-product-information"
+              strategy="afterInteractive"
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: `
+					{
+						"@context": "https://schema.org/",
+						"@type": "Product",
+						"name": "${title}",
+						"image": [
+							"${image}"
+						 ],
+						"description": "${description}",
+						"sku": "${sku}",
+						"offers": {
+							"@type": "Offer",
+							"url": "${url}",
+							"priceCurrency": "LKR",
+							"price": "${price}",
+							"itemCondition": "https://schema.org/UsedCondition",
+							"availability": "https://schema.org/InStock"
+						}
+					}
+					`,
+              }}
+              key="google-product-jsonld"
+            />
+          )}
+        </>
       )}
 
       <Script

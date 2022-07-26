@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 				price,
 				"url": image.asset -> url,
 				description,
-				"brand": (brand[] -> { title, "slug": slug.current, "url": image.asset -> url })[0]
+				"brand": (brand[] -> { title, "slug": slug.current, "url": image.asset -> url })[0],
 				unit,
 				"hasDiscounts": discounted,
 				"hasCollections": defined(count(categories[] -> slug.current)),
