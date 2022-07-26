@@ -11,6 +11,7 @@ import * as fbq from '@lib/fbpixel';
 import '../styles/globals.css';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import { GTM_ID, pageview } from '@lib/tag-manager';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,8 +31,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     fbq.pageview();
 
-    const handleRouteChange = () => {
+    const handleRouteChange = (url: string) => {
       fbq.pageview();
+      pageview(url);
     };
 
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -60,30 +62,19 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }}
       />
 
-      <div id="fb-root"></div>
-      <div id="fb-customer-chat" className="fb-customerchat"></div>
-      <Script id="fb-messenger" strategy="lazyOnload">
-        {`
-					var chatbox = document.getElementById('fb-customer-chat');
-					chatbox.setAttribute("page_id", "112675403902811");
-					chatbox.setAttribute("attribution", "biz_inbox");
-
-					window.fbAsyncInit = function() {
-						FB.init({
-							xfbml            : true,
-							version          : 'v14.0'
-						});
-					};
-
-					(function(d, s, id) {
-						var js, fjs = d.getElementsByTagName(s)[0];
-						if (d.getElementById(id)) return;
-						js = d.createElement(s); js.id = id;
-						js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-						fjs.parentNode.insertBefore(js, fjs);
-					}(document, 'script', 'facebook-jssdk'));
-				`}
-      </Script>
+      <Script
+        id="gtag-base"
+        strategy="worker"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer', '${GTM_ID}');
+          `,
+        }}
+      />
 
       <BakesbyIshContext.Provider
         value={{
