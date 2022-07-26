@@ -17,7 +17,7 @@ export const getBreadCrumbs = (
         '@type': 'ListItem',
         position: (index + 1).toString(),
         name: path.name,
-        item: `${URL}/${path.url}`,
+        item: `${URL}${path.url}`,
       })
     );
   });

@@ -2,6 +2,7 @@ import { IPaths } from '@interfaces/seo';
 import { getBreadCrumbs } from '@lib/seo';
 import { URL } from 'config';
 import Head from 'next/head';
+import Script from 'next/script';
 
 interface IShopSeo {
   sku: string;
@@ -30,33 +31,37 @@ export const ShopSeo = (props: IShopSeo) => {
     paths,
   } = props;
   return (
-    <Head>
-      {/* Facebook */}
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={url} />
-      <meta property="og:image" content={image} />
-      <meta property="product:brand" content="Facebook" />
-      <meta property="product:availability" content="in stock" />
-      <meta property="product:condition" content="new" />
-      <meta property="product:price:amount" content={price.toString()} />
-      <meta property="product:price:currency" content="LKR" />
-      <meta property="product:retailer_item_id" content={slug} />
+    <>
+      <Head>
+        {/* Facebook */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={image} />
+        <meta property="product:brand" content="Facebook" />
+        <meta property="product:availability" content="in stock" />
+        <meta property="product:condition" content="new" />
+        <meta property="product:price:amount" content={price.toString()} />
+        <meta property="product:price:currency" content="LKR" />
+        <meta property="product:retailer_item_id" content={slug} />
 
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary" />
-      <meta name="twitter:site" content="@bakesbyish" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@bakesbyish" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
 
-      {collection ? (
-        <meta property="product:item_group_id" content={collection} />
-      ) : null}
+        {collection ? (
+          <meta property="product:item_group_id" content={collection} />
+        ) : null}
+      </Head>
 
       {hearts ? (
-        <script
+        <Script
+          id="google-product-information"
           type="application/ld+json"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
 					{
@@ -91,7 +96,9 @@ export const ShopSeo = (props: IShopSeo) => {
           key="google-product-jsonld"
         />
       ) : (
-        <script
+        <Script
+          id="google-product-information"
+          strategy="afterInteractive"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: `
@@ -123,10 +130,12 @@ export const ShopSeo = (props: IShopSeo) => {
         />
       )}
 
-      <script
+      <Script
+        id="google-cread-crumbs"
+        strategy="afterInteractive"
         type="application/ld+json"
         dangerouslySetInnerHTML={getBreadCrumbs(paths, URL)}
       />
-    </Head>
+    </>
   );
 };
