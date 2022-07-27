@@ -33,14 +33,9 @@ export const Item = (props: { items: ICart[] }) => {
                 </a>
               </Link>
               <div className="flex justify-start items-start flex-col space-y-2">
-                <p className="text-sm leading-none text-gray-800 dark:text-slate-400">
-                  <span className="text-gray-300 dark:text-white/80">
-                    Quantity: {item.quantity}
-                  </span>
-                </p>
                 {item.size ? (
                   <p className="text-sm leading-none text-gray-800 dark:text-slate-400">
-                    <span className="text-gray-300 dark:text-white/80">
+                    <span className="text-black dark:text-white/80">
                       Size:{' '}
                     </span>{' '}
                     {item.size}
@@ -48,7 +43,7 @@ export const Item = (props: { items: ICart[] }) => {
                 ) : null}
                 {item.color ? (
                   <p className="text-sm leading-none text-gray-800 dark:text-slate-400">
-                    <span className="text-gray-300 dark:text-white/80">
+                    <span className="text-black/80 dark:text-white/80">
                       Color:{' '}
                     </span>{' '}
                     {item.color}

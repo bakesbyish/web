@@ -138,10 +138,10 @@ export default function Orders(props: { uid: string }) {
           ) : null}
         </main>
       ) : (
-        <section className="flex flex-col items-center justfiy-center">
-          <h1 className="text-2xl mb-2">Your have not ordered anything</h1>
+        <section className="flex flex-col items-center justify-center">
+          <h1 className="text-2xl mb-2 break-all">No orders</h1>
           <Link href="/shop">
-            <a className="text-rose-300 underline">Continue shopping</a>
+            <a className="text-rose-400 underline">Continue shopping</a>
           </Link>
         </section>
       )}
