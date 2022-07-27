@@ -46,7 +46,7 @@ export const Order = (props: {
           <h1
             id={order.oid}
             onClick={() => {
-              toast.success('order# copied to clipboard');
+              toast.success('order# copied');
               navigator.clipboard.writeText(oid);
             }}
             className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all cursor-pointer"
