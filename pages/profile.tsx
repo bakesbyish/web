@@ -6,7 +6,7 @@ import { Profile } from '@components/profile/profile';
 import { DefaultSeo } from '@components/seo/default';
 import { Loader } from '@components/utils/loader';
 import { ProfileContext } from '@context/profile';
-import { database, IUser, IUserDocument } from '@interfaces/firestore';
+import { database, IUserDocument } from '@interfaces/firestore';
 import { ISession } from '@interfaces/session';
 import { db } from 'config/firebase';
 import { sessionOptions } from 'config/session';

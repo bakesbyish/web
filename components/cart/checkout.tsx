@@ -1,8 +1,7 @@
 import { Loader } from '@components/utils/loader';
-import { useBakesbyIshcontext } from '@context/context';
 import { Disclosure } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { IAddress } from '@interfaces/firestore';
+import { database, IAddress } from '@interfaces/firestore';
 import { notifyOrder } from '@lib/communication';
 import { ICheckoutForm } from '@lib/forms';
 import { validateDiscount } from '@lib/products';
@@ -12,12 +11,15 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useCart } from 'react-use-cart';
 import * as yup from 'yup';
 import * as fbq from '@lib/fbpixel';
+import { useBakesbyIshcontext } from '@context/context';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from 'config/firebase';
 
 const Modal = dynamic<any>(() =>
   import('@components/utils/modal').then((mod) => mod.Modal)
@@ -29,6 +31,7 @@ export const Checkout = (props: {
 }) => {
   const { address, contactNumber } = props;
   const { items, removeItem, emptyCart } = useCart();
+  const { user } = useBakesbyIshcontext();
 
   const subtotal = items.length
     ? items.reduce(
@@ -72,35 +75,57 @@ export const Checkout = (props: {
 
   const { errors } = formState;
 
+  const [formData, setFormData] = useState<ICheckoutForm | null>(null);
+
   const [discount, setDiscount] = useState<number | null>(null);
   const [discountCode, setDiscountCode] = useState<string>('');
   const [discountError, setDiscountError] = useState<string | null>(null);
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [saveAddressModalOpen, setSaveAddressModalOpen] =
+    useState<boolean>(false);
+
   const [validatingDiscount, setValidatingDiscount] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const submitOrder = async (data: ICheckoutForm) => {
-    setLoading(true);
+  useEffect(() => {
+    if (formData) {
+      if (!saveAddressModalOpen) {
+        (async () => {
+          if (process.env.NODE_ENV !== 'development') {
+            fbq.event('Purchase', {
+              content_ids: items.map((item) => item.sku),
+              content_name: items.map((item) => item.name),
+              currency: 'LKR',
+              value: discount ? subtotal - discount : subtotal,
+            });
+          }
 
-    fbq.event('Purchase', {
-      content_ids: items.map((item) => item.sku),
-      content_name: items.map((item) => item.name),
-      currency: 'LKR',
-      value: discount ? subtotal - discount : subtotal,
-    });
+          const status = await notifyOrder(items, formData, discountCode);
 
-    const status = await notifyOrder(items, data, discountCode);
+          if (Number(status) !== 200) {
+            toast.error('Something went wrong please try again');
+            setLoading(false);
+            return;
+          }
 
-    if (Number(status) !== 200) {
-      toast.error('Something went wrong please try again');
-      setLoading(false);
-      return;
+          setModalOpen(true);
+          setLoading(false);
+        })();
+      }
     }
 
-    setModalOpen(true);
-    setLoading(false);
+    // eslint-disable-next-line
+  }, [formData, saveAddressModalOpen]);
+
+  const submitOrder = async (data: ICheckoutForm) => {
+    setLoading(true);
+    if (!address && !contactNumber && user) {
+      setSaveAddressModalOpen(true);
+    }
+    setFormData(data);
   };
 
   const handleSubmitDiscountcode = async (
@@ -138,6 +163,21 @@ export const Checkout = (props: {
   const onModalClose = async () => {
     await router.push('/');
     emptyCart();
+  };
+
+  const saveAddress = async () => {
+    if (!formData && !user) {
+      return;
+    }
+
+    const userDatabaseRef = database.collections.users;
+    const userRef = doc(db, database.users, user!.uid);
+    await updateDoc(userRef, {
+      [userDatabaseRef.address]: formData?.address,
+      [userDatabaseRef.state]: formData?.state,
+      [userDatabaseRef.city]: formData?.city,
+      [userDatabaseRef.contactNumber]: formData?.contactNumber,
+    });
   };
 
   return items.length ? (
@@ -582,6 +622,20 @@ export const Checkout = (props: {
           </section>
         </div>
       </main>
+
+      {saveAddressModalOpen ? (
+        <Modal
+          isOpen={saveAddressModalOpen}
+          setIsOpen={setSaveAddressModalOpen}
+          heading={'Save address ?'}
+          content={
+            'Do you want to save the current address and contact number for future use ? (you can always change it while checkout or seperatly in your profile page)'
+          }
+          buttonText={'Okay'}
+          onModalClose={saveAddress}
+          showCloseButton={true}
+        />
+      ) : null}
 
       {modalOpen ? (
         <Modal

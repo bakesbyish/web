@@ -1,6 +1,6 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { classNames } from "@lib/utils";
-import { Dispatch, Fragment, SetStateAction } from "react";
+import { Dialog, Transition } from '@headlessui/react';
+import { classNames } from '@lib/utils';
+import { Dispatch, Fragment, SetStateAction } from 'react';
 
 export const Modal = (props: {
   isOpen: boolean;
@@ -9,12 +9,16 @@ export const Modal = (props: {
   content: string;
   buttonText: string;
   onModalClose: () => void;
+  showCloseButton?: boolean;
 }) => {
   const { isOpen, setIsOpen, heading, content, buttonText, onModalClose } =
     props;
 
+  const showCloseButton = props.showCloseButton ? true : false;
+
   const closeModal = () => {
     setIsOpen(false);
+    !showCloseButton ? onModalClose() : null;
   };
 
   return (
@@ -43,23 +47,29 @@ export const Modal = (props: {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={classNames(
+                  'w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-900 p-6 text-left align-middle shadow-xl transition-all'
+                )}
+              >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   {heading}
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">{content}</p>
+                  <p className="text-sm text-gray-500 dark:text-white/80">
+                    {content}
+                  </p>
                 </div>
 
-                <div className="mt-4">
+                <div className="flex mt-4 gap-2">
                   <button
                     type="button"
                     className={classNames(
-                      "inline-flex justify-center rounded-md border border-transparent bg-rose-300 px-4 py-2 text-sm font-medium text-blue-900",
-                      "hover:bg-rose-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2",
+                      'inline-flex justify-center rounded-md border border-transparent bg-rose-300 px-4 py-2 text-sm font-medium text-black',
+                      'hover:bg-rose-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2'
                     )}
                     onClick={() => {
                       closeModal();
@@ -68,6 +78,20 @@ export const Modal = (props: {
                   >
                     {buttonText}
                   </button>
+                  {showCloseButton ? (
+                    <button
+                      type="button"
+                      className={classNames(
+                        'inline-flex justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-black',
+                        'hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2'
+                      )}
+                      onClick={() => {
+                        closeModal();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  ) : null}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
