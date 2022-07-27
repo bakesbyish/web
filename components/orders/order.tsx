@@ -1,4 +1,3 @@
-import { FacebookIcon } from '@components/icons/facebook';
 import { Loader } from '@components/utils/loader';
 import { TrashIcon } from '@heroicons/react/outline';
 import { database, IOrder } from '@interfaces/firestore';
@@ -45,11 +44,12 @@ export const Order = (props: {
       <div className="flex items-between justify-between w-full">
         <div className="flex justify-start item-start space-y-2 flex-col ">
           <h1
+            id={order.oid}
             onClick={() => {
               toast.success('order# copied to clipboard');
               navigator.clipboard.writeText(oid);
             }}
-            className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all"
+            className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all cursor-pointer"
           >
             #{oid}
           </h1>
@@ -116,7 +116,7 @@ export const Order = (props: {
                     Subtotal
                   </p>
                   <p className="text-base leading-4 text-gray-600 dark:text-slate-300">
-                    LKR {subTotal}
+                    LKR {subTotal.toLocaleString()}
                   </p>
                 </div>
                 {discount && discountCode && (
@@ -140,7 +140,7 @@ export const Order = (props: {
                       Shipping
                     </p>
                     <p className="text-base leading-4 text-gray-600 dark:text-slate-300">
-                      LKR {shippingPrice}
+                      LKR {shippingPrice.toLocaleString()}
                     </p>
                   </div>
                 ) : null}
@@ -151,9 +151,11 @@ export const Order = (props: {
                 </p>
                 <p className="text-base font-semibold leading-4 text-gray-600 dark:text-slate-300">
                   LKR{' '}
-                  {subTotal -
+                  {(
+                    subTotal -
                     (discount ? parseFloat(discount) : 0) +
-                    (shippingPrice ? shippingPrice : 0)}
+                    (shippingPrice ? shippingPrice : 0)
+                  ).toLocaleString()}
                 </p>
               </div>
             </div>

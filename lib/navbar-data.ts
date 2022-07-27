@@ -23,21 +23,25 @@ export const mobilePages = [
     name: 'Shop',
     href: '/shop',
     icon: ShoppingBagIcon,
+    auth: false,
   },
   {
     name: 'Collections',
     href: '/collections',
     icon: CollectionIcon,
+    auth: false,
   },
   {
     name: 'Profile',
     href: '/profile',
     icon: UserIcon,
+    auth: true,
   },
   {
     name: 'My Orders',
     href: '/orders',
     icon: ReceiptTaxIcon,
+    auth: true,
   },
 ];
 

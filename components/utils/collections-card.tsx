@@ -52,7 +52,7 @@ export const Collections = (props: { collections: ICollectionCard[] }) => {
 
       <Link href="/collections">
         <h1 className="text-center font-bold underline hover:cursor-pointer sm:-mt-16">
-          See all collections
+          See all
         </h1>
       </Link>
     </div>

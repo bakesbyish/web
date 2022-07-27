@@ -224,7 +224,7 @@ export default function Login() {
                       disabled={logginIn}
                       className={classNames(
                         'focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none',
-                        'text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full'
+                        'text-black focus:outline-none bg-rose-400 border rounded hover:bg-rose-400 py-4 w-full'
                       )}
                     >
                       {logginIn ? <Loader width={4} height={4} /> : 'Login'}

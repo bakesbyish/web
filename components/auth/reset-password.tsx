@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { classNames } from '@lib/utils';
 import { auth } from 'config/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { Dispatch, SetStateAction } from 'react';
@@ -89,7 +90,10 @@ export const ResetPassword = (props: {
             role="button"
             type="submit"
             aria-label="create my account"
-            className="focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full"
+            className={classNames(
+              'focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black',
+              'focus:outline-none bg-rose-400 border rounded hover:bg-rose-400 py-4 w-full'
+            )}
           >
             Reset my password
           </button>

@@ -2,21 +2,18 @@ import { Layout } from '@components/layout/layout';
 import { Order } from '@components/orders/order';
 import { DefaultSeo } from '@components/seo/default';
 import { Loader } from '@components/utils/loader';
-import { useBakesbyIshcontext } from '@context/context';
 import { database, IOrder } from '@interfaces/firestore';
 import { ISession } from '@interfaces/session';
-import { getJSDate, postToJSON } from '@lib/firestore';
+import { postToJSON } from '@lib/firestore';
 import { classNames } from '@lib/utils';
 import { db } from 'config/firebase';
 import { sessionOptions } from 'config/session';
 import {
   collection,
-  DocumentData,
   getDocs,
   limit,
   orderBy,
   query,
-  QuerySnapshot,
   startAfter,
   Timestamp,
   where,
@@ -24,7 +21,7 @@ import {
 import { withIronSessionSsr } from 'iron-session/next';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { Fragment, ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 const LIMIT = 2;

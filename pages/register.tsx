@@ -119,10 +119,12 @@ export default function Register() {
         description={
           'Register with Bakes By Ish to easily manage, review and schedule your baking orders'
         }
-				paths={[{
-					name: 'register',
-					url: '/regsiter'
-				}]}
+        paths={[
+          {
+            name: 'register',
+            url: '/regsiter',
+          },
+        ]}
         url={'/register'}
       />
       <main>
@@ -281,7 +283,7 @@ export default function Register() {
                     aria-label="create my account"
                     className={classNames(
                       'focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 text-sm font-semibold leading-none text-black',
-                      'focus:outline-none bg-rose-300 border rounded hover:bg-rose-400 py-4 w-full'
+                      'focus:outline-none bg-rose-400 border rounded hover:bg-rose-400 py-4 w-full'
                     )}
                   >
                     {creatingAccount ? (
