@@ -53,7 +53,16 @@ export default function Home(props: {
               <Newsletter />
               <GeoLocation />
             </>
-          ) : null}
+          ) : (
+            <>
+              <div className="flex flex-col items-center justify-center w-full">
+                <CardLoader />
+              </div>
+              <div className="flex flex-col items-center justify-center w-full">
+                <CardLoader />
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>
