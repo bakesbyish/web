@@ -23,3 +23,11 @@ export const Loader = (props: { width?: number; height?: number }) => {
     </div>
   );
 };
+
+export const CardLoader = () => {
+  return (
+    <div className="mt-12 w-[90%] animate-pulse space-x-1 rounded-xl">
+      <div className="h-[400px] w-full rounded-md bg-gray-300 dark:bg-gray-700"></div>
+    </div>
+  );
+};

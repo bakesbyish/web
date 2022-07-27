@@ -2,33 +2,31 @@ import { Layout } from '@components/layout/layout';
 import { DefaultSeo } from '@components/seo/default';
 import { Collections } from '@components/utils/collections-card';
 import { Hero } from '@components/utils/hero';
-import { Loader } from '@components/utils/loader';
+import { CardLoader } from '@components/utils/loader';
 import { Trending } from '@components/utils/trending';
 import { ICollectionCard, ICollectionProduct } from '@interfaces/products';
-import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { sanity, urlFor } from 'config/sanity';
-import { collection } from 'firebase/firestore';
+import { sanity } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { useInView } from 'react-cool-inview';
 
 const Newsletter = dynamic<any>(
   () => import('@components/utils/newsletter').then((mod) => mod.Newsletter),
   {
     loading: () => (
-      <section className="mb-5 mt-5">
-        <Loader />
-      </section>
+      <div className="flex flex-col items-center justify-center">
+        <CardLoader />
+      </div>
     ),
   }
 );
 
 const GeoLocation = dynamic<any>(() => import('@components/utils/map'), {
   loading: () => (
-    <section className="mb-5 mt-5">
-      <Loader />
-    </section>
+    <div className="flex flex-col items-center justify-center mb-8">
+      <CardLoader />
+    </div>
   ),
 });
 
