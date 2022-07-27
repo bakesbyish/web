@@ -249,6 +249,9 @@ export const Checkout = (props: {
                               <p className="text-gray-900 dark:text-white">
                                 LKR {item.price.toLocaleString()}
                               </p>
+                              <p className="text-gray-900 dark:text-white">
+                                qty {item.quantity}
+                              </p>
                               <p className="text-gray-500 dark:text-white/80">
                                 {item.color}
                               </p>
@@ -382,6 +385,9 @@ export const Checkout = (props: {
                       </h3>
                       <p className="text-gray-900 dark:text-white">
                         LKR {item.price.toLocaleString()}
+                      </p>
+                      <p className="text-gray-900 dark:text-white">
+                        qty {item.quantity}
                       </p>
                       <p className="text-gray-500 dark:text-white/80">
                         {item.color}
