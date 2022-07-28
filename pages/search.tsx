@@ -13,7 +13,7 @@ const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY
 );
 
-const UPDATE_AFTER = 100;
+const UPDATE_AFTER = 700;
 
 const DEFAULT_PROPS = {
   searchClient,
@@ -72,9 +72,10 @@ export default function SearchPage(props: {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { resolvedUrl, res } = context;
-
+export const getServerSideProps: GetServerSideProps = async ({
+  resolvedUrl,
+  res,
+}) => {
   // Cache the result
   res.setHeader(
     'Cache-Control',
