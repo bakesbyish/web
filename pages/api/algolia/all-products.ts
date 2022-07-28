@@ -26,7 +26,8 @@ export default async function addAllProducts(
 				description,
 				price,
 				"image": image.asset -> url,
-				"variants": productVariants[] -> title
+				"variants": productVariants[] -> title,
+				"brand": (brand[] -> title)[0]
 			}`
   );
 
