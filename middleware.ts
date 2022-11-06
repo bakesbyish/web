@@ -11,7 +11,6 @@ export function middleware(req: NextRequest) {
   // Block the site if the site is in maintainance
   if (maintenance) {
     url.pathname = `/maintenance`;
-    console.log('hello world');
   }
 
   // Handle collections with no page number
