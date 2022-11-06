@@ -49,7 +49,7 @@ export const Order = (props: {
               toast.success('order# copied');
               navigator.clipboard.writeText(oid);
             }}
-            className="text-2xl lg:text-4xl font-semibold leading-7 lg:leading-9 break-all cursor-pointer"
+            className="text-lg lg:text-3xl font-semibold leading-7 lg:leading-9 break-all cursor-pointer"
           >
             #{oid}
           </h1>

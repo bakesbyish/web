@@ -103,13 +103,7 @@ export const Checkout = (props: {
             });
           }
 
-          const status = await notifyOrder(items, formData, discountCode);
-
-          if (Number(status) !== 200) {
-            toast.error('Something went wrong please try again');
-            setLoading(false);
-            return;
-          }
+          await notifyOrder(items, formData, discountCode);
 
           setModalOpen(true);
           setLoading(false);

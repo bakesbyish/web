@@ -1,8 +1,4 @@
 import { database } from '@interfaces/firestore';
-import {
-  sendWhatsAppMessage,
-  sendWhatsAppMessageToMerchant,
-} from '@lib/communication';
 import { firebaseAdmin } from 'config/firebase-admin';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
@@ -10,6 +6,7 @@ import { sessionOptions } from 'config/session';
 import { ISession } from '@interfaces/session';
 import { firestore } from 'firebase-admin';
 import { ICheckoutForm } from '@lib/forms';
+import nodemailer, { Transporter } from 'nodemailer';
 
 export default withIronSessionApiRoute(async function (
   req: NextApiRequest,
@@ -98,13 +95,82 @@ export default withIronSessionApiRoute(async function (
     message += '*View order*\n\n';
     message += `https://orders.bakesbyish.com?q=${orderRef.id}`;
 
-    await sendWhatsAppMessageToMerchant(message);
-    await sendWhatsAppMessage(
-      data.contactNumber,
-      `Your Order is confirmed!!\n\n          *Order#*: _${orderRef.id}_\n\nWe will contact you shortly to inform you regarding your order\n\nThank you for shopping with *BAKES BY ISH* 😇`
+    await fetch(
+      `https://graph.facebook.com/v15.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.WHATSAPP_ACCSESS_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messaging_product: 'whatsapp',
+          to: process.env.WHATSAPP_RECEIPENT_PHONE_NUMBER,
+          type: 'template',
+          template: {
+            name: 'order',
+            language: {
+              code: 'en_US',
+            },
+            components: [
+              {
+                type: 'body',
+                parameters: [
+                  {
+                    type: 'text',
+                    text: orderRef.id,
+                  },
+                  {
+                    type: 'text',
+                    text: displayName,
+                  },
+                  {
+                    type: 'text',
+                    text: data.address,
+                  },
+                  {
+                    type: 'text',
+                    text: data.state,
+                  },
+                  {
+                    type: 'text',
+                    text: data.city,
+                  },
+                  {
+                    type: 'text',
+                    text: data.contactNumber,
+                  },
+                ],
+              },
+            ],
+          },
+        }),
+      }
     );
 
-    return res.status(200).send(null);
+    const transporter: Transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    try {
+      await transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to: 'vinuka.airbus@gmail.com',
+        subject: 'New Order from bakesbyish',
+        html: message,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    res.status(200).send('');
+    return;
   } catch (error) {
     console.error(error);
     return res.status(500).send('Internal server error');
