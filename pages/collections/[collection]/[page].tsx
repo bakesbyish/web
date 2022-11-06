@@ -58,14 +58,14 @@ export default function Page(props: {
       />
       <main className="bg-white dark:bg-gray-800 flex flex-col items-center justify-center py-10 px-5">
         <section className="flex flex-col items-center justify-center gap-2 mb-8 sm:mb-16">
-          <h1 className="text-3xl font-bold text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center">
             {collections.catergory}
           </h1>
-          <p className="break-words text-center">
+          <p className="text-sm sm:text-lg break-words text-left sm:text-center max-w-xl">
             {collections.catergoryDescription}
           </p>
         </section>
-        <div className="flex items-center justify-center sm:gap-8 flex-wrap">
+        <div className="flex items-center justify-center sm:gap-8 flex-wrap max-w-7xl">
           {products?.map((product) => (
             <article key={product.sku} className="group mt-6 sm:mt-0">
               <div className="w-full h-72 bg-white dark:bg-gray-800 rounded-lg overflow-hidden">

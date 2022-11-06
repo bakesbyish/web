@@ -1,7 +1,7 @@
 import { Layout } from '@components/layout/layout';
 import { ShopProducts } from '@components/products/shop';
 import { DefaultSeo } from '@components/seo/default';
-import { IShopProducts, IShopDataStream } from '@interfaces/products';
+import { IShopProducts } from '@interfaces/products';
 import { sanity } from 'config/sanity';
 import { GetStaticProps } from 'next';
 import { ReactElement } from 'react';
