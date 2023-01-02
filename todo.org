@@ -1,0 +1,8 @@
+#+title: Todo stuff
+
+# Location : /pages/collections/[collection]/[page].tsx
+* Layout
+Handle collections that have been created in Graphcms but do not have any products
+within them
+
+** Example :- Cake boxses
