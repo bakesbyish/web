@@ -121,7 +121,7 @@ devDependencies:
   eslint-plugin-prettier: 4.0.0_j7rsahgqtkecno6yauhsgsglf4
   postcss: 8.4.14
   prettier: 2.6.2
-  tailwindcss: 3.1.2
+  tailwindcss: 3.1.2_postcss@8.4.14
   typescript: 4.7.2
 
 packages:
@@ -1188,7 +1188,7 @@ packages:
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.1.2
+      tailwindcss: 3.1.2_postcss@8.4.14
     dev: true
 
   /@tailwindcss/forms/0.5.2_tailwindcss@3.1.2:
@@ -1197,7 +1197,7 @@ packages:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.1.2
+      tailwindcss: 3.1.2_postcss@8.4.14
     dev: true
 
   /@tootallnate/once/2.0.0:
@@ -1664,7 +1664,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.20.4
-      caniuse-lite: 1.0.30001352
+      caniuse-lite: 1.0.30001442
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1725,7 +1725,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001352
+      caniuse-lite: 1.0.30001442
       electron-to-chromium: 1.4.151
       escalade: 3.1.1
       node-releases: 2.0.5
@@ -1752,8 +1752,8 @@ packages:
     engines: {node: '>= 6'}
     dev: true
 
-  /caniuse-lite/1.0.30001352:
-    resolution: {integrity: sha512-GUgH8w6YergqPQDGWhJGt8GDRnY0L/iJVQcU3eJ46GYf52R8tk0Wxp0PymuFVZboJYXGiCqwozAYZNRjVj6IcA==}
+  /caniuse-lite/1.0.30001442:
+    resolution: {integrity: sha512-239m03Pqy0hwxYPYR5JwOIxRJfLTWtle9FV8zosfV5pHg+/51uD4nxcUlM8+mWWGfwKtt8lJNHnD3cWw9VZ6ow==}
 
   /capture-stack-trace/1.0.1:
     resolution: {integrity: sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw==}
@@ -3487,7 +3487,7 @@ packages:
     dependencies:
       '@next/env': 12.2.0
       '@swc/helpers': 0.4.2
-      caniuse-lite: 1.0.30001352
+      caniuse-lite: 1.0.30001442
       postcss: 8.4.5
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
@@ -4387,10 +4387,12 @@ packages:
       react: 18.1.0
     dev: false
 
-  /tailwindcss/3.1.2:
+  /tailwindcss/3.1.2_postcss@8.4.14:
     resolution: {integrity: sha512-yJ6L5s1U5AeS5g7HHy212zdQfjwD426FBfm59pet/JsyneuZuD4C2W7PpJEg4ppisiB21uLqtNagv8KXury3+Q==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
