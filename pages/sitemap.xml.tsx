@@ -1,6 +1,6 @@
 import { getBaseUrl } from "@lib/utils";
 import { sanity } from "config/sanity";
-import * as fs from "fs";
+import glob from "glob";
 import { GetServerSideProps } from "next";
 
 export default function Sitemap() {
@@ -11,24 +11,17 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const BASE_URL = getBaseUrl();
 
   // Fetch static paths
-  const staticPaths = fs
-    .readdirSync("pages")
-    .filter((staticPage) => {
-      return ![
-        "api",
-        "_app.tsx",
-        "_document.tsx",
-        "404.tsx",
-        "sitemap.xml.tsx",
-        "checkout.tsx",
-        "profile.tsx",
-        "maintenance.tsx",
-        "orders.tsx",
-      ].includes(staticPage);
-    })
-    .map((staticPagePath) => {
-      return `${BASE_URL}/${staticPagePath}`;
-    });
+  let staticPaths = glob.sync("pages/**/*.tsx");
+  staticPaths = staticPaths
+    .filter((path) => !path.includes("api"))
+    .filter((path) => !path.includes("_app.tsx"))
+    .filter((path) => !path.includes("_document.tsx"))
+    .filter((path) => !path.includes("404.tsx"))
+    .filter((path) => !path.includes("sitemap.xml.tsx"))
+    .filter((path) => !path.includes("checkout.tsx"))
+    .filter((path) => !path.includes("profile.tsx"))
+    .filter((path) => !path.includes("maintenance.tsx"))
+    .filter((path) => !path.includes("orders.tsx"));
 
   // Fetch products
   const products = (await sanity.fetch(
